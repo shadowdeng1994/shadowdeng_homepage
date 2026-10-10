@@ -8,12 +8,14 @@
          'Sun Yat-sen University',
          'School of Life Sciences',
          'Molecular Evolution',
-         'Cell Lineage'],
+         'Cell Lineage',
+         'Cell Population History'],
     zh: ['邓善俊',
          '中山大学',
          '生命科学学院',
          '分子进化学',
-         '细胞谱系']
+         '细胞谱系',
+         '细胞群体历史']
   };
 
   function currentLang() {
