@@ -298,40 +298,69 @@
     }
   }
 
-  /* ---------- 研究轮播 ---------- */
+  /* ---------- 研究轮播（可拖动 · 双向无限循环） ---------- */
   var track = document.getElementById('track');
   if (track) {
-    var total = track.children.length;
+    var viewport = track.parentElement;
+    var realSlides = Array.prototype.slice.call(track.children);
+    var total = realSlides.length;
     var dotsBox = document.getElementById('dots');
     var curNum = document.getElementById('curNum');
     var totalNum = document.getElementById('totalNum');
     var progress = document.getElementById('progress');
-    var idx = 0;
-    var autoTimer = null;
     var AUTO_MS = 4000;
     var dots = [];
+    var pos = 1;                 // 当前轨道位置（1 = 第一张真实幻灯片）
+    var isAnimating = false;
+    var autoTimer = null;
 
     if (totalNum) totalNum.textContent = String(total).padStart(2, '0');
+
+    // 头尾各克隆一张，实现无缝循环
+    if (total > 1) {
+      var lastClone = realSlides[total - 1].cloneNode(true);
+      var firstClone = realSlides[0].cloneNode(true);
+      lastClone.setAttribute('aria-hidden', 'true');
+      firstClone.setAttribute('aria-hidden', 'true');
+      track.insertBefore(lastClone, realSlides[0]);
+      track.appendChild(firstClone);
+    }
+
     if (dotsBox) {
       for (var d = 0; d < total; d++) {
         (function (n) {
           var dot = document.createElement('button');
           dot.className = 'dot' + (n === 0 ? ' active' : '');
           dot.setAttribute('aria-label', 'slide ' + (n + 1));
-          dot.addEventListener('click', function () { goTo(n); resetAuto(); });
+          dot.addEventListener('click', function () {
+            if (isAnimating) { resetAuto(); return; }
+            goToPos(n + 1, true); resetAuto();
+          });
           dotsBox.appendChild(dot);
           dots.push(dot);
         })(d);
       }
     }
 
-    function goTo(i) {
-      idx = (i + total) % total;
-      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
-      for (var k = 0; k < dots.length; k++) {
-        dots[k].classList.toggle('active', k === idx);
+    function slideWidth() { return viewport.clientWidth || track.clientWidth || 1; }
+    function realIndex() { return ((pos - 1) % total + total) % total; }
+
+    function setTransform(px, animate) {
+      if (animate) {
+        track.style.transition = '';
+        void track.offsetWidth;
+        track.style.transform = 'translateX(' + px + 'px)';
+      } else {
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(' + px + 'px)';
+        void track.offsetWidth;
       }
-      if (curNum) curNum.textContent = String(idx + 1).padStart(2, '0');
+    }
+
+    function updateUI() {
+      var ri = realIndex();
+      for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('active', k === ri);
+      if (curNum) curNum.textContent = String(ri + 1).padStart(2, '0');
       if (progress) {
         progress.style.transition = 'none';
         progress.style.width = '0';
@@ -340,17 +369,84 @@
         progress.style.width = '100%';
       }
     }
+
+    function goToPos(p, animate) {
+      if (total <= 1) { setTransform(0, false); return; }
+      pos = p;
+      isAnimating = animate !== false;
+      setTransform(-pos * slideWidth(), isAnimating);
+      updateUI();
+    }
+
+    function next() { if (total <= 1 || isAnimating) return; goToPos(pos + 1, true); }
+    function prev() { if (total <= 1 || isAnimating) return; goToPos(pos - 1, true); }
+
+    track.addEventListener('transitionend', function (e) {
+      if (e.propertyName !== 'transform') return;
+      isAnimating = false;
+      if (total <= 1) return;
+      if (pos === 0) { pos = total; setTransform(-pos * slideWidth(), false); }
+      else if (pos === total + 1) { pos = 1; setTransform(-pos * slideWidth(), false); }
+    });
+
     function resetAuto() {
       clearInterval(autoTimer);
-      autoTimer = setInterval(function () { goTo(idx + 1); }, AUTO_MS);
+      autoTimer = setInterval(next, AUTO_MS);
     }
 
     var prevBtn = document.getElementById('prev');
     var nextBtn = document.getElementById('next');
-    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(idx - 1); resetAuto(); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(idx + 1); resetAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', function () { prev(); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { next(); resetAuto(); });
 
-    if (total > 0) { goTo(0); resetAuto(); }
+    // 拖动 / 滑动
+    var dragging = false, startX = 0, startY = 0, curDx = 0, axis = null;
+    viewport.addEventListener('pointerdown', function (e) {
+      if (total <= 1) return;
+      dragging = true; axis = null; curDx = 0;
+      startX = e.clientX; startY = e.clientY;
+      isAnimating = false;
+      clearInterval(autoTimer);
+      track.style.transition = 'none';
+      if (viewport.setPointerCapture && e.pointerId != null) {
+        try { viewport.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+    });
+    viewport.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX, dy = e.clientY - startY;
+      if (axis === null) {
+        if (Math.abs(dx) > Math.abs(dy) + 4) axis = 'x';
+        else if (Math.abs(dy) > Math.abs(dx) + 4) axis = 'y';
+        else return;
+      }
+      if (axis !== 'x') return;
+      curDx = dx;
+      track.style.transform = 'translateX(' + (-pos * slideWidth() + dx) + 'px)';
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      var w = slideWidth();
+      if (axis === 'x' && Math.abs(curDx) > Math.max(40, w * 0.15)) {
+        if (curDx < 0) goToPos(pos + 1, true);
+        else goToPos(pos - 1, true);
+      } else {
+        goToPos(pos, true);
+      }
+      resetAuto();
+    }
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+    viewport.addEventListener('lostpointercapture', endDrag);
+
+    window.addEventListener('resize', function () {
+      if (total <= 1) return;
+      setTransform(-pos * slideWidth(), false);
+    });
+
+    if (total > 0) { pos = 1; updateUI(); setTransform(-slideWidth(), false); resetAuto(); }
   }
 
   /* ---------- 导航高亮 ---------- */

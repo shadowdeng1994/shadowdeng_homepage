@@ -308,7 +308,7 @@ html.theme-dark .section-emblem.logo-dark { display: block; }
   font-size: 2.4rem; font-weight: 500;
   box-shadow: 0 0 0 3px #ffffff, 0 10px 26px rgba(19, 58, 120, 0.18);
 }
-.about-header h2 { font-size: 1.5rem; margin: 0 0 0.4rem; color: #0e2440; }
+.about-header h1, .about-header h2 { font-size: 1.5rem; font-weight: 600; margin: 0 0 0.4rem; color: #0e2440; }
 .muted { color: #3a5473; font-size: 0.95rem; margin: 0.2rem 0; }
 .muted a { color: #1d6ff2; text-decoration: none; }
 .muted a:hover { color: #0b57d0; }
@@ -335,7 +335,12 @@ html.theme-dark .section-emblem.logo-dark { display: block; }
   font-size: 0.9rem; color: #6b83a3; letter-spacing: 0.05em;
 }
 .carousel-count .current { color: #1d6ff2; font-weight: 600; font-size: 1.1rem; }
-.carousel-viewport { overflow: hidden; border-radius: 14px; }
+.carousel-viewport {
+  overflow: hidden; border-radius: 14px;
+  touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  cursor: grab;
+}
+.carousel-viewport:active { cursor: grabbing; }
 .carousel-track {
   display: flex;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -639,7 +644,7 @@ footer {
   }
   .about-header .links { justify-content: center; margin-top: 0.5rem; }
   .avatar { width: 96px; height: 96px; font-size: 2rem; }
-  .about-header h2 { font-size: 1.35rem; }
+  .about-header h1, .about-header h2 { font-size: 1.35rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 1.2rem; }
   .contact-map { height: 260px; }
   .post { padding: 32px 18px 80px; }
@@ -706,7 +711,7 @@ html.theme-dark .section {
 html.theme-dark .section-title { color: #e8eef8; }
 html.theme-dark .section-subtitle { color: #6f88a8; }
 html.theme-dark .avatar { box-shadow: 0 0 0 3px rgba(17, 30, 52, 0.9), 0 10px 26px rgba(0, 0, 0, 0.5); }
-html.theme-dark .about-header h2 { color: #e8eef8; }
+html.theme-dark .about-header h1, html.theme-dark .about-header h2 { color: #e8eef8; }
 html.theme-dark .muted { color: #9fb3d0; }
 html.theme-dark .bio { color: #c5d4e8; }
 html.theme-dark .bio strong { color: #e8eef8; }

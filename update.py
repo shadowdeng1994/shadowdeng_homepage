@@ -275,7 +275,7 @@ def build_about(info, avatar_src):
         '<div class="about-header">\n'
         '  %s\n'
         '  <div>\n'
-        '    <h2>%s</h2>\n'
+        '    <h1 class="about-name">%s</h1>\n'
         '    <p class="muted">%s</p>\n'
         '    %s\n'
         '    %s\n'
