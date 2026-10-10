@@ -218,16 +218,28 @@
     // 鼠标跟随光晕（仅桌面指针设备，且仅在欢迎页可见时）
     var glow = document.getElementById('cursorGlow');
     if (glow && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      var gtx = 0, gty = 0, gcx = 0, gcy = 0, ginited = false, grunning = false;
+      var gtx = 0, gty = 0;              // 光标目标
+      var sx = 0, sy = 0;                // 弹簧位置
+      var gvx = 0, gvy = 0;              // 弹簧速度
+      var ginited = false, grunning = false;
+      var gphase = Math.random() * Math.PI * 2;
       var glowStop = function () {
         curtain.classList.remove('cursor-active');
         grunning = false;
       };
       var glowTick = function () {
         if (!grunning) return;
-        gcx += (gtx - gcx) * 0.18;
-        gcy += (gty - gcy) * 0.18;
-        glow.style.transform = 'translate3d(' + gcx + 'px,' + gcy + 'px,0)';
+        // 阻尼弹簧跟随：略微滞后且自然回稳
+        gvx = (gvx + (gtx - sx) * 0.085) * 0.82;
+        gvy = (gvy + (gty - sy) * 0.085) * 0.82;
+        sx += gvx;
+        sy += gvy;
+        // 小精灵式随机飘动 + 呼吸
+        gphase += 0.02;
+        var wx = Math.sin(gphase * 1.9) * 9 + Math.sin(gphase * 3.3 + 1.3) * 4;
+        var wy = Math.cos(gphase * 1.5) * 8 + Math.cos(gphase * 3.7 + 0.7) * 4;
+        var sc = 1 + 0.12 * Math.sin(gphase * 2.4);
+        glow.style.transform = 'translate3d(' + (sx + wx) + 'px,' + (sy + wy) + 'px,0) scale(' + sc + ')';
         requestAnimationFrame(glowTick);
       };
       window.addEventListener('mousemove', function (e) {
@@ -235,7 +247,7 @@
         var r = curtain.getBoundingClientRect();
         gtx = e.clientX - r.left;
         gty = e.clientY - r.top;
-        if (!ginited) { gcx = gtx; gcy = gty; ginited = true; }
+        if (!ginited) { sx = gtx; sy = gty; ginited = true; }
         curtain.classList.add('cursor-active');
         if (!grunning) { grunning = true; requestAnimationFrame(glowTick); }
       }, { passive: true });
