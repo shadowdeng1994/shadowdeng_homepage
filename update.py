@@ -15,6 +15,7 @@ import re
 import glob
 import html
 import shutil
+import hashlib
 import argparse
 import datetime
 
@@ -370,7 +371,15 @@ def copy_assets(info, out):
     return avatar_src
 
 
-def build_news_pages(posts, out):
+def asset_version():
+    h = hashlib.sha1()
+    for name in ('style.css', 'main.js'):
+        with open(os.path.join(STATIC, name), 'rb') as f:
+            h.update(f.read())
+    return h.hexdigest()[:10]
+
+
+def build_news_pages(posts, out, asset_v):
     newsdir = os.path.join(out, 'news')
     if os.path.isdir(newsdir):
         shutil.rmtree(newsdir)
@@ -388,6 +397,7 @@ def build_news_pages(posts, out):
             'TITLE': esc(p['title']),
             'DATE': esc(p['date']),
             'CONTENT': render_md(p['body']),
+            'ASSET_V': asset_v,
         })
         write_text(os.path.join(dest, 'index.html'), page)
 
@@ -410,6 +420,7 @@ def main():
     tagline = info.get('tagline') or ' · '.join(
         [x for x in [info.get('title'), info.get('affiliation')] if x])
     updated = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+    asset_v = asset_version()
 
     avatar_src = copy_assets(info, out)
     about_html = build_about(info, avatar_src)
@@ -425,6 +436,7 @@ def main():
         'PAPERS': build_papers(papers, 5),
         'NEWS': build_news(news, 5),
         'UPDATED_AT': esc(updated),
+        'ASSET_V': asset_v,
     })
     write_text(os.path.join(out, 'index.html'), idx)
 
@@ -433,6 +445,7 @@ def main():
                    'NAME': esc(name),
                    'PAPERS': build_papers(papers),
                    'UPDATED_AT': esc(updated),
+                   'ASSET_V': asset_v,
                }))
 
     write_text(os.path.join(out, 'news.html'),
@@ -440,9 +453,10 @@ def main():
                    'NAME': esc(name),
                    'NEWS': build_news(news),
                    'UPDATED_AT': esc(updated),
+                   'ASSET_V': asset_v,
                }))
 
-    build_news_pages(news, out)
+    build_news_pages(news, out, asset_v)
     copy_static(out)
 
     print('生成完成 -> %s' % out)
