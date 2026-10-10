@@ -266,8 +266,8 @@ def build_about(info, avatar_src):
             ext = ' target="_blank" rel="noopener"' if url.startswith('http') else ''
             label_en = l.get('label_en') or l.get('label', '')
             label_zh = l.get('label') or l.get('label_en', '')
-            parts.append('<a href="%s"%s>%s</a>'
-                         % (esc(url), ext, lang_block(esc(label_en), esc(label_zh))))
+            parts.append('<span class="link-item">%s: <a href="%s"%s>%s</a></span>'
+                         % (lang_block(esc(label_en), esc(label_zh)), esc(url), ext, esc(url)))
         links_html = '<div class="links">%s</div>' % ''.join(parts)
     bio_html = lang_block(render_md(info.get('bio_en', '')), render_md(info.get('bio', '')),
                           tag='div', cls='bio')
