@@ -20,6 +20,38 @@
     }
   }
 
+  /* ---------- 帷幕打字动画 ---------- */
+  var typedText = document.getElementById('typedText');
+  if (typedText) {
+    var phrases = ['邓善俊', '中山大学生命科学学院', '细胞谱系', '分子进化学'];
+    var TYPE_MS = 170, DELETE_MS = 90, HOLD_MS = 1800, GAP_MS = 500;
+    var phraseIdx = 0, charIdx = 0, deleting = false;
+    var typeStep = function () {
+      var cur = phrases[phraseIdx];
+      if (!deleting) {
+        charIdx++;
+        typedText.textContent = cur.slice(0, charIdx);
+        if (charIdx >= cur.length) {
+          deleting = true;
+          setTimeout(typeStep, HOLD_MS);
+        } else {
+          setTimeout(typeStep, TYPE_MS);
+        }
+      } else {
+        charIdx--;
+        typedText.textContent = cur.slice(0, charIdx);
+        if (charIdx <= 0) {
+          deleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          setTimeout(typeStep, GAP_MS);
+        } else {
+          setTimeout(typeStep, DELETE_MS);
+        }
+      }
+    };
+    setTimeout(typeStep, 600);
+  }
+
   /* ---------- 视差背景 ---------- */
   var bgFar = document.querySelector('.bg-far');
   var bgNear = document.querySelector('.bg-near');
