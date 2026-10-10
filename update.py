@@ -364,8 +364,11 @@ def copy_assets(info, out):
     if avatar:
         src = os.path.join(CONTENT, 'about', avatar)
         if os.path.exists(src):
-            shutil.copy2(src, os.path.join(assets, avatar))
-            avatar_src = 'assets/' + avatar
+            dest = os.path.join(assets, avatar)
+            shutil.copy2(src, dest)
+            with open(dest, 'rb') as f:
+                v = hashlib.sha1(f.read()).hexdigest()[:10]
+            avatar_src = 'assets/%s?v=%s' % (avatar, v)
     for f in glob.glob(os.path.join(CONTENT, 'papers', '*.pdf')):
         shutil.copy2(f, os.path.join(assets, 'papers', os.path.basename(f)))
     return avatar_src
