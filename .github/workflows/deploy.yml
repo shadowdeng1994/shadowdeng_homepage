@@ -24,8 +24,11 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Fetch citation counts
+        run: python tool/fetch_citations.py
+        continue-on-error: true
       - name: Build site
-        run: python update.py --out _site
+        run: python update.py --out _site --no-citations
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

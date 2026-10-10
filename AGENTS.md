@@ -62,6 +62,10 @@
 - 每篇 `content/papers/*.yml` 带 `doi:`；引用数由 `tool/fetch_citations.py` 按 DOI 抓取，
   写入 `citations:` 与 `citations_updated:` 字段（开放数据源：OpenAlex，失败回退 Crossref）。
 - Web of Science 需付费 API Key、Google Scholar 无 API 且禁止抓取，故不采用；数字通常低于 Google Scholar。
-- 刷新：`python tool/fetch_citations.py`（可定期手动运行）。`update.py` 构建时只读取
-  `citations` 字段显示「Cited by N / 被引 N」，不做网络请求，保证构建可离线复现。
+- 刷新：`python update.py` **默认会先抓取一次**（`--no-citations` 可跳过）；也可单独运行
+  `python tool/fetch_citations.py`。抓取结果会写回 yml，再由 `update.py` 读取显示
+  「Cited by N / 被引 N」。
+- CI 部署（`.github/workflows/deploy.yml`）：构建前先跑 `python tool/fetch_citations.py`
+  （`continue-on-error: true`，失败不影响部署），再 `python update.py --out _site --no-citations`，
+  确保线上显示的是部署当时的最新引用数（不提交回仓库）。
 - 引用数大于 0 才显示徽标。

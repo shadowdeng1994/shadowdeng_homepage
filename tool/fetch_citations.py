@@ -72,14 +72,10 @@ def set_fields(raw, n, today):
     return raw
 
 
-def main():
-    ap = argparse.ArgumentParser(description='抓取论文引用数写回 yml')
-    ap.add_argument('--source', choices=['openalex', 'crossref'], default='openalex')
-    ap.add_argument('--timeout', type=int, default=30)
-    args = ap.parse_args()
-    socket.setdefaulttimeout(args.timeout)
+def update_all(source='openalex', timeout=30, verbose=True):
+    """按 DOI 抓取所有论文引用数并写回 yml。返回 (成功数, 总数)。"""
+    socket.setdefaulttimeout(timeout)
     today = datetime.date.today().isoformat()
-
     files = sorted(f for f in os.listdir(PAPERS) if f.endswith('.yml'))
     ok = 0
     for name in files:
@@ -87,18 +83,31 @@ def main():
         raw = open(path, encoding='utf-8').read()
         m = re.search(r'^doi:\s*(\S+)', raw, re.M)
         if not m:
-            print('skip  %-20s (no doi)' % name)
+            if verbose:
+                print('skip  %-20s (no doi)' % name)
             continue
         doi = m.group(1)
         try:
-            n, src = count_for(doi, args.source)
+            n, src = count_for(doi, source)
         except Exception as e:  # noqa: BLE001
-            print('fail  %-20s %s -> %s' % (name, doi, e))
+            if verbose:
+                print('fail  %-20s %s -> %s' % (name, doi, e))
             continue
         open(path, 'w', encoding='utf-8').write(set_fields(raw, n, today))
         ok += 1
-        print('ok    %-20s cited_by=%-5d (%s)' % (name, n, src))
-    print('updated %d/%d files' % (ok, len(files)))
+        if verbose:
+            print('ok    %-20s cited_by=%-5d (%s)' % (name, n, src))
+    if verbose:
+        print('updated %d/%d files' % (ok, len(files)))
+    return ok, len(files)
+
+
+def main():
+    ap = argparse.ArgumentParser(description='抓取论文引用数写回 yml')
+    ap.add_argument('--source', choices=['openalex', 'crossref'], default='openalex')
+    ap.add_argument('--timeout', type=int, default=30)
+    args = ap.parse_args()
+    update_all(source=args.source, timeout=args.timeout, verbose=True)
 
 
 if __name__ == '__main__':

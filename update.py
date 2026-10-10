@@ -12,6 +12,7 @@
 """
 import os
 import re
+import sys
 import glob
 import html
 import shutil
@@ -492,9 +493,21 @@ def copy_static(out):
 def main():
     ap = argparse.ArgumentParser(description='生成静态个人主页')
     ap.add_argument('--out', default=ROOT, help='输出目录（默认仓库根目录）')
+    ap.add_argument('--no-citations', action='store_true',
+                    help='跳过按 DOI 抓取引用数（沿用 yml 现有值）')
     args = ap.parse_args()
     out = os.path.abspath(args.out)
     os.makedirs(out, exist_ok=True)
+
+    # 先按 DOI 抓取引用数写回 yml（失败则沿用现有值，不影响构建）
+    if not args.no_citations:
+        try:
+            sys.path.insert(0, os.path.join(ROOT, 'tool'))
+            import fetch_citations
+            print('抓取引用数（OpenAlex）...')
+            fetch_citations.update_all(verbose=True)
+        except Exception as e:  # noqa: BLE001
+            print('  [warn] 引用数抓取失败，沿用 yml 现有值: %s' % e)
 
     info = load_about()
     name_zh = info.get('name', '')
