@@ -24,7 +24,7 @@ html.lang-zh .lang-en { display: none !important; }
 /* ==================== 视差背景层 ==================== */
 .bg-far, .bg-near {
   position: fixed; inset: -10%;
-  pointer-events: none; will-change: background-position;
+  pointer-events: none; will-change: transform;
 }
 .bg-far {
   z-index: -3;
@@ -34,7 +34,6 @@ html.lang-zh .lang-en { display: none !important; }
     radial-gradient(circle at 45% 90%, rgba(74, 158, 255, 0.08) 0%, transparent 44%);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-position: 0 var(--bg-far-y, 0px);
 }
 .bg-near {
   z-index: -2;
@@ -46,17 +45,14 @@ html.lang-zh .lang-en { display: none !important; }
       rgba(29, 111, 242, 0.025) 80px,
       rgba(29, 111, 242, 0.025) 81px);
   background-size: 60px 60px, 60px 60px, auto;
-  background-position:
-    0 var(--bg-near-y, 0px),
-    0 var(--bg-near-y, 0px),
-    0 var(--bg-near-y, 0px);
 }
 
 /* ==================== 帷幕 ==================== */
 .curtain {
   height: 100vh; height: 100dvh;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; overflow: hidden;
+  overflow: hidden;
+  touch-action: none;
   background:
     linear-gradient(180deg,
       rgba(5, 10, 20, 0.95) 0%,
@@ -73,6 +69,20 @@ html.lang-zh .lang-en { display: none !important; }
   50%      { background-position: 0% 0%, 100% 50%; }
 }
 .stars { position: absolute; inset: 0; pointer-events: none; }
+.cursor-glow {
+  position: absolute; top: 0; left: 0;
+  width: 240px; height: 240px; margin: -120px 0 0 -120px;
+  border-radius: 50%; pointer-events: none; z-index: 1;
+  background: radial-gradient(circle,
+    rgba(124, 184, 255, 0.38) 0%,
+    rgba(124, 184, 255, 0.16) 32%,
+    rgba(124, 184, 255, 0.05) 55%,
+    transparent 72%);
+  filter: blur(4px);
+  opacity: 0; transition: opacity 0.35s ease;
+  will-change: transform;
+}
+.curtain.cursor-active .cursor-glow { opacity: 1; }
 .star {
   position: absolute; border-radius: 50%; background: #fff;
   animation: float linear infinite, twinkle ease-in-out infinite;
@@ -90,14 +100,14 @@ html.lang-zh .lang-en { display: none !important; }
 }
 .curtain-content {
   position: relative; z-index: 2; text-align: center; padding: 20px;
-  transition: transform 0.9s cubic-bezier(0.6, 0, 0.4, 1),
-              opacity 0.9s ease;
+  transition: transform 0.6s cubic-bezier(0.6, 0, 0.4, 1),
+              opacity 0.6s ease;
 }
 .curtain.leaving .curtain-content {
   transform: scale(0.94) translateY(-8px);
   opacity: 0.35;
 }
-.curtain.entering .curtain-content { animation: curtainReturn 0.9s ease-out; }
+.curtain.entering .curtain-content { animation: curtainReturn 0.6s ease-out; }
 @keyframes curtainReturn { 0% { opacity: 0; } 100% { opacity: 1; } }
 .curtain-name {
   font-size: 3.6rem; font-weight: 600; margin: 0 0 0.9rem;
@@ -122,29 +132,37 @@ html.lang-zh .lang-en { display: none !important; }
   letter-spacing: 0.15em; margin: 0 0 3.5rem;
   animation: fadeInUp 1.4s 0.3s both cubic-bezier(0.16, 1, 0.3, 1);
 }
-.curtain-hint {
-  color: rgba(150, 190, 240, 0.5); font-size: 0.82rem;
-  letter-spacing: 0.2em; margin: 0;
-  animation: fadeInUp 1.4s 0.9s both cubic-bezier(0.16, 1, 0.3, 1),
-             hintPulse 2.4s 2s ease-in-out infinite;
+.swipe-cue {
+  position: absolute; left: 50%; bottom: 2.2rem;
+  width: 88px; height: 96px; margin-left: -44px;
+  z-index: 3; pointer-events: none; text-align: center;
+}
+.swipe-ring {
+  position: absolute; left: 50%; bottom: 28px;
+  width: 26px; height: 26px; margin-left: -13px;
+  border-radius: 50%; border: 1.5px solid rgba(124, 184, 255, 0.75);
+  opacity: 0; animation: haloUp 2.4s ease-out infinite;
+}
+.swipe-ring:nth-child(2) { animation-delay: 0.8s; }
+.swipe-ring:nth-child(3) { animation-delay: 1.6s; }
+@keyframes haloUp {
+  0%   { transform: translateY(16px) scale(0.4); opacity: 0; }
+  25%  { opacity: 0.85; }
+  100% { transform: translateY(-42px) scale(1.3); opacity: 0; }
+}
+.swipe-label {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  font-size: 0.72rem; letter-spacing: 0.22em;
+  color: rgba(170, 205, 250, 0.8);
+  animation: hintPulse 2.4s ease-in-out infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  .curtain { cursor: pointer; }
 }
 @keyframes hintPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-.scroll-arrow {
-  position: absolute; bottom: 2.5rem; left: 50%;
-  width: 22px; height: 22px;
-  border-right: 1px solid rgba(150, 190, 240, 0.5);
-  border-bottom: 1px solid rgba(150, 190, 240, 0.5);
-  transform: translate(-50%, 0) rotate(45deg);
-  animation: arrowBounce 2s ease-in-out infinite;
-  z-index: 2;
-}
-@keyframes arrowBounce {
-  0%, 100% { transform: translate(-50%, 0) rotate(45deg); opacity: 0.4; }
-  50%      { transform: translate(-50%, 8px) rotate(45deg); opacity: 0.9; }
 }
 
 /* ==================== 吸顶导航（首页） ==================== */

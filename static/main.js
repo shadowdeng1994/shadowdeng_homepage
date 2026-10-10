@@ -135,12 +135,11 @@
   var bgFar = document.querySelector('.bg-far');
   var bgNear = document.querySelector('.bg-near');
   if (bgFar || bgNear) {
-    var root = document.documentElement;
     var bgTicking = false;
     var updateBG = function () {
       var y = window.scrollY;
-      if (bgFar) root.style.setProperty('--bg-far-y', (-y * 0.08) + 'px');
-      if (bgNear) root.style.setProperty('--bg-near-y', (-y * 0.68) + 'px');
+      if (bgFar) bgFar.style.transform = 'translate3d(0,' + (-y * 0.08) + 'px,0)';
+      if (bgNear) bgNear.style.transform = 'translate3d(0,' + (-y * 0.68) + 'px,0)';
       bgTicking = false;
     };
     window.addEventListener('scroll', function () {
@@ -150,7 +149,7 @@
   }
 
   /* ---------- 自定义缓动滚动 ---------- */
-  var SCROLL_DURATION = 3000;
+  var SCROLL_DURATION = 900;
   function smoothScrollTo(targetY, duration) {
     duration = duration || SCROLL_DURATION;
     var html = document.documentElement;
@@ -159,7 +158,9 @@
     var startY = window.scrollY;
     var diff = targetY - startY;
     var start = performance.now();
-    var ease = function (t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); };
+    var ease = function (t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
     return new Promise(function (resolve) {
       function step(now) {
         var t = Math.min((now - start) / duration, 1);
@@ -198,7 +199,50 @@
       });
     };
 
-    curtain.addEventListener('click', goHome);
+    // 桌面端鼠标点击进入（触屏忽略；点开关/链接不触发）
+    var onClickEnter = function (e) {
+      if (locked) return;
+      if (e.target && e.target.closest && e.target.closest('button, a')) return;
+      if (window.scrollY > curtainHeight() - 5) return;
+      goHome();
+    };
+    if (window.PointerEvent) {
+      curtain.addEventListener('pointerup', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        onClickEnter(e);
+      });
+    } else {
+      curtain.addEventListener('click', onClickEnter);
+    }
+
+    // 鼠标跟随光晕（仅桌面指针设备，且仅在欢迎页可见时）
+    var glow = document.getElementById('cursorGlow');
+    if (glow && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      var gtx = 0, gty = 0, gcx = 0, gcy = 0, ginited = false, grunning = false;
+      var glowStop = function () {
+        curtain.classList.remove('cursor-active');
+        grunning = false;
+      };
+      var glowTick = function () {
+        if (!grunning) return;
+        gcx += (gtx - gcx) * 0.18;
+        gcy += (gty - gcy) * 0.18;
+        glow.style.transform = 'translate3d(' + gcx + 'px,' + gcy + 'px,0)';
+        requestAnimationFrame(glowTick);
+      };
+      window.addEventListener('mousemove', function (e) {
+        if (window.scrollY >= curtainHeight() - 5) { glowStop(); return; }
+        var r = curtain.getBoundingClientRect();
+        gtx = e.clientX - r.left;
+        gty = e.clientY - r.top;
+        if (!ginited) { gcx = gtx; gcy = gty; ginited = true; }
+        curtain.classList.add('cursor-active');
+        if (!grunning) { grunning = true; requestAnimationFrame(glowTick); }
+      }, { passive: true });
+      window.addEventListener('scroll', function () {
+        if (window.scrollY >= curtainHeight() - 5) glowStop();
+      }, { passive: true });
+    }
 
     window.addEventListener('wheel', function (e) {
       if (locked) { e.preventDefault(); return; }
@@ -212,9 +256,13 @@
     curtain.addEventListener('touchstart', function (e) {
       touchStartY = e.touches[0].clientY;
     }, { passive: true });
+    curtain.addEventListener('touchmove', function (e) {
+      if (window.scrollY < curtainHeight() - 5) { e.preventDefault(); }
+    }, { passive: false });
     curtain.addEventListener('touchend', function (e) {
+      if (locked) return;
       var dy = touchStartY - e.changedTouches[0].clientY;
-      if (dy > 30) goHome();
+      if (dy > 36) goHome();
     }, { passive: true });
 
     document.addEventListener('keydown', function (e) {
