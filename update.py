@@ -63,6 +63,13 @@ def norm_ws(s):
     return ' '.join(str(s).split())
 
 
+def render_inline(s):
+    s = esc(s)
+    s = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', s)
+    s = re.sub(r'\*([^*]+)\*', r'<em>\1</em>', s)
+    return s
+
+
 def prettify_slug(slug):
     return slug.replace('-', ' ').replace('_', ' ').strip()
 
@@ -275,9 +282,9 @@ def build_research(items):
 def _paper_meta(p):
     parts = []
     if p['authors']:
-        parts.append(', '.join(str(a) for a in p['authors']))
+        parts.append(', '.join(render_inline(a) for a in p['authors']))
     if p['venue']:
-        parts.append(str(p['venue']))
+        parts.append(render_inline(p['venue']))
     if p['year']:
         parts.append(str(p['year']))
     return ' · '.join(parts)
@@ -287,14 +294,14 @@ def build_papers(papers, limit=None):
     sel = papers[:limit] if limit else papers
     out = []
     for p in sel:
-        bits = ['<li class="paper">', '  <h3>%s</h3>' % esc(p['title'])]
+        bits = ['<li class="paper">', '  <h3>%s</h3>' % render_inline(p['title'])]
         meta = _paper_meta(p)
         if meta:
-            bits.append('  <p class="meta">%s</p>' % esc(meta))
+            bits.append('  <p class="meta">%s</p>' % meta)
         if p['abstract']:
-            bits.append('  <p class="abstract">%s</p>' % esc(norm_ws(p['abstract'])))
+            bits.append('  <p class="abstract">%s</p>' % render_inline(norm_ws(p['abstract'])))
         if p['citation']:
-            bits.append('  <pre class="citation">%s</pre>' % esc(str(p['citation']).strip()))
+            bits.append('  <pre class="citation">%s</pre>' % render_inline(str(p['citation']).strip()))
         if p['has_pdf']:
             bits.append('  <a class="pdf-link" href="assets/papers/%s.pdf">📄 下载 PDF</a>' % esc(p['slug']))
         bits.append('</li>')

@@ -4,7 +4,7 @@ authors:
   - Shanlan Mao
   - Duo Xie
   - Xiangwei Zhai
-  - Shanjun Deng
+  - '**Shanjun Deng**'
   - Kantian Zhou
   - Kun Wang
   - Xueling Kang
@@ -23,13 +23,13 @@ authors:
   - Zhen He
   - Xionglei He
   - Zheng Hu
-venue: Nature
+venue: '*Nature*'
 year: 2024
 citation: |
-  Lu Z., Mao S., Xie D., Zhai X., Deng S., Zhou K., Wang K., Kang X., Zhang H.,
+  Lu Z., Mao S., Xie D., Zhai X., **Deng S.**, Zhou K., Wang K., Kang X., Zhang H.,
   Tong J., Hou L., Hu H., Li X., Zhou D., Lee L. T. O., Liu L., Zhu Y., Yu J.,
   Lan P., Wang J., He Z., He X. & Hu Z. Polyclonal-to-monoclonal transition in
-  colorectal precancerous evolution. Nature (2024).
+  colorectal precancerous evolution. *Nature* (2024).
   https://doi.org/10.1038/s41586-024-08133-1
 abstract: |
   解析癌前病变的起源与演化对于有效预防恶性转化至关重要，但现有认知仍然有限。
