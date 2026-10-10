@@ -459,6 +459,17 @@ html.theme-dark .section-emblem.logo-dark { display: block; }
 .paper .author-note { color: #6b83a3; font-size: 0.78rem; margin: 0 0 0.7rem; }
 .paper .author-mark { color: #1d6ff2; font-weight: 700; }
 .paper .abstract { color: #29405f; font-size: 0.92rem; margin: 0 0 0.8rem; line-height: 1.7; }
+.paper .cite-badge {
+  display: inline-block; margin: 0 0 0.7rem;
+  font-size: 0.76rem; font-weight: 600; letter-spacing: 0.02em;
+  color: #0b57d0; background: rgba(29, 111, 242, 0.1);
+  border: 1px solid rgba(29, 111, 242, 0.22);
+  border-radius: 1rem; padding: 0.1rem 0.6rem;
+}
+html.theme-dark .paper .cite-badge {
+  color: #9cc4ff; background: rgba(106, 168, 255, 0.14);
+  border-color: rgba(106, 168, 255, 0.3);
+}
 .pdf-link {
   color: #1d6ff2; text-decoration: none;
   font-size: 0.9rem; font-weight: 500;

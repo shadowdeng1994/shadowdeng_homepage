@@ -178,6 +178,10 @@ def load_papers():
         ppath = os.path.join(d, slug + '.pdf')
         data = load_yaml(ypath) if os.path.exists(ypath) else {}
         date = str(data.get('date') or '')
+        try:
+            citations = int(data.get('citations'))
+        except (TypeError, ValueError):
+            citations = None
         papers.append({
             'slug': slug,
             'title': data.get('title') or prettify_slug(slug),
@@ -185,6 +189,8 @@ def load_papers():
             'venue': data.get('venue') or '',
             'year': _paper_date_key(date)[0],
             'date': date,
+            'doi': data.get('doi') or '',
+            'citations': citations,
             'corresponding': data.get('corresponding') or [],
             'co_first': data.get('co_first') or [],
             'abstract': data.get('abstract') or '',
@@ -361,6 +367,9 @@ def build_papers(papers, limit=None, numbered=False):
         meta = _paper_meta(p)
         if meta:
             bits.append('  <p class="meta">%s</p>' % meta)
+        if (p.get('citations') or 0) > 0:
+            bits.append('  <span class="cite-badge">%s</span>'
+                        % lang_block('Cited by %d' % p['citations'], '被引 %d' % p['citations']))
         notes_en = []
         notes_zh = []
         if p.get('co_first'):

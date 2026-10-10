@@ -56,3 +56,12 @@
 - 静态资源引用带内容哈希版本号 `?v={{ASSET_V}}`（见 `asset_version()`），避免缓存。
 - 头像须保存为 `content/about/avatar.jpg`（或在 `info.yml` 里改 `avatar:`）。
 - CSV/摘要等临时文件属中间产物，用完即删。
+
+## 论文引用数（citations）
+
+- 每篇 `content/papers/*.yml` 带 `doi:`；引用数由 `tool/fetch_citations.py` 按 DOI 抓取，
+  写入 `citations:` 与 `citations_updated:` 字段（开放数据源：OpenAlex，失败回退 Crossref）。
+- Web of Science 需付费 API Key、Google Scholar 无 API 且禁止抓取，故不采用；数字通常低于 Google Scholar。
+- 刷新：`python tool/fetch_citations.py`（可定期手动运行）。`update.py` 构建时只读取
+  `citations` 字段显示「Cited by N / 被引 N」，不做网络请求，保证构建可离线复现。
+- 引用数大于 0 才显示徽标。
