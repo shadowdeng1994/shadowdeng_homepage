@@ -109,14 +109,15 @@
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     var phrases = phrasesByLang[currentLang()];
     var pi = 0, ci = 0, deleting = false;
-    var TYPE_MS = 170, DELETE_MS = 90, HOLD_MS = 1800, GAP_MS = 500;
+    var TYPE_MS = 90, DELETE_MS = 45, HOLD_MS = 1500, GAP_MS = 380;
+    var jitter = function (base, spread) { return base + Math.random() * spread; };
     var step = function () {
       var cur = phrases[pi];
       if (!deleting) {
         ci++;
         typedText.textContent = cur.slice(0, ci);
         if (ci >= cur.length) { deleting = true; typeTimer = setTimeout(step, HOLD_MS); }
-        else { typeTimer = setTimeout(step, TYPE_MS); }
+        else { typeTimer = setTimeout(step, jitter(TYPE_MS, 55)); }
       } else {
         ci--;
         typedText.textContent = cur.slice(0, ci);
@@ -124,10 +125,10 @@
           deleting = false;
           pi = (pi + 1) % phrases.length;
           typeTimer = setTimeout(step, GAP_MS);
-        } else { typeTimer = setTimeout(step, DELETE_MS); }
+        } else { typeTimer = setTimeout(step, jitter(DELETE_MS, 25)); }
       }
     };
-    typeTimer = setTimeout(step, 600);
+    typeTimer = setTimeout(step, 400);
   }
 
   /* ---------- 视差背景 ---------- */

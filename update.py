@@ -337,11 +337,27 @@ def _paper_meta(p):
     return ' · '.join(parts)
 
 
-def build_papers(papers, limit=None):
+SELF_NAME = 'Shanjun Deng'
+
+
+def is_lead_paper(p):
+    """本人为通讯（含共通）、一作或共一的论文。"""
+    key = _name_key(SELF_NAME)
+    corr = set(_name_key(x) for x in p.get('corresponding') or [])
+    cof = set(_name_key(x) for x in p.get('co_first') or [])
+    if key in corr or key in cof:
+        return True
+    return bool(p['authors']) and _name_key(p['authors'][0]) == key
+
+
+def build_papers(papers, limit=None, numbered=False):
     sel = papers[:limit] if limit else papers
     out = []
-    for p in sel:
-        bits = ['<li class="paper">', '  <h3>%s</h3>' % render_inline(p['title'])]
+    for i, p in enumerate(sel, 1):
+        bits = ['<li class="paper">']
+        if numbered:
+            bits.append('  <div class="item-num">%02d</div>' % i)
+        bits.append('  <h3>%s</h3>' % render_inline(p['title']))
         meta = _paper_meta(p)
         if meta:
             bits.append('  <p class="meta">%s</p>' % meta)
@@ -368,16 +384,18 @@ def build_papers(papers, limit=None):
     return '\n'.join(out)
 
 
-def build_news(posts, limit=None):
+def build_news(posts, limit=None, numbered=False):
     sel = posts[:limit] if limit else posts
     out = []
-    for p in sel:
+    for i, p in enumerate(sel, 1):
+        num = ('  <div class="item-num">%02d</div>\n' % i) if numbered else ''
         out.append(
             '<li class="news-item">\n'
+            '%s'
             '  <span class="date">%s</span>\n'
             '  <a class="title" href="news/%s/">%s</a>\n'
             '  <p class="summary">%s</p>\n'
-            '</li>' % (esc(p['date']), esc(p['stem']), esc(p['title']), esc(p['summary']))
+            '</li>' % (num, esc(p['date']), esc(p['stem']), esc(p['title']), esc(p['summary']))
         )
     return '\n'.join(out)
 
@@ -481,9 +499,11 @@ def main():
     research_html = build_research(load_research())
     papers = load_papers()
     news = load_news()
-    news_all = build_news(news)
-    news_latest = build_news(news, 5)
-    if not news:
+    lead_papers = [p for p in papers if is_lead_paper(p)]
+    if news:
+        news_all = build_news(news, numbered=True)
+        news_latest = build_news(news, 5)
+    else:
         news_all = news_latest = '<li class="news-empty">%s</li>' % lang_block(
             'No news yet — stay tuned.', '暂无新闻，敬请期待。')
 
@@ -492,7 +512,7 @@ def main():
         'NAME_ZH': esc(name_zh),
         'ABOUT': about_html,
         'RESEARCH': research_html,
-        'PAPERS': build_papers(papers, 5),
+        'PAPERS': build_papers(lead_papers, 5),
         'NEWS': news_latest,
         'UPDATED_AT': esc(updated),
         'ASSET_V': asset_v,
@@ -505,7 +525,7 @@ def main():
                fill(read_text(os.path.join(TEMPLATES, 'papers.template.html')), {
                    'NAME_EN': esc(name_en),
                    'NAME_ZH': esc(name_zh),
-                   'PAPERS': build_papers(papers),
+                   'PAPERS': build_papers(papers, numbered=True),
                    'UPDATED_AT': esc(updated),
                    'ASSET_V': asset_v,
                    'LOGO_LIGHT': logo_light,

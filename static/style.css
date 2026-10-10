@@ -474,6 +474,22 @@ html.theme-dark .section-emblem.logo-dark { display: block; }
   border-radius: 12px;
   color: #6b83a3; font-size: 0.92rem; text-align: center;
 }
+.item-num {
+  display: inline-block;
+  font-family: "SF Mono", "Consolas", monospace;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+  color: #1d6ff2;
+  background: rgba(29, 111, 242, 0.1);
+  border: 1px solid rgba(29, 111, 242, 0.2);
+  border-radius: 6px;
+  padding: 0.08rem 0.45rem;
+  margin-bottom: 0.55rem;
+}
+html.theme-dark .item-num {
+  color: #9cc4ff;
+  background: rgba(106, 168, 255, 0.14);
+  border-color: rgba(106, 168, 255, 0.3);
+}
 
 /* ---------- 联系我们 ---------- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 1.6rem; }
