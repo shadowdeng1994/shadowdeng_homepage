@@ -1,10 +1,14 @@
 name: 邓善俊
+name_en: Shanjun Deng
 title: 副教授
+title_en: Associate Professor
 affiliation: 中山大学 生命科学学院
+affiliation_en: School of Life Sciences, Sun Yat-sen University
 email: dengshj8@mail.sysu.edu.cn
 avatar: avatar.jpg
 bio: |
-  邓善俊，男，1994 年生于广东佛山，现任中山大学生命科学学院副教授、博士生导师。
+  邓善俊，男，1994 年生于广东佛山，现任中山大学生命科学学院副教授、博士生导师，
+  任职于贺雄雷教授团队（有害生物控制与资源利用国家重点实验室）。
   2015 年本科毕业于中国农业大学生物科学（理科实验班），2021 年于中山大学获
   生物化学与分子生物学博士学位，2022–2024 年在中山大学从事博士后研究。
 
@@ -21,7 +25,41 @@ bio: |
 
   近年来以第一或通讯作者在 *Nature*、*Nature Methods*、*National Science Review*
   等国际顶尖期刊发表多篇高影响力论文，并主持国家自然科学基金青年科学基金等项目。
+bio_en: |
+  Shanjun Deng (b. 1994, Foshan, Guangdong) is an Associate Professor and doctoral
+  supervisor at the School of Life Sciences, Sun Yat-sen University, working in
+  Prof. Xionglei He's group (State Key Laboratory of Biocontrol). He received his
+  B.S. in Biological Sciences from China Agricultural University in 2015 and his
+  Ph.D. in Biochemistry and Molecular Biology from Sun Yat-sen University in 2021,
+  and was a postdoctoral fellow at Sun Yat-sen University from 2022 to 2024.
+
+  His research focuses on molecular evolution and phylogenetics, using molecular
+  similarity as a clue to explore the evolutionary processes of living systems at
+  different levels, with the goal of making developmental biology more quantitative
+  and theoretical. His main research interests include:
+
+  - **Phylogenetic origins of complex traits**: combining comparative genomics and
+    phylogenetics to dissect the molecular mechanisms, cellular basis and spatial
+    distribution of complex traits (e.g., sleep, intelligence, neurological
+    disorders) within the framework of the species tree.
+  - **Cell lineage tracing and cell population dynamics**: having built
+    high-resolution lineage-tracing systems (SMALT) in yeast, fruit fly and
+    zebrafish, with plans to extend them to mammals such as mouse to map the cell
+    lineage of complex multicellular organisms.
+  - **Quantification and theorization of developmental biology**: transferring the
+    quantitative algorithms and theories of species-tree analysis to cell-lineage
+    research, establishing standardized cell-population measurements and building a
+    "digital-twin embryo" AI model.
+
+  In recent years he has published multiple high-impact papers as first or
+  corresponding author in *Nature*, *Nature Methods*, *National Science Review* and
+  other leading journals, and leads projects including a National Natural Science
+  Foundation Young Scientists Fund grant.
 research_interests:
   - 分子进化与系统发育学
   - 细胞谱系示踪
   - 发育生物学计量化
+research_interests_en:
+  - Molecular evolution & phylogenetics
+  - Cell lineage tracing
+  - Quantitative developmental biology

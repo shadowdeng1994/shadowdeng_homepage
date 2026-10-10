@@ -13,6 +13,13 @@ abstract: |
   本文将 SMALT 系统应用于斑马鱼，在受精后一天胚胎的 1 kb 条形码上平均记录 14 个替换突变，
   重建出内部节点达数百个、自举支持率中位数为 99% 的细胞谱系树，揭示再生鳍细胞主要来自
   同一部位，并证实生殖细胞库的稳定性及其与体细胞谱系的早期分离。
+abstract_en: |
+  Applying the SMALT system to zebrafish, we record a median of 14 substitution mutations
+  per 1-kb barcode in one-day post-fertilization embryos and reconstruct cell lineage trees
+  with hundreds of internal nodes (median bootstrap support 99%), showing that regenerated
+  fin cells mainly originate from the same part of the fin and confirming the stability of
+  the germ-cell pool and its early separation from somatic lineages.
+
 tags:
   - lineage tracing
   - zebrafish

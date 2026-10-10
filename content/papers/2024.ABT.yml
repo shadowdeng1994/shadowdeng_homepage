@@ -15,6 +15,12 @@ co_first:
 abstract: |
   本文定量评估了九种人体器官的体细胞克隆扩增程度，发现其因器官而异、在个体间一致，且与
   终生癌症风险并无显著相关，提示正常组织中的体细胞克隆扩增是与癌变不同的一种独立演化过程。
+abstract_en: |
+  Quantifying somatic clonal expansion across nine human organs, we find that its degree
+  varies among organs but is consistent among individuals and is not significantly
+  correlated with lifetime cancer risk, suggesting that somatic clonal expansion in normal
+  tissues is an evolutionary process distinct from carcinogenesis.
+
 tags:
   - somatic clonal expansion
   - cancer risk

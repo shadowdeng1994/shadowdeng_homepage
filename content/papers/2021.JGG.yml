@@ -14,6 +14,12 @@ co_first:
 abstract: |
   本文提出对群体结构不敏感的 i-coalescent（瞬时溯祖）方法，证明相邻上一代的溯祖概率
   与群体结构无关，并可基于取样等位的系统发育树准确重建高度结构化群体的有效群体大小动态。
+abstract_en: |
+  We propose i-coalescent analysis, a coalescent method insensitive to population structure:
+  the coalescent probability one generation back is independent of population structure, and
+  a phylogenetic tree of sampled alleles can accurately reconstruct the population-size
+  dynamics of highly structured populations.
+
 tags:
   - coalescent
   - population structure

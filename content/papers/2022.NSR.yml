@@ -14,6 +14,12 @@ abstract: |
   通过比较 SARS-CoV-2 与六种近缘冠状病毒的突变谱，发现疫情前分支的突变谱与蝙蝠宿主分支
   （如 RaTG13）近乎一致（i-score 99.9%），而与疫情后的人群分支明显不同，提示其自然宿主
   为蝙蝠，且该病毒不太可能为人工合成。
+abstract_en: |
+  By comparing the mutation spectra of SARS-CoV-2 and six related coronaviruses, we find
+  that the pre-outbreak branch is nearly identical to the bat branch RaTG13 (i-score 99.9%)
+  and clearly distinct from the post-outbreak human branch, suggesting a bat host and an
+  unlikely artificial synthesis.
+
 tags:
   - SARS-CoV-2
   - mutation signatures

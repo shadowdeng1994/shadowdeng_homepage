@@ -9,6 +9,12 @@ corresponding:
 abstract: |
   本文以物种树类比细胞树，综述了利用体细胞突变重建复杂多细胞生物发育细胞树的最新进展
   及基于细胞树的群体遗传建模，并展望生态与演化生物学同分子、细胞与发育生物学的融合。
+abstract_en: |
+  This perspective parallels species trees with cell trees, reviews recent progress in
+  reconstructing the developmental cell tree of complex multicellular organisms using
+  somatic mutations and cell-tree-based population-genetic modelling, and anticipates the
+  convergence of evolutionary biology with molecular, cellular and developmental biology.
+
 tags:
   - cell phylogeny
   - lineage tracing

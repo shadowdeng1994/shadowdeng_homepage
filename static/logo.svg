@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Cell Tree">
+  <defs>
+    <linearGradient id="ctTrunk" x1="128" y1="214" x2="128" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b57d0"/>
+      <stop offset="1" stop-color="#3f8ef7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- trunk + branches -->
+  <path d="M128 210 V150" stroke="url(#ctTrunk)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M128 150 C100 150 62 142 46 120" stroke="#5fb0ff" stroke-width="7" stroke-linecap="round"/>
+  <path d="M128 150 C112 128 96 110 86 88" stroke="#2f7ef7" stroke-width="7" stroke-linecap="round"/>
+  <path d="M128 150 V74" stroke="#22b866" stroke-width="7" stroke-linecap="round"/>
+  <path d="M128 150 C144 128 160 110 170 88" stroke="#f2ad34" stroke-width="7" stroke-linecap="round"/>
+  <path d="M128 150 C156 150 194 142 210 120" stroke="#ef5b5b" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- tip nodes -->
+  <circle cx="46" cy="116" r="13" fill="#ffffff" stroke="#5fb0ff" stroke-width="5"/>
+  <circle cx="46" cy="116" r="4.5" fill="#5fb0ff"/>
+  <circle cx="86" cy="86" r="13" fill="#ffffff" stroke="#2f7ef7" stroke-width="5"/>
+  <circle cx="86" cy="86" r="4.5" fill="#2f7ef7"/>
+  <circle cx="128" cy="74" r="13" fill="#ffffff" stroke="#22b866" stroke-width="5"/>
+  <circle cx="128" cy="74" r="4.5" fill="#22b866"/>
+  <circle cx="170" cy="86" r="13" fill="#ffffff" stroke="#f2ad34" stroke-width="5"/>
+  <circle cx="170" cy="86" r="4.5" fill="#f2ad34"/>
+  <circle cx="210" cy="116" r="13" fill="#ffffff" stroke="#ef5b5b" stroke-width="5"/>
+  <circle cx="210" cy="116" r="4.5" fill="#ef5b5b"/>
+
+  <!-- root node (zygote) -->
+  <circle cx="128" cy="226" r="16" fill="#ffffff" stroke="#0b57d0" stroke-width="6"/>
+  <circle cx="128" cy="226" r="6" fill="#0b57d0"/>
+</svg>

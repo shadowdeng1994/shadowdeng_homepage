@@ -1,6 +1,52 @@
 (function () {
   'use strict';
 
+  /* ---------- 语言切换（默认英文） ---------- */
+  var LANG_KEY = 'lang';
+  var phrasesByLang = {
+    en: ['Shanjun Deng',
+         'School of Life Sciences, Sun Yat-sen University',
+         'Cell Lineage',
+         'Molecular Evolution'],
+    zh: ['邓善俊',
+         '中山大学生命科学学院',
+         '细胞谱系',
+         '分子进化学']
+  };
+
+  function currentLang() {
+    return document.documentElement.classList.contains('lang-zh') ? 'zh' : 'en';
+  }
+
+  function applyLang(lang) {
+    var d = document.documentElement;
+    d.classList.toggle('lang-en', lang === 'en');
+    d.classList.toggle('lang-zh', lang === 'zh');
+    d.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    var t = d.getAttribute('data-title-' + lang);
+    if (t) { document.title = t; }
+    var btns = document.querySelectorAll('.lang-toggle');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].textContent = lang === 'en' ? '中文' : 'English';
+      btns[i].setAttribute('aria-label', lang === 'en' ? '切换为中文' : 'Switch to English');
+    }
+    startTyping();
+  }
+
+  function setLang(lang) {
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang(lang);
+  }
+
+  var toggles = document.querySelectorAll('.lang-toggle');
+  for (var ti = 0; ti < toggles.length; ti++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        setLang(currentLang() === 'en' ? 'zh' : 'en');
+      });
+    })(toggles[ti]);
+  }
+
   /* ---------- 星光 ---------- */
   var starsBox = document.getElementById('stars');
   if (starsBox) {
@@ -20,36 +66,34 @@
     }
   }
 
-  /* ---------- 帷幕打字动画 ---------- */
+  /* ---------- 帷幕打字动画（随语言切换） ---------- */
   var typedText = document.getElementById('typedText');
-  if (typedText) {
-    var phrases = ['邓善俊', '中山大学生命科学学院', '细胞谱系', '分子进化学'];
+  var typeTimer = null;
+
+  function startTyping() {
+    if (!typedText) { return; }
+    if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
+    var phrases = phrasesByLang[currentLang()];
+    var pi = 0, ci = 0, deleting = false;
     var TYPE_MS = 170, DELETE_MS = 90, HOLD_MS = 1800, GAP_MS = 500;
-    var phraseIdx = 0, charIdx = 0, deleting = false;
-    var typeStep = function () {
-      var cur = phrases[phraseIdx];
+    var step = function () {
+      var cur = phrases[pi];
       if (!deleting) {
-        charIdx++;
-        typedText.textContent = cur.slice(0, charIdx);
-        if (charIdx >= cur.length) {
-          deleting = true;
-          setTimeout(typeStep, HOLD_MS);
-        } else {
-          setTimeout(typeStep, TYPE_MS);
-        }
+        ci++;
+        typedText.textContent = cur.slice(0, ci);
+        if (ci >= cur.length) { deleting = true; typeTimer = setTimeout(step, HOLD_MS); }
+        else { typeTimer = setTimeout(step, TYPE_MS); }
       } else {
-        charIdx--;
-        typedText.textContent = cur.slice(0, charIdx);
-        if (charIdx <= 0) {
+        ci--;
+        typedText.textContent = cur.slice(0, ci);
+        if (ci <= 0) {
           deleting = false;
-          phraseIdx = (phraseIdx + 1) % phrases.length;
-          setTimeout(typeStep, GAP_MS);
-        } else {
-          setTimeout(typeStep, DELETE_MS);
-        }
+          pi = (pi + 1) % phrases.length;
+          typeTimer = setTimeout(step, GAP_MS);
+        } else { typeTimer = setTimeout(step, DELETE_MS); }
       }
     };
-    setTimeout(typeStep, 600);
+    typeTimer = setTimeout(step, 600);
   }
 
   /* ---------- 视差背景 ---------- */
@@ -178,7 +222,7 @@
         (function (n) {
           var dot = document.createElement('button');
           dot.className = 'dot' + (n === 0 ? ' active' : '');
-          dot.setAttribute('aria-label', '第 ' + (n + 1) + ' 个');
+          dot.setAttribute('aria-label', 'slide ' + (n + 1));
           dot.addEventListener('click', function () { goTo(n); resetAuto(); });
           dotsBox.appendChild(dot);
           dots.push(dot);
@@ -230,4 +274,7 @@
     }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
     sections.forEach(function (sec) { obs.observe(sec); });
   }
+
+  /* ---------- 初始语言 ---------- */
+  applyLang(currentLang());
 })();

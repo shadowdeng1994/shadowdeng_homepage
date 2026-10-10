@@ -17,6 +17,12 @@ abstract: |
   本文通过种群遗传学模型与演化实验，揭示四膜虫（Tetrahymena thermophila）七种交配型的
   组成动态主要取决于有性/无性细胞存活率之比与自然选择强度，实验群体中携带新发有益突变的
   交配型受强选择驱动而趋于固定。
+abstract_en: |
+  Using a population-genetics model together with an evolution experiment, we show that the
+  mating-type composition of Tetrahymena thermophila is determined mainly by the ratio of
+  sexual to asexual cell survival and the strength of natural selection, with beneficial
+  mutations driving the fixation of their carrying mating types.
+
 tags:
   - population genetics
   - ciliate

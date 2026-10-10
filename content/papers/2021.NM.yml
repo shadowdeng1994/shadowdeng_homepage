@@ -21,6 +21,12 @@ abstract: |
   本文开发了基于替换突变的谱系追踪系统 SMALT，在果蝇早期成体细胞中每个条形码平均记录约
   21 个替换突变（有效编码空间大于 10^30），由此重建了近单细胞分辨率的细胞系统发育树，
   并解析出 12 个以上器官发育过程中的细胞群体动态。
+abstract_en: |
+  We developed SMALT, a substitution mutation-aided lineage-tracing system that records on
+  average roughly 21 substitution mutations per barcode in early-adult Drosophila cells
+  (effective barcoding space > 10^30), enabling near single-cell-resolution cell phylogenies
+  and reconstruction of developmental cell population dynamics in more than 12 fly organs.
+
 tags:
   - lineage tracing
   - cell phylogeny

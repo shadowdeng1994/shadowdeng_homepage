@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" class="lang-en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{TITLE}}</title>
   <link rel="stylesheet" href="../../style.css?v={{ASSET_V}}">
+  <link rel="icon" type="image/svg+xml" href="../../logo.svg?v={{ASSET_V}}">
+  <script>(function(){try{var l=localStorage.getItem('lang');if(l!=='zh'&&l!=='en')l='en';document.documentElement.className='lang-'+l;document.documentElement.setAttribute('lang',l==='zh'?'zh-CN':'en');}catch(e){}})();</script>
   <script src="../../main.js?v={{ASSET_V}}" defer></script>
 </head>
 <body class="page-post">
@@ -14,18 +16,19 @@
 
 <header class="topbar">
   <div class="nav-inner">
-    <a class="nav-name" href="../../index.html">主页</a>
+    <a class="nav-name" href="../../index.html"><img class="nav-logo" src="../../logo.svg?v={{ASSET_V}}" alt=""><span class="lang-en">Home</span><span class="lang-zh">主页</span></a>
     <div class="nav-links">
-      <a href="../../index.html#about"    data-nav="about">简介</a>
-      <a href="../../index.html#research" data-nav="research">研究</a>
+      <a href="../../index.html#about"    data-nav="about"><span class="lang-en">About</span><span class="lang-zh">简介</span></a>
+      <a href="../../index.html#research" data-nav="research"><span class="lang-en">Research</span><span class="lang-zh">研究</span></a>
       <a href="../../index.html#papers"   data-nav="papers">Publication</a>
       <a href="../../news.html" class="active" data-nav="news">News</a>
     </div>
+    <button class="lang-toggle" type="button">中文</button>
   </div>
 </header>
 
 <main class="post">
-  <a class="post-back" href="../../news.html">← 返回 News</a>
+  <a class="post-back" href="../../news.html"><span class="lang-en">← Back to News</span><span class="lang-zh">← 返回 News</span></a>
   <article>
     <h1 class="post-title">{{TITLE}}</h1>
     <p class="post-date">{{DATE}}</p>

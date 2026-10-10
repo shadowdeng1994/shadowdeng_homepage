@@ -71,6 +71,13 @@ def render_inline(s):
     return s
 
 
+def lang_block(en_html, zh_html, tag='span', cls=''):
+    """把同一段内容的中英两版包进 .lang-en / .lang-zh，由前端按语言切换显示。"""
+    c = (' ' + cls) if cls else ''
+    return ('<%s class="lang-en%s">%s</%s><%s class="lang-zh%s">%s</%s>'
+            % (tag, c, en_html, tag, tag, c, zh_html, tag))
+
+
 def prettify_slug(slug):
     return slug.replace('-', ' ').replace('_', ' ').strip()
 
@@ -181,6 +188,7 @@ def load_papers():
             'corresponding': data.get('corresponding') or [],
             'co_first': data.get('co_first') or [],
             'abstract': data.get('abstract') or '',
+            'abstract_en': data.get('abstract_en') or '',
             'has_pdf': os.path.exists(ppath),
         })
     papers.sort(key=lambda p: (_paper_date_key(p['date']), p['slug']), reverse=True)
@@ -239,12 +247,14 @@ def load_news():
 
 # ---------------- 片段构建 ----------------
 def build_about(info, avatar_src):
-    name = info.get('name', '')
-    head = ' · '.join([x for x in [info.get('title'), info.get('affiliation')] if x])
+    name_zh = info.get('name', '')
+    name_en = info.get('name_en') or name_zh
+    head_en = ' · '.join([x for x in [info.get('title_en'), info.get('affiliation_en')] if x])
+    head_zh = ' · '.join([x for x in [info.get('title'), info.get('affiliation')] if x])
     if avatar_src:
-        avatar_html = '<img class="avatar" src="%s" alt="%s">' % (esc(avatar_src), esc(name))
+        avatar_html = '<img class="avatar" src="%s" alt="%s">' % (esc(avatar_src), esc(name_en))
     else:
-        avatar_html = '<div class="avatar">%s</div>' % esc(name[:1])
+        avatar_html = '<div class="avatar">%s</div>' % esc(name_en[:1])
     email = info.get('email', '')
     email_html = ('<p class="muted"><a href="mailto:%s">%s</a></p>' % (esc(email), esc(email))) if email else ''
     links = info.get('links') or []
@@ -254,9 +264,13 @@ def build_about(info, avatar_src):
         for l in links:
             url = str(l.get('url', ''))
             ext = ' target="_blank" rel="noopener"' if url.startswith('http') else ''
-            parts.append('<a href="%s"%s>%s</a>' % (esc(url), ext, esc(l.get('label', ''))))
+            label_en = l.get('label_en') or l.get('label', '')
+            label_zh = l.get('label') or l.get('label_en', '')
+            parts.append('<a href="%s"%s>%s</a>'
+                         % (esc(url), ext, lang_block(esc(label_en), esc(label_zh))))
         links_html = '<div class="links">%s</div>' % ''.join(parts)
-    bio_html = render_md(info.get('bio', ''))
+    bio_html = lang_block(render_md(info.get('bio_en', '')), render_md(info.get('bio', '')),
+                          tag='div', cls='bio')
     return (
         '<div class="about-header">\n'
         '  %s\n'
@@ -267,21 +281,29 @@ def build_about(info, avatar_src):
         '    %s\n'
         '  </div>\n'
         '</div>\n'
-        '<div class="bio">%s</div>'
-    ) % (avatar_html, esc(name), esc(head), email_html, links_html, bio_html)
+        '%s'
+    ) % (avatar_html, lang_block(esc(name_en), esc(name_zh)),
+         lang_block(esc(head_en), esc(head_zh)), email_html, links_html, bio_html)
 
 
 def build_research(items):
     slides = []
     for i, d in enumerate(items, 1):
-        tags = ''.join('<li>%s</li>' % esc(t) for t in (d.get('tags') or []))
+        def block(title, desc, tags):
+            tag_items = ''.join('<li>%s</li>' % esc(t) for t in (tags or []))
+            return ('<h3 class="slide-title">%s</h3>\n'
+                    '<p class="slide-desc">%s</p>\n'
+                    '<ul class="slide-tags">%s</ul>') % (esc(title), esc(norm_ws(desc)), tag_items)
+        en = block(d.get('title_en') or d.get('title', ''),
+                   d.get('description_en') or d.get('description', ''),
+                   d.get('tags_en') or d.get('tags'))
+        zh = block(d.get('title', ''), d.get('description', ''), d.get('tags'))
         slides.append(
             '<div class="slide">\n'
             '  <div class="slide-num">%02d</div>\n'
-            '  <h3 class="slide-title">%s</h3>\n'
-            '  <p class="slide-desc">%s</p>\n'
-            '  <ul class="slide-tags">%s</ul>\n'
-            '</div>' % (i, esc(d.get('title', '')), esc(norm_ws(d.get('description', ''))), tags)
+            '  <div class="lang-en">%s</div>\n'
+            '  <div class="lang-zh">%s</div>\n'
+            '</div>' % (i, en, zh)
         )
     return '\n'.join(slides)
 
@@ -323,17 +345,24 @@ def build_papers(papers, limit=None):
         meta = _paper_meta(p)
         if meta:
             bits.append('  <p class="meta">%s</p>' % meta)
-        notes = []
+        notes_en = []
+        notes_zh = []
         if p.get('co_first'):
-            notes.append('# 共同第一作者')
+            notes_en.append('# Co-first author')
+            notes_zh.append('# 共同第一作者')
         if p.get('corresponding'):
-            notes.append('* 通讯作者')
-        if notes:
-            bits.append('  <p class="author-note">%s</p>' % ' · '.join(notes))
+            notes_en.append('* Corresponding author')
+            notes_zh.append('* 通讯作者')
+        if notes_en:
+            bits.append('  <p class="author-note">%s</p>'
+                        % lang_block(esc(' · '.join(notes_en)), esc(' · '.join(notes_zh))))
+        if p.get('abstract_en'):
+            bits.append('  <p class="abstract lang-en">%s</p>' % render_inline(norm_ws(p['abstract_en'])))
         if p['abstract']:
-            bits.append('  <p class="abstract">%s</p>' % render_inline(norm_ws(p['abstract'])))
+            bits.append('  <p class="abstract lang-zh">%s</p>' % render_inline(norm_ws(p['abstract'])))
         if p['has_pdf']:
-            bits.append('  <a class="pdf-link" href="assets/papers/%s.pdf">📄 下载 PDF</a>' % esc(p['slug']))
+            bits.append('  <a class="pdf-link" href="assets/papers/%s.pdf">📄 %s</a>'
+                        % (esc(p['slug']), lang_block('Download PDF', '下载 PDF')))
         bits.append('</li>')
         out.append('\n'.join(bits))
     return '\n'.join(out)
@@ -376,7 +405,7 @@ def copy_assets(info, out):
 
 def asset_version():
     h = hashlib.sha1()
-    for name in ('style.css', 'main.js'):
+    for name in ('style.css', 'main.js', 'logo.svg'):
         with open(os.path.join(STATIC, name), 'rb') as f:
             h.update(f.read())
     return h.hexdigest()[:10]
@@ -406,8 +435,8 @@ def build_news_pages(posts, out, asset_v):
 
 
 def copy_static(out):
-    shutil.copy2(os.path.join(STATIC, 'style.css'), os.path.join(out, 'style.css'))
-    shutil.copy2(os.path.join(STATIC, 'main.js'), os.path.join(out, 'main.js'))
+    for name in ('style.css', 'main.js', 'logo.svg'):
+        shutil.copy2(os.path.join(STATIC, name), os.path.join(out, name))
     write_text(os.path.join(out, '.nojekyll'), '')
 
 
@@ -419,9 +448,8 @@ def main():
     os.makedirs(out, exist_ok=True)
 
     info = load_about()
-    name = info.get('name', '')
-    tagline = info.get('tagline') or ' · '.join(
-        [x for x in [info.get('title'), info.get('affiliation')] if x])
+    name_zh = info.get('name', '')
+    name_en = info.get('name_en') or name_zh
     updated = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
     asset_v = asset_version()
 
@@ -430,14 +458,19 @@ def main():
     research_html = build_research(load_research())
     papers = load_papers()
     news = load_news()
+    news_all = build_news(news)
+    news_latest = build_news(news, 5)
+    if not news:
+        news_all = news_latest = '<li class="news-empty">%s</li>' % lang_block(
+            'No news yet — stay tuned.', '暂无新闻，敬请期待。')
 
     idx = fill(read_text(os.path.join(TEMPLATES, 'index.template.html')), {
-        'NAME': esc(name),
-        'TAGLINE': esc(tagline),
+        'NAME_EN': esc(name_en),
+        'NAME_ZH': esc(name_zh),
         'ABOUT': about_html,
         'RESEARCH': research_html,
         'PAPERS': build_papers(papers, 5),
-        'NEWS': build_news(news, 5),
+        'NEWS': news_latest,
         'UPDATED_AT': esc(updated),
         'ASSET_V': asset_v,
     })
@@ -445,7 +478,8 @@ def main():
 
     write_text(os.path.join(out, 'papers.html'),
                fill(read_text(os.path.join(TEMPLATES, 'papers.template.html')), {
-                   'NAME': esc(name),
+                   'NAME_EN': esc(name_en),
+                   'NAME_ZH': esc(name_zh),
                    'PAPERS': build_papers(papers),
                    'UPDATED_AT': esc(updated),
                    'ASSET_V': asset_v,
@@ -453,8 +487,9 @@ def main():
 
     write_text(os.path.join(out, 'news.html'),
                fill(read_text(os.path.join(TEMPLATES, 'news.template.html')), {
-                   'NAME': esc(name),
-                   'NEWS': build_news(news),
+                   'NAME_EN': esc(name_en),
+                   'NAME_ZH': esc(name_zh),
+                   'NEWS': news_all,
                    'UPDATED_AT': esc(updated),
                    'ASSET_V': asset_v,
                }))

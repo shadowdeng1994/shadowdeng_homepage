@@ -1,11 +1,23 @@
 order: 2
 title: 细胞群体遗传学与计量化算法
+title_en: Cell Population Genetics and Quantitative Algorithms
 description: |
   借鉴群体遗传学与系统发育学的成熟理论，发展面向细胞谱系的定量分析算法，如瞬时
   溯祖（i-coalescent）与靶向溯祖分析（TarCA），用于估计细胞群体大小、祖细胞数目
   与谱系分化，推动发育生物学从经验归纳走向计量化与理论化。
+description_en: |
+  Drawing on the mature theory of population genetics and phylogenetics, we develop
+  quantitative algorithms for cell lineages—such as instantaneous coalescent
+  (i-coalescent) and targeting coalescent analysis (TarCA)—to estimate cell
+  population size, progenitor number and lineage differentiation, moving
+  developmental biology from empirical induction toward quantification and theory.
 tags:
   - 群体遗传学
   - 溯祖分析
   - 计算生物学
   - 发育计量学
+tags_en:
+  - population genetics
+  - coalescent analysis
+  - computational biology
+  - developmental metrics

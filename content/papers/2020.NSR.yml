@@ -18,6 +18,12 @@ co_first:
 abstract: |
   以酵母转录因子 HAP4 为例，发现基因敲除的大多数多效性表达效应在群体中不可遗传、在近缘
   酵母中不保守，因而在进化上与基因本身的正常功能相脱耦，为反向遗传学分析提出了新框架。
+abstract_en: |
+  Using the yeast transcription factor HAP4 as an example, we find that most of a gene's
+  pleiotropic knockout effects are non-heritable and poorly conserved across related yeasts,
+  and are therefore evolutionarily decoupled from the gene's normal function, suggesting a
+  new framework for reverse genetics.
+
 tags:
   - pleiotropy
   - gene function

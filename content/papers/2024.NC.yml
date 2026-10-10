@@ -32,6 +32,12 @@ abstract: |
   本文开发了光声断层成像结合时间编码重建（PATTERN）平台，可对啮齿类、雪貂及非人灵长类
   离体全脑进行无损、高速的三维成像，并能与其他全脑成像模态及转录组分析结合，实现个体
   水平的跨模态全脑研究。
+abstract_en: |
+  We develop PATTERN, a photoacoustic tomography platform with temporal-encoding
+  reconstruction for non-destructive, high-speed 3D imaging of ex vivo rodent, ferret and
+  non-human primate brains, which can be combined with other whole-brain imaging modalities
+  and transcriptomic analysis for individual-level cross-modal studies.
+
 tags:
   - photoacoustic tomography
   - whole-brain imaging

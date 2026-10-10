@@ -39,6 +39,13 @@ abstract: |
   本文利用碱基编辑器 DNA 条形码在小鼠肠肿瘤模型中绘制单细胞系统发育树，并在人类散发性
   结直肠息肉中加以验证，发现癌前病灶常由多个谱系多克隆奠基，并支持“多克隆向单克隆转变”
   的模型，其中单克隆病灶代表更晚期的阶段。
+abstract_en: |
+  Using base-editor DNA barcoding to build single-cell phylogenies in mouse intestinal
+  tumour models and validating them in human sporadic colorectal polyps, we find that
+  precancerous lesions are often founded polyclonally by multiple lineages and support a
+  'polyclonal-to-monoclonal transition' model in which monoclonal lesions represent a later
+  stage.
+
 tags:
   - colorectal cancer
   - lineage tracing

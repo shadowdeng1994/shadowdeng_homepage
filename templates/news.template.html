@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" class="lang-en" data-title-en="{{NAME_EN}} · News" data-title-zh="{{NAME_ZH}} · News">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{NAME}} · News</title>
+  <title>{{NAME_EN}} · News</title>
   <link rel="stylesheet" href="style.css?v={{ASSET_V}}">
+  <link rel="icon" type="image/svg+xml" href="logo.svg?v={{ASSET_V}}">
+  <script>(function(){try{var l=localStorage.getItem('lang');if(l!=='zh'&&l!=='en')l='en';var d=document.documentElement;d.className='lang-'+l;d.setAttribute('lang',l==='zh'?'zh-CN':'en');var t=d.getAttribute('data-title-'+l);if(t){document.title=t;}}catch(e){}})();</script>
   <script src="main.js?v={{ASSET_V}}" defer></script>
 </head>
 <body class="page-list">
@@ -14,25 +16,18 @@
 
 <header class="topbar">
   <div class="nav-inner">
-    <a class="nav-name" href="index.html">{{NAME}}</a>
+    <a class="nav-name" href="index.html"><img class="nav-logo" src="logo.svg?v={{ASSET_V}}" alt=""><span class="lang-en">{{NAME_EN}}</span><span class="lang-zh">{{NAME_ZH}}</span></a>
     <div class="nav-links">
-      <a href="index.html#about"    data-nav="about">简介</a>
-      <a href="index.html#research" data-nav="research">研究</a>
+      <a href="index.html#about"    data-nav="about"><span class="lang-en">About</span><span class="lang-zh">简介</span></a>
+      <a href="index.html#research" data-nav="research"><span class="lang-en">Research</span><span class="lang-zh">研究</span></a>
       <a href="index.html#papers"   data-nav="papers">Publication</a>
       <a href="index.html#news" class="active" data-nav="news">News</a>
     </div>
+    <button class="lang-toggle" type="button">中文</button>
   </div>
 </header>
 
 <main class="home">
-  <!-- 占位符 NEWS —— 全部新闻列表项（日期倒序），结构同首页：
-       <li class="news-item">
-         <span class="date">2026-03-15</span>
-         <a class="title" href="news/<slug>/">标题</a>
-         <p class="summary">正文前 120 字</p>
-       </li>
-       注意：本页位于站点根目录，详情页链接用 news/<slug>/。
-  -->
   <section class="section">
     <div class="section-header">
       <h2 class="section-title">News</h2>
@@ -44,7 +39,7 @@
   </section>
 </main>
 
-<footer>最近更新 · {{UPDATED_AT}}</footer>
+<footer><span class="lang-en">Last updated · {{UPDATED_AT}}</span><span class="lang-zh">最近更新 · {{UPDATED_AT}}</span></footer>
 
 </body>
 </html>

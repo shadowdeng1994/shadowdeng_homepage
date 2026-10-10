@@ -20,6 +20,13 @@ abstract: |
   本文结合遗传距离较远的斑马鱼品系正反交、全基因组测序与单细胞 RNA 测序，在 50,819 个
   细胞、37 种细胞类型中构建了等位基因表达图谱，鉴定出 738 个单等位表达（MAE）基因，
   揭示 MAE 在脊椎动物发育中广泛而动态，并参与组织特化与调控多样性。
+abstract_en: |
+  Using reciprocal crosses between divergent zebrafish strains, whole-genome sequencing and
+  single-cell RNA sequencing, we build a single-cell atlas of allelic expression across
+  50,819 cells and 37 cell types, identifying 738 monoallelically expressed (MAE) genes and
+  revealing that MAE is widespread and dynamic during vertebrate development and contributes
+  to tissue specialization.
+
 tags:
   - monoallelic expression
   - single-cell

@@ -1,11 +1,23 @@
 order: 3
 title: 复杂性状与神经相关性状的演化
+title_en: Evolution of Complex and Neural-related Traits
 description: |
   以物种树为框架，结合比较基因组学与系统发育学，在宏观演化尺度上解析复杂性状的
   分子机制与演化规律，重点关注睡眠、智力及神经性疾病等神经相关性状的起源、演化
   与空间分布。
+description_en: |
+  Within the framework of the species tree and by combining comparative genomics and
+  phylogenetics, we dissect the molecular mechanisms and evolutionary patterns of
+  complex traits at the macroevolutionary scale, focusing on the origin, evolution
+  and spatial distribution of neural-related traits such as sleep, intelligence and
+  neurological disorders.
 tags:
   - 分子进化
   - 系统发育学
   - 神经性状演化
   - 复杂性状
+tags_en:
+  - molecular evolution
+  - phylogenetics
+  - neural trait evolution
+  - complex traits

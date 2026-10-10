@@ -1,12 +1,25 @@
 order: 1
 title: 细胞谱系示踪与细胞群体动态
+title_en: Cell Lineage Tracing and Cell Population Dynamics
 description: |
   多细胞生物的亿万细胞皆源于一枚受精卵，其分裂与分化历程可用细胞系统发育树刻画。
   我们已在酵母、果蝇与斑马鱼中构建高分辨率的细胞谱系追踪系统（SMALT），重建近
   单细胞分辨率的细胞谱系树，并据此解析胚胎发育、器官稳态、衰老与癌症发生等过程中
   细胞群体的动态变化规律。
+description_en: |
+  All the billions of cells in a multicellular organism arise from a single zygote,
+  and their division and differentiation can be described by a cell phylogenetic
+  tree. We have built high-resolution lineage-tracing systems (SMALT) in yeast,
+  fruit fly and zebrafish, reconstructed near single-cell-resolution cell trees, and
+  used them to dissect the dynamics of cell populations during embryonic
+  development, organ homeostasis, ageing and cancer.
 tags:
   - 细胞谱系
   - 谱系示踪
   - SMALT
   - 单细胞系统发育
+tags_en:
+  - cell lineage
+  - lineage tracing
+  - SMALT
+  - single-cell phylogeny

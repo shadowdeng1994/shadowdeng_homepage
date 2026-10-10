@@ -16,6 +16,13 @@ abstract: |
   本文提出无需祖细胞特异标志物的统计方法 TarCA，通过细胞系统发育树计算同一组织内两随机
   细胞的溯祖概率来估计祖细胞数目，并在线虫、果蝇和小鼠数据中得到验证，进而识别出小鼠胚胎
   发育中的谱系特异上调基因与早期细胞命运决定。
+abstract_en: |
+  We propose TarCA, a statistical method that quantifies progenitor cells without
+  progenitor-specific markers by computing the coalescent probability of two randomly
+  sampled cells in the cell phylogenetic tree; it is validated in nematode, fruit fly and
+  mouse data and used to identify lineage-specific upregulated genes and incipient cell fate
+  commitments in mouse embryos.
+
 tags:
   - progenitor quantification
   - cell phylogeny
