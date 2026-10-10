@@ -403,15 +403,33 @@ def copy_assets(info, out):
     return avatar_src
 
 
+def logo_files():
+    bright = None
+    for n in ('logo_bright.png', 'logo.png', 'logo.jpg', 'logo.jpeg', 'logo.webp', 'logo.svg'):
+        if os.path.exists(os.path.join(STATIC, n)):
+            bright = n
+            break
+    dark = None
+    for n in ('logo_dark.png', 'logo_dark.jpg', 'logo_dark.jpeg', 'logo_dark.webp'):
+        if os.path.exists(os.path.join(STATIC, n)):
+            dark = n
+            break
+    if bright is None:
+        bright = 'logo.svg'
+    if dark is None:
+        dark = bright
+    return bright, dark
+
+
 def asset_version():
     h = hashlib.sha1()
-    for name in ('style.css', 'main.js', 'logo.svg'):
+    for name in set(['style.css', 'main.js'] + list(logo_files())):
         with open(os.path.join(STATIC, name), 'rb') as f:
             h.update(f.read())
     return h.hexdigest()[:10]
 
 
-def build_news_pages(posts, out, asset_v):
+def build_news_pages(posts, out, asset_v, logo_light, logo_dark):
     newsdir = os.path.join(out, 'news')
     if os.path.isdir(newsdir):
         shutil.rmtree(newsdir)
@@ -430,12 +448,16 @@ def build_news_pages(posts, out, asset_v):
             'DATE': esc(p['date']),
             'CONTENT': render_md(p['body']),
             'ASSET_V': asset_v,
+            'LOGO_LIGHT': logo_light,
+            'LOGO_DARK': logo_dark,
         })
         write_text(os.path.join(dest, 'index.html'), page)
 
 
 def copy_static(out):
-    for name in ('style.css', 'main.js', 'logo.svg'):
+    for name in ('style.css', 'main.js'):
+        shutil.copy2(os.path.join(STATIC, name), os.path.join(out, name))
+    for name in set(logo_files()):
         shutil.copy2(os.path.join(STATIC, name), os.path.join(out, name))
     write_text(os.path.join(out, '.nojekyll'), '')
 
@@ -452,6 +474,7 @@ def main():
     name_en = info.get('name_en') or name_zh
     updated = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
     asset_v = asset_version()
+    logo_light, logo_dark = logo_files()
 
     avatar_src = copy_assets(info, out)
     about_html = build_about(info, avatar_src)
@@ -473,6 +496,8 @@ def main():
         'NEWS': news_latest,
         'UPDATED_AT': esc(updated),
         'ASSET_V': asset_v,
+        'LOGO_LIGHT': logo_light,
+        'LOGO_DARK': logo_dark,
     })
     write_text(os.path.join(out, 'index.html'), idx)
 
@@ -483,6 +508,8 @@ def main():
                    'PAPERS': build_papers(papers),
                    'UPDATED_AT': esc(updated),
                    'ASSET_V': asset_v,
+                   'LOGO_LIGHT': logo_light,
+                   'LOGO_DARK': logo_dark,
                }))
 
     write_text(os.path.join(out, 'news.html'),
@@ -492,9 +519,11 @@ def main():
                    'NEWS': news_all,
                    'UPDATED_AT': esc(updated),
                    'ASSET_V': asset_v,
+                   'LOGO_LIGHT': logo_light,
+                   'LOGO_DARK': logo_dark,
                }))
 
-    build_news_pages(news, out, asset_v)
+    build_news_pages(news, out, asset_v, logo_light, logo_dark)
     copy_static(out)
 
     print('生成完成 -> %s' % out)

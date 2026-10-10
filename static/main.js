@@ -5,13 +5,15 @@
   var LANG_KEY = 'lang';
   var phrasesByLang = {
     en: ['Shanjun Deng',
-         'School of Life Sciences, Sun Yat-sen University',
-         'Cell Lineage',
-         'Molecular Evolution'],
+         'Sun Yat-sen University',
+         'School of Life Sciences',
+         'Molecular Evolution',
+         'Cell Lineage'],
     zh: ['邓善俊',
-         '中山大学生命科学学院',
-         '细胞谱系',
-         '分子进化学']
+         '中山大学',
+         '生命科学学院',
+         '分子进化学',
+         '细胞谱系']
   };
 
   function currentLang() {
@@ -25,10 +27,10 @@
     d.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
     var t = d.getAttribute('data-title-' + lang);
     if (t) { document.title = t; }
-    var btns = document.querySelectorAll('.lang-toggle');
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].textContent = lang === 'en' ? '中文' : 'English';
-      btns[i].setAttribute('aria-label', lang === 'en' ? '切换为中文' : 'Switch to English');
+    var sw = document.querySelectorAll('.lang-switch');
+    for (var i = 0; i < sw.length; i++) {
+      sw[i].setAttribute('aria-checked', lang === 'en' ? 'true' : 'false');
+      sw[i].setAttribute('aria-label', lang === 'en' ? 'Switch to 中文' : 'Switch to English');
     }
     startTyping();
   }
@@ -38,13 +40,43 @@
     applyLang(lang);
   }
 
-  var toggles = document.querySelectorAll('.lang-toggle');
-  for (var ti = 0; ti < toggles.length; ti++) {
+  var switches = document.querySelectorAll('.lang-switch');
+  for (var ti = 0; ti < switches.length; ti++) {
     (function (btn) {
       btn.addEventListener('click', function () {
         setLang(currentLang() === 'en' ? 'zh' : 'en');
       });
-    })(toggles[ti]);
+    })(switches[ti]);
+  }
+
+  /* ---------- 主题切换（默认浅色） ---------- */
+  function currentTheme() {
+    return document.documentElement.classList.contains('theme-dark') ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    var d = document.documentElement;
+    d.classList.toggle('theme-light', theme === 'light');
+    d.classList.toggle('theme-dark', theme === 'dark');
+    var sw = document.querySelectorAll('.theme-switch');
+    for (var i = 0; i < sw.length; i++) {
+      sw[i].setAttribute('aria-checked', theme === 'dark' ? 'true' : 'false');
+      sw[i].setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+  }
+
+  function setTheme(theme) {
+    try { localStorage.setItem('theme', theme); } catch (e) {}
+    applyTheme(theme);
+  }
+
+  var themeSwitches = document.querySelectorAll('.theme-switch');
+  for (var tsi = 0; tsi < themeSwitches.length; tsi++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      });
+    })(themeSwitches[tsi]);
   }
 
   /* ---------- 星光 ---------- */
@@ -275,6 +307,7 @@
     sections.forEach(function (sec) { obs.observe(sec); });
   }
 
-  /* ---------- 初始语言 ---------- */
+  /* ---------- 初始语言 / 主题 ---------- */
   applyLang(currentLang());
+  applyTheme(currentTheme());
 })();

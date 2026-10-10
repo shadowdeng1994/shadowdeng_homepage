@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="lang-en" data-title-en="{{NAME_EN}} · Publication" data-title-zh="{{NAME_ZH}} · Publication">
+<html lang="en" class="lang-en theme-light" data-title-en="{{NAME_EN}} · Publication" data-title-zh="{{NAME_ZH}} · 文章">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{NAME_EN}} · Publication</title>
   <link rel="stylesheet" href="style.css?v={{ASSET_V}}">
-  <link rel="icon" type="image/svg+xml" href="logo.svg?v={{ASSET_V}}">
-  <script>(function(){try{var l=localStorage.getItem('lang');if(l!=='zh'&&l!=='en')l='en';var d=document.documentElement;d.className='lang-'+l;d.setAttribute('lang',l==='zh'?'zh-CN':'en');var t=d.getAttribute('data-title-'+l);if(t){document.title=t;}}catch(e){}})();</script>
+  <link rel="icon" type="image/png" href="{{LOGO_LIGHT}}?v={{ASSET_V}}">
+  <script>(function(){try{var l=localStorage.getItem('lang');if(l!=='zh'&&l!=='en')l='en';var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t='light';var d=document.documentElement;d.className='lang-'+l+' theme-'+t;d.setAttribute('lang',l==='zh'?'zh-CN':'en');var ti=d.getAttribute('data-title-'+l);if(ti){document.title=ti;}}catch(e){}})();</script>
   <script src="main.js?v={{ASSET_V}}" defer></script>
 </head>
 <body class="page-list">
@@ -16,21 +16,24 @@
 
 <header class="topbar">
   <div class="nav-inner">
-    <a class="nav-name" href="index.html"><img class="nav-logo" src="logo.svg?v={{ASSET_V}}" alt=""><span class="lang-en">{{NAME_EN}}</span><span class="lang-zh">{{NAME_ZH}}</span></a>
+    <a class="nav-name" href="index.html"><img class="nav-logo logo-light" src="{{LOGO_LIGHT}}?v={{ASSET_V}}" alt=""><img class="nav-logo logo-dark" src="{{LOGO_DARK}}?v={{ASSET_V}}" alt=""><span class="lang-en">{{NAME_EN}}</span><span class="lang-zh">{{NAME_ZH}}</span></a>
     <div class="nav-links">
       <a href="index.html#about"    data-nav="about"><span class="lang-en">About</span><span class="lang-zh">简介</span></a>
       <a href="index.html#research" data-nav="research"><span class="lang-en">Research</span><span class="lang-zh">研究</span></a>
-      <a href="index.html#papers" class="active" data-nav="papers">Publication</a>
-      <a href="index.html#news"     data-nav="news">News</a>
+      <a href="index.html#papers" class="active" data-nav="papers"><span class="lang-en">Publication</span><span class="lang-zh">文章</span></a>
+      <a href="index.html#news"     data-nav="news"><span class="lang-en">News</span><span class="lang-zh">新闻</span></a>
     </div>
-    <button class="lang-toggle" type="button">中文</button>
+    <div class="nav-controls">
+      <button class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Toggle dark mode"><span class="ls-knob"></span><span class="ts-light">☀</span><span class="ts-dark">☾</span></button>
+      <button class="lang-switch" type="button" role="switch" aria-checked="true" aria-label="Switch language"><span class="ls-knob"></span><span class="ls-zh">中</span><span class="ls-en">En</span></button>
+    </div>
   </div>
 </header>
 
 <main class="home">
   <section class="section">
     <div class="section-header">
-      <h2 class="section-title">Publication</h2>
+      <h2 class="section-title"><span class="lang-en">Publication</span><span class="lang-zh">文章</span></h2>
       <p class="section-subtitle">ALL</p>
     </div>
     <ul class="paper-list">

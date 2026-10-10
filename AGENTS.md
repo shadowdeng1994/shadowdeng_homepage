@@ -33,6 +33,24 @@
 
 新增英语姓名：**Shanjun Deng**。
 
+## 主题（亮色 / 暗夜，默认亮色）
+
+- 由 `<html>` 上的 `class="theme-light"` / `theme-dark` 控制，切换按钮为导航里的
+  `.theme-switch`（与语言开关 `.lang-switch` 共用样式与 `.ls-knob`）。
+- `static/main.js` 的 `applyTheme`/`setTheme` 负责切换并写入 `localStorage.theme`；
+  `<head>` 内联脚本会先按存储设置，避免闪烁。
+- 暗色样式集中在 `static/style.css` 末尾的「暗夜主题」段（`html.theme-dark ...`）。
+  **新增任何区块/组件时，都要在该段补一条对应的暗色规则**，否则暗夜下会沿用亮色配色。
+
+## Logo（两套）
+
+- `static/logo_bright.png`（亮色主题用）、`static/logo_dark.png`（暗夜主题用）。
+  `update.py` 的 `logo_files()` 会自动选用（找不到则回退 `logo.png`…`logo.svg`），
+  并分别注入 `{{LOGO_LIGHT}}` / `{{LOGO_DARK}}`；模板里两套 logo 用 `.logo-light` /
+  `.logo-dark` 配合主题显隐。favicon 用亮色版。
+- 放入的原始图片请先压缩（建议 ≤256×256 PNG，几十 KB 级别），避免仓库体积过大。
+
+
 ## 其它约定
 
 - 静态资源引用带内容哈希版本号 `?v={{ASSET_V}}`（见 `asset_version()`），避免缓存。
