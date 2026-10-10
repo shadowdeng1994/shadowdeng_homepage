@@ -4,7 +4,7 @@
   /* ---------- 语言切换（默认英文） ---------- */
   var LANG_KEY = 'lang';
   var phrasesByLang = {
-    en: ['Shanjun Deng',
+    en: ['Prof. Shanjun Deng',
          'Sun Yat-sen University',
          'School of Life Sciences',
          'Molecular Evolution',
