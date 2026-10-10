@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{NAME}} · Publication</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="../main.js" defer></script>
+</head>
+<body class="page-list">
+
+<div class="bg-far"></div>
+<div class="bg-near"></div>
+
+<header class="topbar">
+  <div class="nav-inner">
+    <a class="nav-name" href="../index.html">{{NAME}}</a>
+    <div class="nav-links">
+      <a href="../index.html#about"    data-nav="about">简介</a>
+      <a href="../index.html#research" data-nav="research">研究</a>
+      <a href="../index.html#papers" class="active" data-nav="papers">Publication</a>
+      <a href="../index.html#news"     data-nav="news">News</a>
+    </div>
+  </div>
+</header>
+
+<main class="home">
+  <!-- 占位符 PAPERS —— 全部论文列表项（倒序），结构同首页：
+       <li class="paper">
+         <h3>标题</h3>
+         <p class="meta">作者 · 会议 · 年份</p>
+         <p class="abstract">摘要（可选）</p>
+         <pre class="citation">引用文本</pre>
+         <a class="pdf-link" href="assets/papers/<slug>.pdf">📄 下载 PDF</a>
+       </li>
+       注意：本页位于站点根目录，PDF 路径用 assets/papers/<slug>.pdf。
+  -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Publication</h2>
+      <p class="section-subtitle">ALL</p>
+    </div>
+    <ul class="paper-list">
+{{PAPERS}}
+    </ul>
+  </section>
+</main>
+
+<footer>最近更新 · {{UPDATED_AT}}</footer>
+
+</body>
+</html>

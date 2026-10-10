@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{NAME}} · 个人主页</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+<div class="bg-far"></div>
+<div class="bg-near"></div>
+
+<!-- 帷幕：点击 / 滚动 / 回车进入主页 -->
+<div class="curtain" id="curtain">
+  <div class="stars" id="stars"></div>
+  <div class="curtain-content">
+    <h1 class="curtain-name">{{NAME}}</h1>
+    <p class="curtain-tagline">{{TAGLINE}}</p>
+    <p class="curtain-hint">点击任意位置 · 或向下滚动</p>
+  </div>
+  <div class="scroll-arrow"></div>
+</div>
+
+<!-- 吸顶导航：滚过帷幕后出现，滚动时高亮当前区块 -->
+<nav class="sticky-nav" id="stickyNav">
+  <div class="nav-inner">
+    <a class="nav-name" id="navName">{{NAME}}</a>
+    <div class="nav-links">
+      <a href="#about"    data-nav="about">简介</a>
+      <a href="#research" data-nav="research">研究</a>
+      <a href="#papers"   data-nav="papers">Publication</a>
+      <a href="#news"     data-nav="news">News</a>
+    </div>
+  </div>
+</nav>
+
+<main class="home" id="home">
+
+  <!-- 占位符 ABOUT —— 个人简介区块内部：
+       <div class="about-header">
+         <img class="avatar" src="assets/avatar.jpg" alt="头像">
+         <div>
+           <h2>姓名</h2>
+           <p class="muted">头衔 · 单位</p>
+           <p class="muted"><a href="mailto:...">邮箱</a></p>
+           <div class="links"><a href="...">Google Scholar</a> ...</div>
+         </div>
+       </div>
+       <div class="bio">bio 渲染后的 HTML</div>
+  -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <h2 class="section-title">个人简介</h2>
+    </div>
+    {{ABOUT}}
+  </section>
+
+  <!-- 占位符 RESEARCH —— 研究轮播的若干张卡片，按 order 升序：
+       <div class="slide">
+         <div class="slide-num">01</div>
+         <h3 class="slide-title">研究方向标题</h3>
+         <p class="slide-desc">描述</p>
+         <ul class="slide-tags"><li>标签</li><li>标签</li></ul>
+       </div>
+       （slide-num 由脚本按序号补零生成；dots / 计数 / 进度条由 main.js 自动生成）
+  -->
+  <section class="section" id="research">
+    <div class="carousel-header">
+      <h2 class="section-title">研究方向</h2>
+      <div class="carousel-count">
+        <span class="current" id="curNum">01</span> / <span id="totalNum">00</span>
+      </div>
+    </div>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="track">
+{{RESEARCH}}
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <div class="dots" id="dots"></div>
+      <div class="arrows">
+        <button class="arrow" id="prev" aria-label="上一个">←</button>
+        <button class="arrow" id="next" aria-label="下一个">→</button>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+  </section>
+
+  <!-- 占位符 PAPERS —— 最新论文列表项（倒序，最多 5 条）：
+       <li class="paper">
+         <h3>标题</h3>
+         <p class="meta">作者 · 会议 · 年份</p>
+         <p class="abstract">摘要（可选）</p>
+         <pre class="citation">引用文本</pre>
+         <a class="pdf-link" href="assets/papers/<slug>.pdf">📄 下载 PDF</a>
+       </li>
+  -->
+  <section class="section" id="papers">
+    <div class="section-header">
+      <h2 class="section-title">Publication</h2>
+      <p class="section-subtitle">LATEST 5</p>
+    </div>
+    <ul class="paper-list">
+{{PAPERS}}
+    </ul>
+    <div class="section-footer">
+      <a class="more-btn" href="papers.html">查看全部论文</a>
+    </div>
+  </section>
+
+  <!-- 占位符 NEWS —— 最新新闻列表项（日期倒序，最多 5 条）：
+       <li class="news-item">
+         <span class="date">2026-03-15</span>
+         <a class="title" href="news/<slug>/">标题</a>
+         <p class="summary">正文前 120 字</p>
+       </li>
+  -->
+  <section class="section" id="news">
+    <div class="section-header">
+      <h2 class="section-title">News</h2>
+      <p class="section-subtitle">LATEST 5</p>
+    </div>
+    <ul class="news-list">
+{{NEWS}}
+    </ul>
+    <div class="section-footer">
+      <a class="more-btn" href="news.html">查看全部新闻</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>最近更新 · {{UPDATED_AT}}</footer>
+
+</body>
+</html>

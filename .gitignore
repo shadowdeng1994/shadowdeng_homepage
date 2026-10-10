@@ -1,0 +1,8 @@
+# 由 update.py 生成的产物（源文件在 content/ templates/ static/）
+/index.html
+/papers.html
+/news.html
+/news/
+/assets/
+/style.css
+/main.js

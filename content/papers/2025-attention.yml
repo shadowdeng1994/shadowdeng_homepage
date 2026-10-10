@@ -1,0 +1,19 @@
+title: Rethinking Sparse Attention for Long-Context Language Models
+authors:
+  - Mingyuan Chen
+  - Wei Li
+  - Hao Zhang
+venue: NeurIPS 2025
+year: 2025
+citation: |
+  Chen M., Li W., Zhang H. Rethinking Sparse Attention for Long-Context
+  Language Models. In Advances in Neural Information Processing Systems
+  (NeurIPS), 2025.
+abstract: |
+  本文提出一种面向长上下文语言模型的稀疏注意力机制，通过动态选择关键
+  token 将注意力计算复杂度从 O(n^2) 降至 O(n log n)，在 128K 上下文长度
+  下仍保持与全注意力相当的下游效果。
+tags:
+  - attention
+  - long-context
+  - efficiency

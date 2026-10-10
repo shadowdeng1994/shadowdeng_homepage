@@ -1,0 +1,16 @@
+title: A Survey on Large Language Models - Architectures, Training and Evaluation
+authors:
+  - Mingyuan Chen
+  - Jing Wang
+  - Wei Li
+venue: ACM Computing Surveys
+year: 2024
+citation: |
+  Chen M., Wang J., Li W. A Survey on Large Language Models: Architectures,
+  Training and Evaluation. ACM Computing Surveys, 56(4): 1-38, 2024.
+abstract: |
+  本文系统综述了大语言模型在模型架构、预训练、对齐微调与评测方面的研究
+  进展，梳理了代表性方法并讨论了未来的开放问题。
+tags:
+  - survey
+  - LLM

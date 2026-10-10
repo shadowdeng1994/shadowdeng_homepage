@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{NAME}} · News</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="../main.js" defer></script>
+</head>
+<body class="page-list">
+
+<div class="bg-far"></div>
+<div class="bg-near"></div>
+
+<header class="topbar">
+  <div class="nav-inner">
+    <a class="nav-name" href="../index.html">{{NAME}}</a>
+    <div class="nav-links">
+      <a href="../index.html#about"    data-nav="about">简介</a>
+      <a href="../index.html#research" data-nav="research">研究</a>
+      <a href="../index.html#papers"   data-nav="papers">Publication</a>
+      <a href="../index.html#news" class="active" data-nav="news">News</a>
+    </div>
+  </div>
+</header>
+
+<main class="home">
+  <!-- 占位符 NEWS —— 全部新闻列表项（日期倒序），结构同首页：
+       <li class="news-item">
+         <span class="date">2026-03-15</span>
+         <a class="title" href="news/<slug>/">标题</a>
+         <p class="summary">正文前 120 字</p>
+       </li>
+       注意：本页位于站点根目录，详情页链接用 news/<slug>/。
+  -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">News</h2>
+      <p class="section-subtitle">ALL</p>
+    </div>
+    <ul class="news-list">
+{{NEWS}}
+    </ul>
+  </section>
+</main>
+
+<footer>最近更新 · {{UPDATED_AT}}</footer>
+
+</body>
+</html>
