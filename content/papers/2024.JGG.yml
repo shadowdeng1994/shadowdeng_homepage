@@ -1,0 +1,33 @@
+title: Achieving single-cell-resolution lineage tracing in zebrafish by continuous barcoding mutations during embryogenesis
+authors:
+  - Zhan Liu
+  - Hui Zeng
+  - Huimin Xiang
+  - '**Shanjun Deng**'
+  - Xionglei He
+date: 2024-09
+venue: '*Journal of Genetics and Genomics*'
+corresponding:
+  - Xionglei He
+abstract: |
+  Unraveling the lineage relationships of all descendants from a zygote is fundamental
+  to advancing our understanding of developmental and stem cell biology. However,
+  existing cell barcoding technologies in zebrafish lack the resolution to capture the
+  majority of cell divisions during embryogenesis. A recently developed method, a
+  substitution mutation-aided lineage-tracing system (SMALT), successfully
+  reconstructed high-resolution cell phylogenetic trees for Drosophila melanogaster.
+  Here, we implement the SMALT system in zebrafish, recording a median of 14
+  substitution mutations on a one-kilobase-pair barcoding sequence for one-day
+  post-fertilization embryos. Leveraging this system, we reconstruct four cell lineage
+  trees for zebrafish fin cells, encompassing both original and regenerated fin. Each
+  tree consists of hundreds of internal nodes with a median bootstrap support of 99%.
+  Analysis of the obtained cell lineage trees reveals that regenerated fin cells mainly
+  originate from cells in the same part of the fins. Through multiple times sampling
+  germ cells from the same individual, we confirm the stability of the germ cell pool
+  and the early separation of germ cell and somatic cell progenitors. Our system offers
+  the potential for reconstructing high-quality cell phylogenies across diverse
+  tissues, providing valuable insights into development and disease in zebrafish.
+tags:
+  - lineage tracing
+  - zebrafish
+  - cell phylogeny

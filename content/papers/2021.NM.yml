@@ -1,0 +1,36 @@
+title: Mapping single-cell-resolution cell phylogeny reveals cell population dynamics during organ development
+authors:
+  - Kehui Liu
+  - '**Shanjun Deng**'
+  - Chang Ye
+  - Zeqi Yao
+  - Jianguo Wang
+  - Han Gong
+  - Li Liu
+  - Xionglei He
+date: 2021-12
+venue: '*Nature Methods*'
+corresponding:
+  - Li Liu
+  - Xionglei He
+co_first:
+  - Kehui Liu
+  - Shanjun Deng
+  - Chang Ye
+abstract: |
+  Existing cell barcoding systems record only about three mutations per barcode and
+  therefore track at most three mitotic divisions, providing limited information for
+  the cell phylogeny of a complex organism. Here we developed SMALT, a substitution
+  mutation-aided lineage-tracing system. By applying SMALT to the fruit fly
+  Drosophila melanogaster, we observed on average roughly 21 substitution mutations per
+  barcode in early-adult cells, with an effective barcoding space larger than 10^30.
+  Using the barcoding mutations, we obtained nearly single-cell-resolution cell
+  phylogenetic trees, each comprising several thousand informative (internal) nodes
+  supported by 84-93% median bootstrap values in two fly individuals. We further
+  designed a phylodynamic analysis and successfully reconstructed the developmental
+  cell population dynamics in more than 12 fly organs.
+tags:
+  - lineage tracing
+  - cell phylogeny
+  - barcoding
+  - Drosophila

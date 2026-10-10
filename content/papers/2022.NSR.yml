@@ -1,0 +1,27 @@
+title: Mutation signatures inform the natural host of SARS-CoV-2
+authors:
+  - '**Shanjun Deng**'
+  - Ke Xing
+  - Xionglei He
+date: 2022-02-23
+venue: '*National Science Review*'
+corresponding:
+  - Xionglei He
+co_first:
+  - Shanjun Deng
+  - Ke Xing
+abstract: |
+  The origin of SARS-CoV-2 has been a mystery since the beginning of the outbreak.
+  Because the viral mutation spectrum is expected to be heavily shaped by host
+  factors, we inferred the substitution mutations accumulated on the evolutionary
+  branches of SARS-CoV-2 and six related coronaviruses and compared their mutation
+  spectra. The mutation spectrum of the pre-outbreak branch of SARS-CoV-2 is nearly
+  identical to that of the bat branch RaTG13 after its split from SARS-CoV-2
+  (i-score 99.9%) and in general highly similar to the branches with bats as the
+  putative hosts, while clearly distinct from the post-outbreak human branch. These
+  results suggest that SARS-CoV-2 was not artificially synthesized and inform the
+  natural host of SARS-CoV-2.
+tags:
+  - SARS-CoV-2
+  - mutation signatures
+  - viral evolution

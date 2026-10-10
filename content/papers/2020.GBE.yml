@@ -1,0 +1,39 @@
+title: Drivers of Mating Type Composition in *Tetrahymena thermophila*
+authors:
+  - Guangying Wang
+  - Kai Chen
+  - Jing Zhang
+  - '**Shanjun Deng**'
+  - Jie Xiong
+  - Xionglei He
+  - Yunxin Fu
+  - Wei Miao
+date: 2020-12-06
+venue: '*Genome Biology and Evolution*'
+corresponding:
+  - Yunxin Fu
+  - Wei Miao
+abstract: |
+  Sex offers advantages even in primarily asexual species. Some ciliates appear to
+  utilize such reproductive strategy with many mating types. However, the factors
+  determining the composition of mating types in the unicellular ciliate Tetrahymena
+  thermophila are poorly understood, and this is further complicated by non-Mendelian
+  determination of mating type in the offspring. We therefore developed a novel
+  population genetics model to predict how various factors influence the dynamics of
+  mating type composition, including natural selection. The model predicted either the
+  coexistence of all seven mating types or fixation of a single mating type in a
+  population, depending on parameter combinations, irrespective of natural selection.
+  To understand what factor(s) may be more influential and to test the validity of
+  theoretical prediction, five replicate populations were maintained in laboratory such
+  that several factors could be controlled or measured. Whole-genome sequencing was
+  used to identify newly arising mutations and determine mating type composition.
+  Strikingly, all populations were found to be driven by strong selection on newly
+  arising beneficial mutations to fixation of their carrying mating types, and the
+  trajectories of speed to fixation agreed well with our theoretical predictions. This
+  study illustrates the evolutionary strategies that T. thermophila can utilize to
+  optimize population fitness.
+tags:
+  - population genetics
+  - ciliate
+  - mating type
+  - experimental evolution

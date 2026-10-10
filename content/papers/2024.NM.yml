@@ -1,0 +1,35 @@
+title: A statistical method for quantifying progenitor cells reveals incipient cell fate commitments
+authors:
+  - '**Shanjun Deng**'
+  - Han Gong
+  - Di Zhang
+  - Mengdong Zhang
+  - Xionglei He
+date: 2024-04
+venue: '*Nature Methods*'
+corresponding:
+  - Xionglei He
+co_first:
+  - Shanjun Deng
+  - Han Gong
+abstract: |
+  Quantifying the number of progenitor cells that found an organ, tissue or cell
+  population is of fundamental importance for understanding the development and
+  homeostasis of a multicellular organism. Previous efforts rely on marker genes that
+  are specifically expressed in progenitors. This strategy is, however, often hindered
+  by the lack of ideal markers. Here we propose a general statistical method to
+  quantify the progenitors of any tissues or cell populations in an organism, even in
+  the absence of progenitor-specific markers, by exploring the cell phylogenetic tree
+  that records the cell division history during development. The method, termed
+  targeting coalescent analysis (TarCA), computes the probability that two randomly
+  sampled cells of a tissue coalesce within the tissue-specific monophyletic clades.
+  The inverse of this probability then serves as a measure of the progenitor number of
+  the tissue. Both mathematic modeling and computer simulations demonstrated the high
+  accuracy of TarCA, which was then validated using real data from nematode, fruit fly
+  and mouse, all with related cell phylogenetic trees. We further showed that TarCA
+  can be used to identify lineage-specific upregulated genes during embryogenesis,
+  revealing incipient cell fate commitments in mouse embryos.
+tags:
+  - progenitor quantification
+  - cell phylogeny
+  - coalescent analysis

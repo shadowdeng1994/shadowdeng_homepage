@@ -1,0 +1,43 @@
+title: A comprehensive single-cell atlas of monoallelic expression across various tissues in zebrafish
+authors:
+  - Hui Zeng
+  - Zhan Liu
+  - Huimin Xiang
+  - Boliang Liu
+  - Di Zhang
+  - Xionglei He
+  - '**Shanjun Deng**'
+  - Li Liu
+date: 2026-05-28
+venue: '*Genome Research*'
+corresponding:
+  - Li Liu
+  - Shanjun Deng
+co_first:
+  - Hui Zeng
+  - Zhan Liu
+abstract: |
+  Monoallelic expression (MAE), the preferential transcription of one allele in diploid
+  organisms, plays a crucial role in generating cellular heterogeneity and phenotypic
+  diversity. Although MAE has been extensively characterized in humans and mice,
+  previous studies have been limited by clonal analyses or insufficient cell-type
+  resolution, leaving its dynamics during development largely unexplored. In this
+  study, we present a comprehensive single-cell atlas of allelic expression in
+  zebrafish, leveraging reciprocal crosses between divergent strains, whole-genome
+  sequencing, and single-cell RNA sequencing at two developmental stages. Using
+  maximum likelihood estimation, we profile allele-specific expression patterns across
+  50,819 cells and 37 distinct cell types, identifying 738 genes (16.5% of evaluable
+  genes) with MAE. MAE SNVs exhibit chromosomal clustering and regional enrichment,
+  and MAE genes show functional specialization, being enriched in chromatin remodeling
+  and hematopoietic processes. Notably, MAE genes are more likely to be tissue-specific
+  markers, particularly in the epidermis, periderm, and erythrocytes. Tissue context
+  further shapes allele choice, with distinct allelic biases observed in specific cell
+  types. Together, our findings provide a comprehensive single-cell atlas of allelic
+  expression in zebrafish, revealing the widespread and dynamic nature of MAE during
+  vertebrate development and its contribution to tissue specialization and regulatory
+  diversity.
+tags:
+  - monoallelic expression
+  - single-cell
+  - zebrafish
+  - allele-specific expression

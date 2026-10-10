@@ -1,0 +1,39 @@
+title: Decoupling gene functions from knockout effects by evolutionary analyses
+authors:
+  - Li Liu
+  - Mengdi Liu
+  - Di Zhang
+  - '**Shanjun Deng**'
+  - Piaopiao Chen
+  - Jing Yang
+  - Yunhan Xie
+  - Xionglei He
+date: 2020-07-01
+venue: '*National Science Review*'
+corresponding:
+  - Xionglei He
+co_first:
+  - Li Liu
+  - Mengdi Liu
+abstract: |
+  Genic functions have long been confounded by pleiotropic mutational effects. To
+  understand such genetic effects, we examine HAP4, a well-studied transcription factor
+  in Saccharomyces cerevisiae that functions by forming a tetramer with HAP2, HAP3 and
+  HAP5. Deletion of HAP4 results in highly pleiotropic gene expression responses, some
+  of which are clustered in related cellular processes (clustered effects) while most
+  are distributed randomly across diverse cellular processes (distributed effects).
+  Strikingly, the distributed effects that account for much of HAP4 pleiotropy tend to
+  be non-heritable in a population, suggesting they have few evolutionary consequences.
+  Indeed, these effects are poorly conserved in closely related yeasts. We further show
+  substantial overlaps of clustered effects, but not distributed effects, among the four
+  genes encoding the HAP2/3/4/5 tetramer. This pattern holds for other biochemically
+  characterized yeast protein complexes or metabolic pathways. Examination of a set of
+  cell morphological traits of the deletion lines yields consistent results. Hence, only
+  some deletion effects of a gene support related biochemical understandings with the
+  rest being often pleiotropic and evolutionarily decoupled from the gene's normal
+  functions. This study suggests a new framework for reverse genetic analysis.
+tags:
+  - pleiotropy
+  - gene function
+  - reverse genetics
+  - yeast

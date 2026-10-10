@@ -1,7 +1,7 @@
 title: Polyclonal-to-monoclonal transition in colorectal precancerous evolution
 authors:
   - Zhaolian Lu
-  - Shanlan Mao
+  - Shanlan Mo
   - Duo Xie
   - Xiangwei Zhai
   - '**Shanjun Deng**'
@@ -23,14 +23,18 @@ authors:
   - Zhen He
   - Xionglei He
   - Zheng Hu
+date: 2024-12-05
 venue: '*Nature*'
-year: 2024
-citation: |
-  Lu Z., Mao S., Xie D., Zhai X., **Deng S.**, Zhou K., Wang K., Kang X., Zhang H.,
-  Tong J., Hou L., Hu H., Li X., Zhou D., Lee L. T. O., Liu L., Zhu Y., Yu J.,
-  Lan P., Wang J., He Z., He X. & Hu Z. Polyclonal-to-monoclonal transition in
-  colorectal precancerous evolution. *Nature* (2024).
-  https://doi.org/10.1038/s41586-024-08133-1
+corresponding:
+  - Zhen He
+  - Xionglei He
+  - Zheng Hu
+co_first:
+  - Zhaolian Lu
+  - Shanlan Mo
+  - Duo Xie
+  - Xiangwei Zhai
+  - Shanjun Deng
 abstract: |
   解析癌前病变的起源与演化对于有效预防恶性转化至关重要，但现有认知仍然有限。
   本研究利用基于碱基编辑器的 DNA 条形码系统，在炎症或 Apc 基因缺失诱导的小鼠

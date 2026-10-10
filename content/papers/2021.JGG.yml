@@ -1,0 +1,34 @@
+title: An instantaneous coalescent method insensitive to population structure
+authors:
+  - Zeqi Yao
+  - Kehui Liu
+  - '**Shanjun Deng**'
+  - Xionglei He
+date: 2021-03
+venue: '*Journal of Genetics and Genomics*'
+corresponding:
+  - Xionglei He
+co_first:
+  - Zeqi Yao
+  - Kehui Liu
+abstract: |
+  Conventional coalescent inferences of population history make the critical assumption
+  that the population under examination is panmictic. However, most populations are
+  structured. This complicates the prevailing coalescent analyses and sometimes leads to
+  inaccurate estimates. To develop a coalescent method unhampered by population
+  structure, we perform two analyses. First, we demonstrate that the coalescent
+  probability of two randomly sampled alleles from the immediate preceding generation
+  (one generation back) is independent of population structure. Second, motivated by
+  this finding, we propose a new coalescent method: i-coalescent analysis. The
+  i-coalescent analysis computes the instantaneous coalescent rate by using a
+  phylogenetic tree of sampled alleles. Using simulated data, we broadly demonstrate
+  the capability of i-coalescent analysis to accurately reconstruct population size
+  dynamics of highly structured populations, although we find this method often requires
+  larger sample sizes for structured populations than for panmictic populations.
+  Overall, our results indicate i-coalescent analysis to be a useful tool, especially
+  for the inference of population histories with intractable structure such as the
+  developmental history of cell populations in the organs of complex organisms.
+tags:
+  - coalescent
+  - population structure
+  - demographic inference

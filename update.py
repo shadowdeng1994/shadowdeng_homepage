@@ -152,6 +152,13 @@ def load_research():
     return [d for _, _, d in items]
 
 
+def _paper_date_key(s):
+    m = re.match(r'(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?', str(s or ''))
+    if not m:
+        return (0, 0, 0)
+    return (int(m.group(1)), int(m.group(2) or 0), int(m.group(3) or 0))
+
+
 def load_papers():
     d = os.path.join(CONTENT, 'papers')
     slugs = set()
@@ -162,21 +169,20 @@ def load_papers():
         ypath = os.path.join(d, slug + '.yml')
         ppath = os.path.join(d, slug + '.pdf')
         data = load_yaml(ypath) if os.path.exists(ypath) else {}
-        try:
-            year = int(data.get('year'))
-        except (TypeError, ValueError):
-            year = 0
+        date = str(data.get('date') or '')
         papers.append({
             'slug': slug,
             'title': data.get('title') or prettify_slug(slug),
             'authors': data.get('authors') or [],
             'venue': data.get('venue') or '',
-            'year': year,
-            'citation': data.get('citation') or '',
+            'year': _paper_date_key(date)[0],
+            'date': date,
+            'corresponding': data.get('corresponding') or [],
+            'co_first': data.get('co_first') or [],
             'abstract': data.get('abstract') or '',
             'has_pdf': os.path.exists(ppath),
         })
-    papers.sort(key=lambda p: (p['year'], p['slug']), reverse=True)
+    papers.sort(key=lambda p: (_paper_date_key(p['date']), p['slug']), reverse=True)
     return papers
 
 
@@ -279,10 +285,28 @@ def build_research(items):
     return '\n'.join(slides)
 
 
+def _name_key(s):
+    return re.sub(r'[^a-z]', '', str(s).lower())
+
+
 def _paper_meta(p):
+    corr = set(_name_key(x) for x in p.get('corresponding') or [])
+    cof = set(_name_key(x) for x in p.get('co_first') or [])
+
+    def disp(a):
+        marks = ''
+        if _name_key(a) in cof:
+            marks += '#'
+        if _name_key(a) in corr:
+            marks += '*'
+        out = render_inline(a)
+        if marks:
+            out += '<sup class="author-mark">%s</sup>' % marks
+        return out
+
     parts = []
     if p['authors']:
-        parts.append(', '.join(render_inline(a) for a in p['authors']))
+        parts.append(', '.join(disp(a) for a in p['authors']))
     if p['venue']:
         parts.append(render_inline(p['venue']))
     if p['year']:
@@ -298,10 +322,15 @@ def build_papers(papers, limit=None):
         meta = _paper_meta(p)
         if meta:
             bits.append('  <p class="meta">%s</p>' % meta)
+        notes = []
+        if p.get('co_first'):
+            notes.append('# 共同第一作者')
+        if p.get('corresponding'):
+            notes.append('* 通讯作者')
+        if notes:
+            bits.append('  <p class="author-note">%s</p>' % ' · '.join(notes))
         if p['abstract']:
             bits.append('  <p class="abstract">%s</p>' % render_inline(norm_ws(p['abstract'])))
-        if p['citation']:
-            bits.append('  <pre class="citation">%s</pre>' % render_inline(str(p['citation']).strip()))
         if p['has_pdf']:
             bits.append('  <a class="pdf-link" href="assets/papers/%s.pdf">📄 下载 PDF</a>' % esc(p['slug']))
         bits.append('</li>')

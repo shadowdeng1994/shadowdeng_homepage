@@ -1,0 +1,24 @@
+title: 'Tree of life at two levels: from species to cell'
+authors:
+  - '**Shanjun Deng**'
+  - Xionglei He
+date: 2023-11
+venue: '*Science Bulletin*'
+corresponding:
+  - Xionglei He
+abstract: |
+  All species on Earth can trace their origins back to a common ancestor, and their
+  evolutionary history can be illustrated as a species tree. Similarly, all cells in
+  a multicellular organism develop from a zygote, and their developmental lineage can
+  also be depicted as a phylogenetic tree in which the bifurcations signify mitotic
+  cell divisions. While the species tree has long been fundamental to Ecology and
+  Evolutionary Biology (EEB), the study of cell trees is still in its early stages.
+  This perspective discusses recent progress in reconstructing the developmental cell
+  tree of complex multicellular organisms with somatic mutations, and cell
+  tree-based population genetic modeling for comprehending organ development,
+  highlighting the anticipated convergence between EEB and Molecular, Cellular, and
+  Developmental Biology (MCDB).
+tags:
+  - cell phylogeny
+  - lineage tracing
+  - perspective
