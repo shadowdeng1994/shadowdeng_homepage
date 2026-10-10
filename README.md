@@ -138,17 +138,21 @@ python update.py
 
 运行后在仓库根目录生成 `index.html`、`papers.html`、`news.html`、`news/`、`assets/`、`style.css`、`main.js`。
 
+> 若本地未安装 `markdown`，脚本会自动回退到内置的极简渲染器（仅供本地预览）；
+> CI 中会安装真正的 `markdown` 包。用 `python update.py --out _site` 可输出到指定目录。
+
 ## 部署到 GitHub Pages
 
-1. 将本仓库推送到 GitHub。
-2. 在本地运行 `python update.py` 生成产物（或配置 CI 自动生成）。
-3. 在仓库 **Settings → Pages** 中选择部署来源：
-   - **Deploy from a branch**：选择包含产物的分支与根目录 `/ (root)`；
-     由于产物被 `.gitignore` 忽略，推荐用 GitHub Actions 在推送时生成并部署，
-     或将产物提交到 `gh-pages` 分支。
-   - **GitHub Actions**：使用 `actions/configure-pages` + `actions/upload-pages-artifact`
-     上传生成后的站点目录。
-4. 访问 `https://<用户名>.github.io/<仓库名>/` 即可。
+本仓库已内置 GitHub Actions 工作流 `.github/workflows/deploy.yml`：
+推送到 `main` 分支即会自动安装依赖、运行 `update.py --out _site` 并部署到 Pages。
+
+1. 将本仓库推送到 GitHub（建议仓库名使用 ASCII，如 `shadowdeng_homepage`）。
+2. 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。
+3. 推送后在 **Actions** 标签页查看构建；完成后访问
+   `https://<用户名>.github.io/<仓库名>/`。
+
+> 也可本地 `python update.py` 生成后用 **Deploy from a branch** 部署产物；
+> 但产物已被 `.gitignore` 忽略，推荐直接使用上面的 Actions 流程。
 
 > 提示：若站点部署在子路径下，生成脚本中的资源链接需使用相对路径，
 > 或在配置中设置站点 base path。
