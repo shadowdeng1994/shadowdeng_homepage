@@ -514,7 +514,7 @@ html.theme-dark .item-num {
 }
 
 /* ---------- 联系我们 ---------- */
-.contact-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 1.6rem; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 1.6rem; align-items: start; }
 .contact-list { list-style: none; margin: 0; padding: 0; }
 .contact-list li { margin: 0 0 1.05rem; }
 .contact-list li:last-child { margin-bottom: 0; }
@@ -527,13 +527,14 @@ a.contact-value { color: #1d6ff2; transition: color 0.2s; }
 a.contact-value:hover { color: #0b57d0; }
 .contact-map-col { display: flex; flex-direction: column; }
 .contact-map {
-  position: relative; border-radius: 12px; overflow: hidden; flex: 1;
+  position: relative; width: 100%; height: 340px;
+  border-radius: 12px; overflow: hidden;
   border: 1px solid rgba(29, 111, 242, 0.14);
   box-shadow: 0 8px 22px rgba(19, 58, 120, 0.08);
-  min-height: 300px;
 }
-.contact-map iframe { width: 100%; height: 100%; min-height: 300px; border: 0; display: block; }
-.map-link { margin-top: 0.6rem; font-size: 0.82rem; color: #1d6ff2; }
+.contact-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.map-links { margin: 0.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+.map-link { font-size: 0.82rem; color: #1d6ff2; }
 .map-link:hover { color: #0b57d0; }
 
 /* ---------- 区块底部按钮 ---------- */
@@ -640,7 +641,7 @@ footer {
   .avatar { width: 96px; height: 96px; font-size: 2rem; }
   .about-header h2 { font-size: 1.35rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-  .contact-map, .contact-map iframe { min-height: 240px; }
+  .contact-map { height: 260px; }
   .post { padding: 32px 18px 80px; }
   .post-title { font-size: 1.45rem; }
 }
