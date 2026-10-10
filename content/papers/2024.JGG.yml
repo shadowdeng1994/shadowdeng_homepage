@@ -10,23 +10,9 @@ venue: '*Journal of Genetics and Genomics*'
 corresponding:
   - Xionglei He
 abstract: |
-  Unraveling the lineage relationships of all descendants from a zygote is fundamental
-  to advancing our understanding of developmental and stem cell biology. However,
-  existing cell barcoding technologies in zebrafish lack the resolution to capture the
-  majority of cell divisions during embryogenesis. A recently developed method, a
-  substitution mutation-aided lineage-tracing system (SMALT), successfully
-  reconstructed high-resolution cell phylogenetic trees for Drosophila melanogaster.
-  Here, we implement the SMALT system in zebrafish, recording a median of 14
-  substitution mutations on a one-kilobase-pair barcoding sequence for one-day
-  post-fertilization embryos. Leveraging this system, we reconstruct four cell lineage
-  trees for zebrafish fin cells, encompassing both original and regenerated fin. Each
-  tree consists of hundreds of internal nodes with a median bootstrap support of 99%.
-  Analysis of the obtained cell lineage trees reveals that regenerated fin cells mainly
-  originate from cells in the same part of the fins. Through multiple times sampling
-  germ cells from the same individual, we confirm the stability of the germ cell pool
-  and the early separation of germ cell and somatic cell progenitors. Our system offers
-  the potential for reconstructing high-quality cell phylogenies across diverse
-  tissues, providing valuable insights into development and disease in zebrafish.
+  本文将 SMALT 系统应用于斑马鱼，在受精后一天胚胎的 1 kb 条形码上平均记录 14 个替换突变，
+  重建出内部节点达数百个、自举支持率中位数为 99% 的细胞谱系树，揭示再生鳍细胞主要来自
+  同一部位，并证实生殖细胞库的稳定性及其与体细胞谱系的早期分离。
 tags:
   - lineage tracing
   - zebrafish

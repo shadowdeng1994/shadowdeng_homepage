@@ -12,22 +12,8 @@ co_first:
   - Zeqi Yao
   - Kehui Liu
 abstract: |
-  Conventional coalescent inferences of population history make the critical assumption
-  that the population under examination is panmictic. However, most populations are
-  structured. This complicates the prevailing coalescent analyses and sometimes leads to
-  inaccurate estimates. To develop a coalescent method unhampered by population
-  structure, we perform two analyses. First, we demonstrate that the coalescent
-  probability of two randomly sampled alleles from the immediate preceding generation
-  (one generation back) is independent of population structure. Second, motivated by
-  this finding, we propose a new coalescent method: i-coalescent analysis. The
-  i-coalescent analysis computes the instantaneous coalescent rate by using a
-  phylogenetic tree of sampled alleles. Using simulated data, we broadly demonstrate
-  the capability of i-coalescent analysis to accurately reconstruct population size
-  dynamics of highly structured populations, although we find this method often requires
-  larger sample sizes for structured populations than for panmictic populations.
-  Overall, our results indicate i-coalescent analysis to be a useful tool, especially
-  for the inference of population histories with intractable structure such as the
-  developmental history of cell populations in the organs of complex organisms.
+  本文提出对群体结构不敏感的 i-coalescent（瞬时溯祖）方法，证明相邻上一代的溯祖概率
+  与群体结构无关，并可基于取样等位的系统发育树准确重建高度结构化群体的有效群体大小动态。
 tags:
   - coalescent
   - population structure

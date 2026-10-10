@@ -17,25 +17,9 @@ co_first:
   - Hui Zeng
   - Zhan Liu
 abstract: |
-  Monoallelic expression (MAE), the preferential transcription of one allele in diploid
-  organisms, plays a crucial role in generating cellular heterogeneity and phenotypic
-  diversity. Although MAE has been extensively characterized in humans and mice,
-  previous studies have been limited by clonal analyses or insufficient cell-type
-  resolution, leaving its dynamics during development largely unexplored. In this
-  study, we present a comprehensive single-cell atlas of allelic expression in
-  zebrafish, leveraging reciprocal crosses between divergent strains, whole-genome
-  sequencing, and single-cell RNA sequencing at two developmental stages. Using
-  maximum likelihood estimation, we profile allele-specific expression patterns across
-  50,819 cells and 37 distinct cell types, identifying 738 genes (16.5% of evaluable
-  genes) with MAE. MAE SNVs exhibit chromosomal clustering and regional enrichment,
-  and MAE genes show functional specialization, being enriched in chromatin remodeling
-  and hematopoietic processes. Notably, MAE genes are more likely to be tissue-specific
-  markers, particularly in the epidermis, periderm, and erythrocytes. Tissue context
-  further shapes allele choice, with distinct allelic biases observed in specific cell
-  types. Together, our findings provide a comprehensive single-cell atlas of allelic
-  expression in zebrafish, revealing the widespread and dynamic nature of MAE during
-  vertebrate development and its contribution to tissue specialization and regulatory
-  diversity.
+  本文结合遗传距离较远的斑马鱼品系正反交、全基因组测序与单细胞 RNA 测序，在 50,819 个
+  细胞、37 种细胞类型中构建了等位基因表达图谱，鉴定出 738 个单等位表达（MAE）基因，
+  揭示 MAE 在脊椎动物发育中广泛而动态，并参与组织特化与调控多样性。
 tags:
   - monoallelic expression
   - single-cell

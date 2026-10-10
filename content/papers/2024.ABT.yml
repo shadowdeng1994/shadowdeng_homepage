@@ -13,23 +13,8 @@ co_first:
   - Di Zhang
   - Ao Zhang
 abstract: |
-  Somatic clonal expansion refers to the proliferation and expansion of a cell clone
-  within a multicellular organism. Since cancer also results from the uncontrolled
-  proliferation of few cell clones, it is generally believed that aging-associated
-  somatic clonal expansion observed in normal tissues represents a precancerous
-  condition. For instance, hematological malignancy is often preceded by clonal
-  hematopoiesis. However, the precise connection between cancer and somatic clonal
-  expansion remains elusive in solid organs. In this study, we utilized a
-  straightforward method to assess the relative quantitative degrees of clonal
-  expansion in nine human organs. Our findings reveal that the degree of clonal
-  expansion varies across different organs while remaining consistent among different
-  individuals. Contrary to the general belief, we did not identify any significant
-  correlation between lifetime cancer risk and the degree of lifetime somatic clonal
-  expansion. For example, the lifetime risk of colorectal cancer is approximately 20
-  times higher than that of esophageal cancer, yet the former exhibited the lower
-  degree of clonal expansion than the latter. Our results suggest that somatic clonal
-  expansion represents an evolutionary process distinct from carcinogenesis in normal
-  tissues, providing novel perspectives on precancerous conditions.
+  本文定量评估了九种人体器官的体细胞克隆扩增程度，发现其因器官而异、在个体间一致，且与
+  终生癌症风险并无显著相关，提示正常组织中的体细胞克隆扩增是与癌变不同的一种独立演化过程。
 tags:
   - somatic clonal expansion
   - cancer risk

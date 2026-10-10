@@ -18,17 +18,9 @@ co_first:
   - Shanjun Deng
   - Chang Ye
 abstract: |
-  Existing cell barcoding systems record only about three mutations per barcode and
-  therefore track at most three mitotic divisions, providing limited information for
-  the cell phylogeny of a complex organism. Here we developed SMALT, a substitution
-  mutation-aided lineage-tracing system. By applying SMALT to the fruit fly
-  Drosophila melanogaster, we observed on average roughly 21 substitution mutations per
-  barcode in early-adult cells, with an effective barcoding space larger than 10^30.
-  Using the barcoding mutations, we obtained nearly single-cell-resolution cell
-  phylogenetic trees, each comprising several thousand informative (internal) nodes
-  supported by 84-93% median bootstrap values in two fly individuals. We further
-  designed a phylodynamic analysis and successfully reconstructed the developmental
-  cell population dynamics in more than 12 fly organs.
+  本文开发了基于替换突变的谱系追踪系统 SMALT，在果蝇早期成体细胞中每个条形码平均记录约
+  21 个替换突变（有效编码空间大于 10^30），由此重建了近单细胞分辨率的细胞系统发育树，
+  并解析出 12 个以上器官发育过程中的细胞群体动态。
 tags:
   - lineage tracing
   - cell phylogeny

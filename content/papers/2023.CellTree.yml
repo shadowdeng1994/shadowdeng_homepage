@@ -7,17 +7,8 @@ venue: '*Science Bulletin*'
 corresponding:
   - Xionglei He
 abstract: |
-  All species on Earth can trace their origins back to a common ancestor, and their
-  evolutionary history can be illustrated as a species tree. Similarly, all cells in
-  a multicellular organism develop from a zygote, and their developmental lineage can
-  also be depicted as a phylogenetic tree in which the bifurcations signify mitotic
-  cell divisions. While the species tree has long been fundamental to Ecology and
-  Evolutionary Biology (EEB), the study of cell trees is still in its early stages.
-  This perspective discusses recent progress in reconstructing the developmental cell
-  tree of complex multicellular organisms with somatic mutations, and cell
-  tree-based population genetic modeling for comprehending organ development,
-  highlighting the anticipated convergence between EEB and Molecular, Cellular, and
-  Developmental Biology (MCDB).
+  本文以物种树类比细胞树，综述了利用体细胞突变重建复杂多细胞生物发育细胞树的最新进展
+  及基于细胞树的群体遗传建模，并展望生态与演化生物学同分子、细胞与发育生物学的融合。
 tags:
   - cell phylogeny
   - lineage tracing
