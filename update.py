@@ -161,6 +161,20 @@ def load_research():
     return [d for _, _, d in items]
 
 
+def load_software():
+    files = glob.glob(os.path.join(CONTENT, 'software', '*.yml'))
+    items = []
+    for f in files:
+        d = load_yaml(f)
+        try:
+            order = int(d.get('order'))
+        except (TypeError, ValueError):
+            order = 999
+        items.append((order, os.path.splitext(os.path.basename(f))[0], d))
+    items.sort(key=lambda t: (t[0], t[1]))
+    return [d for _, _, d in items]
+
+
 def _paper_date_key(s):
     m = re.match(r'(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?', str(s or ''))
     if not m:
@@ -317,6 +331,35 @@ def build_research(items):
             '</div>' % (i, en, zh)
         )
     return '\n'.join(slides)
+
+
+def build_software(items):
+    out = []
+    for d in items:
+        title = d.get('title') or d.get('name') or ''
+        title_en = d.get('title_en') or title
+        url = str(d.get('url') or '')
+        desc = d.get('description') or ''
+        desc_en = d.get('description_en') or desc
+        lang = d.get('language') or ''
+        tags = d.get('tags') or []
+        tags_en = d.get('tags_en') or tags
+        lang_chip = '<span class="sw-lang">%s</span>' % esc(lang) if lang else ''
+        tag_items = ''.join('<li>%s</li>' % esc(t) for t in tags)
+        tag_items_en = ''.join('<li>%s</li>' % esc(t) for t in tags_en)
+        href = (' href="%s" target="_blank" rel="noopener"' % esc(url)) if url else ''
+        out.append(
+            '<li class="software-card">\n'
+            '  <a class="sw-title"%s>%s <span class="sw-ext">↗</span></a>\n'
+            '  <p class="sw-desc">%s</p>\n'
+            '  <div class="sw-meta">%s'
+            '<ul class="sw-tags lang-en">%s</ul>'
+            '<ul class="sw-tags lang-zh">%s</ul></div>\n'
+            '</li>' % (href, lang_block(esc(title_en), esc(title)),
+                       lang_block(esc(norm_ws(desc_en)), esc(norm_ws(desc))),
+                       lang_chip, tag_items_en, tag_items)
+        )
+    return '\n'.join(out)
 
 
 def _name_key(s):
@@ -540,6 +583,13 @@ def main():
         news_all = news_latest = '<li class="news-empty">%s</li>' % lang_block(
             'No news yet — stay tuned.', '暂无新闻，敬请期待。')
 
+    software = load_software()
+    if software:
+        software_html = build_software(software)
+    else:
+        software_html = '<li class="software-empty">%s</li>' % lang_block(
+            'Repositories coming soon.', '代码库整理中，敬请期待。')
+
     idx = fill(read_text(os.path.join(TEMPLATES, 'index.template.html')), {
         'NAME_EN': esc(name_en),
         'NAME_ZH': esc(name_zh),
@@ -547,6 +597,7 @@ def main():
         'RESEARCH': research_html,
         'PAPERS': build_papers(lead_papers, 5),
         'NEWS': news_latest,
+        'SOFTWARE': software_html,
         'UPDATED_AT': esc(updated),
         'ASSET_V': asset_v,
         'LOGO_LIGHT': logo_light,

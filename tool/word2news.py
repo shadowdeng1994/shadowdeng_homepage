@@ -10,11 +10,10 @@
                              [--source "来源"] [--me "邓善俊"] [--force]
 
 行为：
-- 正文按 Word 段落顺序转成 Markdown；段内图片抽取到 content/news/<slug>/，
-  并在原位插入 ![](图片名)；表格文字按段落摊平。
+- 按 Word 里的真实顺序输出文字与图片：段内图片会留在它出现的位置（不会挤到一起），
+  图片抽取到 content/news/<slug>/ 并以 ![](图片名) 原位插入；表格文字按段落摊平。
 - 标题默认取首个非空段落整行（含期刊名，如 "Advanced Biotechnology | …"）。
-- 多段之间会合并无意义的空行；孤立的换行不保留。
-- 图注（紧跟图片、且较短的段）自动设为斜体。
+- 忽略无意义的空行；图注（紧跟图片、且较短的段）自动设为斜体。
 - --me（默认「邓善俊」）：把正文里出现的本人姓名加粗突出（作者/通讯信息处）。
 - 日期默认从文件名（YYYYMMDD / YYYY-MM-DD）推断，否则用今天。
 - 输出文件名以 YYYY-MM-DD 开头，便于 update.py 按日期排序；同名已存在需 --force。
@@ -61,18 +60,34 @@ def read_docx(path):
     return z, doc, rid2target
 
 
-def para_info(p):
-    parts = []
+def para_text(p):
+    return ' '.join(''.join(t.text or '' for t in p.iter(W + 't')).split())
+
+
+def para_style(p):
+    el = p.find('.//' + W + 'pStyle')
+    return el.get(W + 'val') if el is not None else ''
+
+
+def para_segments(p):
+    """按文档顺序返回 [('t', 文本) / ('img', rId) ...]。"""
+    segs = []
+    buf = ''
     for node in p.iter():
         if node.tag == W + 't':
-            parts.append(node.text or '')
+            buf += node.text or ''
         elif node.tag in (W + 'br', W + 'cr'):
-            parts.append('\n')
-    text = ''.join(parts)
-    style_el = p.find('.//' + W + 'pStyle')
-    style = style_el.get(W + 'val') if style_el is not None else ''
-    rids = [b.get(R + 'embed') for b in p.iter(A + 'blip') if b.get(R + 'embed')]
-    return text, style, rids
+            buf += '\n'
+        elif node.tag == A + 'blip':
+            if buf.strip():
+                segs.append(('t', buf))
+                buf = ''
+            rid = node.get(R + 'embed')
+            if rid:
+                segs.append(('img', rid))
+    if buf.strip():
+        segs.append(('t', buf))
+    return segs
 
 
 def heading_level(style):
@@ -109,13 +124,13 @@ def guess_date(path, override):
 
 def convert(path, out_dir, date, slug, title, title_en, source, me, force):
     z, doc, rid2target = read_docx(path)
-    infos = [para_info(p) for p in collect_paragraphs(doc)]
+    paras = collect_paragraphs(doc)
 
     if not title:
-        for text, style, rids in infos:
-            flat = ' '.join(text.split())
-            if flat:
-                title = flat
+        for p in paras:
+            t = para_text(p)
+            if t:
+                title = t
                 break
     if not title:
         sys.exit('无法从文档中识别标题，请用 --title 指定')
@@ -132,34 +147,38 @@ def convert(path, out_dir, date, slug, title, title_en, source, me, force):
     images = []
     used_title = False
     after_img = False
-    for text, style, rids in infos:
-        flat = ' '.join(text.split())
-        if not used_title and flat and flat == title:
-            used_title = True
-            text = ''
-        had_img = False
-        for rid in rids:
-            target = rid2target.get(rid)
-            if not target:
-                continue
-            name = os.path.basename(target)
-            images.append(('word/' + target.lstrip('/'), name))
-            blocks.append('![](' + name + ')')
-            had_img = True
+
+    def flush(text, style):
+        nonlocal after_img
         lines = [ln.strip() for ln in text.split('\n') if ln.strip()]
         if not lines:
-            after_img = after_img or had_img
-            continue
+            return
         lvl = heading_level(style)
-        if lvl:
-            for ln in lines:
+        for j, ln in enumerate(lines):
+            if lvl:
                 blocks.append('#' * lvl + ' ' + bold_name(ln, me))
-        else:
-            for j, ln in enumerate(lines):
-                cap = bool(re.match(r'^图\s*\d', ln)) or \
-                    (j == 0 and (had_img or after_img) and len(ln) <= 60)
+            else:
+                cap = bool(re.match(r'^图\s*\d', ln)) or (j == 0 and after_img and len(ln) <= 60)
                 blocks.append(('*' + bold_name(ln, me) + '*') if cap else bold_name(ln, me))
         after_img = False
+
+    for p in paras:
+        flat = para_text(p)
+        style = para_style(p)
+        skip_text = bool(not used_title and flat and flat == title)
+        if skip_text:
+            used_title = True
+        for kind, val in para_segments(p):
+            if kind == 'img':
+                target = rid2target.get(val)
+                if not target:
+                    continue
+                name = os.path.basename(target)
+                images.append(('word/' + target.lstrip('/'), name))
+                blocks.append('![](' + name + ')')
+                after_img = True
+            elif not skip_text:
+                flush(val, style)
 
     if images:
         img_dir = os.path.join(out_dir, stem)

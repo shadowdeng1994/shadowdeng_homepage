@@ -86,3 +86,17 @@
 - **期刊发表类新闻**：正文末尾常含通讯作者/第一作者信息。用 `--me`（默认「邓善俊」）
   把正文里出现的本人姓名加粗突出（工具默认开启）。若原稿没有作者信息，需在文末补一句
   说明（如「…为本文共同第一作者/通讯作者」）并把**邓善俊**加粗。
+- **每次更新新闻都要检查排版 / 语法 / 错别字**：重点确认
+  ① 图片落在对应段落的位置（`word2news.py` 现在按 Word 真实顺序插图片，不再把多张图挤在一起）；
+  ② 段落没有错误的合并/断行；③ 术语与标点统一（如 `SARS-CoV-2`、`溯祖`、`伪时间(pseudotime)`、`小鼠`）；
+  ④ 作者信息与本人姓名标注正确。发现明显错误当次改正。
+
+## 软件（Software）
+
+- 数据在 `content/software/*.yml`；同目录的 `softwarelist.txt` 只是待抓取的仓库清单，不会被读取。
+- 字段：`order`、`title`/`title_en`（仓库名）、`description`/`description_en`、`url`（GitHub 链接）、
+  `language`、`tags`/`tags_en`。**中英双语**（描述英文可取自 GitHub，中文翻译补上）。
+- 抓取仓库信息：`GET https://api.github.com/repos/<owner>/<repo>` 的 `description`/`language`
+  （`topics` 常为空，标签需人工补）。
+- `update.py` 的 `load_software()`/`build_software()` 渲染为卡片网格（空时占位）；
+  首页与子页导航都有「软件 / Software」入口。

@@ -1,0 +1,18 @@
+order: 4
+title: NpDynamic
+title_en: NpDynamic
+description: |
+  面向 SLOTH（Single-cell Lineage on Targeted Hypermutation）的 Np 动态重建。
+description_en: |
+  Np dynamic reconstruction for SLOTH (Single-cell Lineage on Targeted
+  Hypermutation).
+url: https://github.com/shadowdeng1994/NpDynamic
+language: R
+tags:
+  - 谱系追踪
+  - 溯祖分析
+  - 祖先细胞群体
+tags_en:
+  - lineage tracing
+  - coalescent
+  - ancestral population

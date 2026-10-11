@@ -1,0 +1,19 @@
+order: 1
+title: LEAP
+title_en: LEAP
+description: |
+  一个全新的基于系统发育的计算框架，利用谱系特异性上调基因（LUGs）从细胞系统发育树
+  推断内部节点的转录状态。
+description_en: |
+  A novel phylogeny-based computational framework for inferring the transcriptional
+  states of internal nodes from cell phylogenies via lineage-specific upregulated genes.
+url: https://github.com/shadowdeng1994/LEAP
+language: R
+tags:
+  - 细胞谱系
+  - 系统发育
+  - 转录状态
+tags_en:
+  - cell phylogeny
+  - lineage tracing
+  - transcriptional states

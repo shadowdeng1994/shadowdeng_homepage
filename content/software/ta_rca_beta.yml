@@ -1,0 +1,18 @@
+order: 3
+title: TarCA.beta
+title_en: TarCA.beta
+description: |
+  TarCA 的测试版。为获得更高的计算效率，整个软件包以更紧凑的方式重写。
+description_en: |
+  The beta version of TarCA. To achieve higher computational efficiency, the entire
+  package is rewritten in a more compact way.
+url: https://github.com/shadowdeng1994/TarCA.beta
+language: R
+tags:
+  - 溯祖分析
+  - 祖细胞
+  - 统计方法
+tags_en:
+  - coalescent analysis
+  - progenitors
+  - statistics
