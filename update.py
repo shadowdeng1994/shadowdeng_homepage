@@ -451,7 +451,7 @@ def build_papers(papers, limit=None, numbered=False):
         if p['abstract']:
             bits.append('  <p class="abstract lang-zh">%s</p>' % render_inline(norm_ws(p['abstract'])))
         if p['has_pdf']:
-            bits.append('  <a class="pdf-link" href="assets/papers/%s.pdf">📄 %s</a>'
+            bits.append('  <a class="pdf-link" href="assets/papers/%s.pdf" target="_blank" rel="noopener">📄 %s</a>'
                         % (esc(p['slug']), lang_block('Download PDF', '下载 PDF')))
         bits.append('</li>')
         out.append('\n'.join(bits))
