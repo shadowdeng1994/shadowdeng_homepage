@@ -174,8 +174,8 @@
 
   /* ---------- 帷幕 / 主页切换 ---------- */
   var curtain = document.getElementById('curtain');
-  if (curtain) {
-    var stickyNav = document.getElementById('stickyNav');
+  var skipCurtain = document.documentElement.classList.contains('skip-curtain');
+  if (curtain && !skipCurtain) {
     var curtainHeight = function () { return curtain.offsetHeight; };
     var locked = false;
 
@@ -290,12 +290,19 @@
 
     var navName = document.getElementById('navName');
     if (navName) navName.addEventListener('click', goCurtain);
+  }
 
-    if (stickyNav) {
-      window.addEventListener('scroll', function () {
-        stickyNav.classList.toggle('visible', window.scrollY > curtainHeight() - 80);
-      }, { passive: true });
-    }
+  /* ---------- 吸顶导航显隐 ---------- */
+  var stickyNav = document.getElementById('stickyNav');
+  if (stickyNav) {
+    var navThreshold = function () {
+      return (curtain && !skipCurtain ? curtain.offsetHeight : 0) - 80;
+    };
+    var toggleNav = function () {
+      stickyNav.classList.toggle('visible', window.scrollY > navThreshold());
+    };
+    window.addEventListener('scroll', toggleNav, { passive: true });
+    toggleNav();
   }
 
   /* ---------- 研究轮播（可拖动 · 双向无限循环） ---------- */

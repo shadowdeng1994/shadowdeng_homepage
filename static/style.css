@@ -109,6 +109,7 @@ html.lang-zh .lang-en { display: none !important; }
 }
 .curtain.entering .curtain-content { animation: curtainReturn 0.6s ease-out; }
 @keyframes curtainReturn { 0% { opacity: 0; } 100% { opacity: 1; } }
+html.skip-curtain .curtain { display: none !important; }
 .curtain-name {
   font-size: 3.6rem; font-weight: 600; margin: 0 0 0.9rem;
   letter-spacing: 0.04em; min-height: 1.35em;

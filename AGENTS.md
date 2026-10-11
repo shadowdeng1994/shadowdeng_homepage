@@ -69,3 +69,15 @@
   （`continue-on-error: true`，失败不影响部署），再 `python update.py --out _site --no-citations`，
   确保线上显示的是部署当时的最新引用数（不提交回仓库）。
 - 引用数大于 0 才显示徽标。
+
+## 新闻（News）
+
+- 用带图片的 Word 稿生成新闻：`python tool/word2news.py content/news/<name>.docx`
+  （std/tool 仅用标准库）。会生成 `content/news/<YYYY-MM-DD>.md` 与图片目录
+  `content/news/<YYYY-MM-DD>/`，图片在正文原位插入；标题取首段（支持「来源 | 标题」）。
+- 常用参数：`--date` 覆盖日期、`--slug` 指定文件名后缀、`--title`/`--title-en` 覆盖标题、
+  `--source` 来源、`--force` 覆盖。
+- 列表条目显示日期并按日期倒序（`load_news` 用 front matter 的 `date:` 或文件名前缀）。
+- 双语：front matter 可加 `title_en` / `body_en`（`word2news.py --title-en` 会写入 `title_en`）；
+  缺失时该条目在中英模式下显示同一份文本。
+- 列出所有新闻用 `numbered=True`（`update.py` 在 `news.html` 上启用序号）。

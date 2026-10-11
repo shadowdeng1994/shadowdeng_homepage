@@ -19,13 +19,13 @@ bio: |
   我们的研究聚焦分子进化与系统发育学，以分子层面的相似性为线索，探究生命
   系统在不同层级的演化进程，致力于推动发育生物学的计量化与理论化。主要研究兴趣包括：
 
-  - **复杂性状的系统发育溯源**：结合比较基因组学与系统发育学，在物种树框架下解析
-    睡眠、智力、神经性疾病等复杂性状的分子机制、细胞基础及其空间分布模式。
   - **细胞谱系示踪与细胞群体动态**：我们已在酵母、果蝇、斑马鱼中构建高分辨率的
     细胞谱系追踪系统（SMALT），未来将拓展至小鼠等哺乳动物，绘制复杂多细胞生物的
     细胞谱系图谱。
   - **发育生物学的计量化与理论化**：将物种树分析中的定量算法与理论迁移至细胞谱系
     研究，建立标准化的细胞群体计量范式，并构建“数字孪生胚胎”人工智能模型。
+  - **复杂性状与神经相关性状的演化**：结合比较基因组学与系统发育学，在物种树框架下
+    解析睡眠、智力、神经性疾病等复杂性状的分子机制、细胞基础及其空间分布模式。
 
   近年来，我们以第一或通讯作者在 *Nature*、*Nature Methods*、*National Science
   Review* 等国际顶尖期刊发表多篇高影响力论文，并主持国家自然科学基金青年科学基金等项目。
@@ -42,10 +42,6 @@ bio_en: |
   different levels, with the goal of making developmental biology more quantitative
   and theoretical. Our main research interests include:
 
-  - **Phylogenetic origins of complex traits**: combining comparative genomics and
-    phylogenetics to dissect the molecular mechanisms, cellular basis and spatial
-    distribution of complex traits (e.g., sleep, intelligence, neurological
-    disorders) within the framework of the species tree.
   - **Cell lineage tracing and cell population dynamics**: we have built
     high-resolution lineage-tracing systems (SMALT) in yeast, fruit fly and
     zebrafish, and plan to extend them to mammals such as mouse to map the cell
@@ -54,6 +50,10 @@ bio_en: |
     quantitative algorithms and theories of species-tree analysis to cell-lineage
     research, establishing standardized cell-population measurements and building a
     "digital-twin embryo" AI model.
+  - **Evolution of complex and neural-related traits**: combining comparative
+    genomics and phylogenetics to dissect the molecular mechanisms, cellular basis
+    and spatial distribution of complex traits (e.g., sleep, intelligence,
+    neurological disorders) within the framework of the species tree.
 
   In recent years we have published multiple high-impact papers as first or
   corresponding author in *Nature*, *Nature Methods*, *National Science Review* and

@@ -243,10 +243,14 @@ def load_news():
         else:
             fm, body = {}, raw
         title = fm.get('title') or prettify_slug(re.sub(r'^\d{4}-\d{2}-\d{2}-', '', stem))
+        title_en = fm.get('title_en') or ''
+        body_en = fm.get('body_en') or ''
         date_str = _fmt_date(fm.get('date'), stem)
         posts.append({
-            'stem': stem, 'title': title, 'date': date_str,
-            'body': body, 'summary': _summarize(body),
+            'stem': stem, 'title': title, 'title_en': title_en,
+            'date': date_str, 'body': body, 'body_en': body_en,
+            'summary': _summarize(body),
+            'summary_en': _summarize(body_en) if body_en else '',
         })
     posts.sort(key=lambda p: (_date_key(p['date']), p['stem']), reverse=True)
     return posts
@@ -399,13 +403,16 @@ def build_news(posts, limit=None, numbered=False):
     out = []
     for i, p in enumerate(sel, 1):
         num = ('  <div class="item-num">%02d</div>\n' % i) if numbered else ''
+        title_html = lang_block(esc(p['title_en']), esc(p['title'])) if p.get('title_en') else esc(p['title'])
+        summary_html = (lang_block(esc(p['summary_en']), esc(p['summary']))
+                        if p.get('summary_en') else esc(p['summary']))
         out.append(
             '<li class="news-item">\n'
             '%s'
             '  <span class="date">%s</span>\n'
             '  <a class="title" href="news/%s/">%s</a>\n'
             '  <p class="summary">%s</p>\n'
-            '</li>' % (num, esc(p['date']), esc(p['stem']), esc(p['title']), esc(p['summary']))
+            '</li>' % (num, esc(p['date']), esc(p['stem']), title_html, summary_html)
         )
     return '\n'.join(out)
 
@@ -471,10 +478,14 @@ def build_news_pages(posts, out, asset_v, logo_light, logo_dark):
                 fp = os.path.join(imgsrc, f)
                 if os.path.isfile(fp):
                     shutil.copy2(fp, os.path.join(dest, f))
+        title_html = lang_block(esc(p['title_en']), esc(p['title'])) if p.get('title_en') else esc(p['title'])
+        content_html = render_md(p['body'])
+        if p.get('body_en'):
+            content_html = lang_block(render_md(p['body_en']), content_html, tag='div')
         page = fill(tpl, {
-            'TITLE': esc(p['title']),
+            'TITLE': title_html,
             'DATE': esc(p['date']),
-            'CONTENT': render_md(p['body']),
+            'CONTENT': content_html,
             'ASSET_V': asset_v,
             'LOGO_LIGHT': logo_light,
             'LOGO_DARK': logo_dark,
