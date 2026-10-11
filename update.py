@@ -73,6 +73,29 @@ def norm_ws(s):
     return ' '.join(str(s).split())
 
 
+def _is_latin(ch):
+    return bool(ch) and ch.isascii() and ch.isalnum()
+
+
+def unwrap_zh(s):
+    """中文段落内的软换行不加空格（仅英文单词之间的换行保留一个空格）；
+    以列表标记开头的行仍作为新的一项。避免 Markdown 把软换行渲染成空格。"""
+    paras = re.split(r'\n\s*\n', str(s or ''))
+    out = []
+    for p in paras:
+        merged = []
+        for ln in [x.strip() for x in p.split('\n') if x.strip()]:
+            if not merged or re.match(r'^([-*+]|\d+\.)\s', ln):
+                merged.append(ln)
+            else:
+                prev = merged[-1]
+                sep = ' ' if (_is_latin(prev[-1:]) and _is_latin(ln[:1])) else ''
+                merged[-1] = prev + sep + ln
+        if merged:
+            out.append('\n'.join(merged))
+    return '\n\n'.join(out)
+
+
 def render_inline(s):
     s = esc(s)
     s = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', s)
@@ -277,11 +300,12 @@ def load_news():
         title_en = fm.get('title_en') or ''
         body_en = fm.get('body_en') or ''
         date_str = _fmt_date(fm.get('date'), stem)
+        first = lambda t: re.split(r'\n\s*\n', (t or '').strip())[0]
         posts.append({
             'stem': stem, 'title': title, 'title_en': title_en,
             'date': date_str, 'body': body, 'body_en': body_en,
-            'summary': _summarize(body),
-            'summary_en': _summarize(body_en) if body_en else '',
+            'summary': _summarize(first(body)),
+            'summary_en': _summarize(first(body_en)) if body_en else '',
         })
     posts.sort(key=lambda p: (_date_key(p['date']), p['stem']), reverse=True)
     return posts
@@ -311,7 +335,7 @@ def build_about(info, avatar_src):
             parts.append('<span class="link-item">%s: <a href="%s"%s>%s</a></span>'
                          % (lang_block(esc(label_en), esc(label_zh)), esc(url), ext, esc(url)))
         links_html = '<div class="links">%s</div>' % ''.join(parts)
-    bio_html = lang_block(render_md(info.get('bio_en', '')), render_md(info.get('bio', '')),
+    bio_html = lang_block(render_md(info.get('bio_en', '')), render_md(unwrap_zh(info.get('bio', ''))),
                           tag='div', cls='bio')
     return (
         '<div class="about-header">\n'
@@ -335,11 +359,11 @@ def build_research(items):
             tag_items = ''.join('<li>%s</li>' % esc(t) for t in (tags or []))
             return ('<h3 class="slide-title">%s</h3>\n'
                     '<p class="slide-desc">%s</p>\n'
-                    '<ul class="slide-tags">%s</ul>') % (esc(title), esc(norm_ws(desc)), tag_items)
+                    '<ul class="slide-tags">%s</ul>') % (esc(title), esc(desc), tag_items)
         en = block(d.get('title_en') or d.get('title', ''),
-                   d.get('description_en') or d.get('description', ''),
+                   norm_ws(d.get('description_en') or d.get('description', '')),
                    d.get('tags_en') or d.get('tags'))
-        zh = block(d.get('title', ''), d.get('description', ''), d.get('tags'))
+        zh = block(d.get('title', ''), unwrap_zh(d.get('description', '')), d.get('tags'))
         slides.append(
             '<div class="slide">\n'
             '  <div class="slide-num">%02d</div>\n'
@@ -373,7 +397,7 @@ def build_software(items):
             '<ul class="sw-tags lang-en">%s</ul>'
             '<ul class="sw-tags lang-zh">%s</ul></div>\n'
             '</li>' % (href, lang_block(esc(title_en), esc(title)),
-                       lang_block(esc(norm_ws(desc_en)), esc(norm_ws(desc))),
+                       lang_block(esc(norm_ws(desc_en)), esc(unwrap_zh(desc))),
                        lang_chip, tag_items_en, tag_items)
         )
     return '\n'.join(out)
@@ -449,7 +473,7 @@ def build_papers(papers, limit=None, numbered=False):
         if p.get('abstract_en'):
             bits.append('  <p class="abstract lang-en">%s</p>' % render_inline(norm_ws(p['abstract_en'])))
         if p['abstract']:
-            bits.append('  <p class="abstract lang-zh">%s</p>' % render_inline(norm_ws(p['abstract'])))
+            bits.append('  <p class="abstract lang-zh">%s</p>' % render_inline(unwrap_zh(p['abstract'])))
         if p['has_pdf']:
             bits.append('  <a class="pdf-link" href="assets/papers/%s.pdf" target="_blank" rel="noopener">📄 %s</a>'
                         % (esc(p['slug']), lang_block('Download PDF', '下载 PDF')))
@@ -540,7 +564,7 @@ def build_news_pages(posts, out, asset_v, logo_light, logo_dark):
                 if os.path.isfile(fp):
                     shutil.copy2(fp, os.path.join(dest, f))
         title_html = lang_block(esc(p['title_en']), esc(p['title'])) if p.get('title_en') else esc(p['title'])
-        content_html = render_md(p['body'])
+        content_html = render_md(unwrap_zh(p['body']))
         if p.get('body_en'):
             content_html = lang_block(render_md(p['body_en']), content_html, tag='div')
         page = fill(tpl, {
