@@ -30,9 +30,17 @@ except ImportError:
     _HAVE_MARKDOWN = False
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-CONTENT = os.path.join(ROOT, 'content')
+SOURCES = os.path.join(ROOT, 'sources')          # 手动维护的源文件（about / papers / news / software 清单 / research）
+CONTENT = os.path.join(ROOT, 'content')          # 由 tool 脚本生成的数据（papers yml / news md / software yml）
 TEMPLATES = os.path.join(ROOT, 'templates')
 STATIC = os.path.join(ROOT, 'static')
+
+ABOUT_DIR = os.path.join(SOURCES, 'about')
+RESEARCH_DIR = os.path.join(SOURCES, 'research')
+PAPERS_PDF = os.path.join(SOURCES, 'papers')      # 只放 PDF
+PAPERS_YML = os.path.join(CONTENT, 'papers')      # 由 pdf2yml 生成
+NEWS_DIR = os.path.join(CONTENT, 'news')          # md 与图片由 word2news 生成
+SOFTWARE_DIR = os.path.join(CONTENT, 'software')  # yml 由 fetch_software 生成
 
 PLACEHOLDER_RE = re.compile(r'\{\{[A-Z_]+\}\}')
 FRONT_RE = re.compile(r'^\s*---\s*\n(.*?)\n---\s*\n?(.*)$', re.S)
@@ -144,11 +152,11 @@ def render_md(text):
 
 # ---------------- 数据加载 ----------------
 def load_about():
-    return load_yaml(os.path.join(CONTENT, 'about', 'info.yml'))
+    return load_yaml(os.path.join(ABOUT_DIR, 'info.yml'))
 
 
 def load_research():
-    files = glob.glob(os.path.join(CONTENT, 'research', '*.yml'))
+    files = glob.glob(os.path.join(RESEARCH_DIR, '*.yml'))
     items = []
     for f in files:
         d = load_yaml(f)
@@ -162,7 +170,7 @@ def load_research():
 
 
 def load_software():
-    files = glob.glob(os.path.join(CONTENT, 'software', '*.yml'))
+    files = glob.glob(os.path.join(SOFTWARE_DIR, '*.yml'))
     items = []
     for f in files:
         d = load_yaml(f)
@@ -182,15 +190,24 @@ def _paper_date_key(s):
     return (int(m.group(1)), int(m.group(2) or 0), int(m.group(3) or 0))
 
 
+def _find_pdf(slug):
+    for d in (PAPERS_PDF, PAPERS_YML):
+        p = os.path.join(d, slug + '.pdf')
+        if os.path.exists(p):
+            return p
+    return None
+
+
 def load_papers():
-    d = os.path.join(CONTENT, 'papers')
     slugs = set()
-    for f in glob.glob(os.path.join(d, '*.yml')) + glob.glob(os.path.join(d, '*.pdf')):
+    for f in glob.glob(os.path.join(PAPERS_YML, '*.yml')):
+        slugs.add(os.path.splitext(os.path.basename(f))[0])
+    for f in glob.glob(os.path.join(PAPERS_PDF, '*.pdf')):
         slugs.add(os.path.splitext(os.path.basename(f))[0])
     papers = []
     for slug in slugs:
-        ypath = os.path.join(d, slug + '.yml')
-        ppath = os.path.join(d, slug + '.pdf')
+        ypath = os.path.join(PAPERS_YML, slug + '.yml')
+        ppath = _find_pdf(slug)
         data = load_yaml(ypath) if os.path.exists(ypath) else {}
         date = str(data.get('date') or '')
         try:
@@ -210,7 +227,7 @@ def load_papers():
             'co_first': data.get('co_first') or [],
             'abstract': data.get('abstract') or '',
             'abstract_en': data.get('abstract_en') or '',
-            'has_pdf': os.path.exists(ppath),
+            'has_pdf': ppath is not None,
         })
     papers.sort(key=lambda p: (_paper_date_key(p['date']), p['slug']), reverse=True)
     return papers
@@ -245,7 +262,7 @@ def _summarize(text, n=120):
 
 
 def load_news():
-    d = os.path.join(CONTENT, 'news')
+    d = NEWS_DIR
     posts = []
     for f in glob.glob(os.path.join(d, '*.md')):
         stem = os.path.splitext(os.path.basename(f))[0]
@@ -469,15 +486,16 @@ def copy_assets(info, out):
     avatar_src = None
     avatar = info.get('avatar')
     if avatar:
-        src = os.path.join(CONTENT, 'about', avatar)
+        src = os.path.join(ABOUT_DIR, avatar)
         if os.path.exists(src):
             dest = os.path.join(assets, avatar)
             shutil.copy2(src, dest)
             with open(dest, 'rb') as f:
                 v = hashlib.sha1(f.read()).hexdigest()[:10]
             avatar_src = 'assets/%s?v=%s' % (avatar, v)
-    for f in glob.glob(os.path.join(CONTENT, 'papers', '*.pdf')):
-        shutil.copy2(f, os.path.join(assets, 'papers', os.path.basename(f)))
+    for d in (PAPERS_PDF, PAPERS_YML):
+        for f in glob.glob(os.path.join(d, '*.pdf')):
+            shutil.copy2(f, os.path.join(assets, 'papers', os.path.basename(f)))
     return avatar_src
 
 

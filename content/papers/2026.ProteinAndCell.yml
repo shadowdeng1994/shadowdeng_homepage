@@ -1,0 +1,37 @@
+title: Long-term in vivo CRISPR/Cas9 gene editing in liver triggers host immunity and clonal mutations in DNA damage response genes beyond off-target effects
+authors:
+  - Tianqi Cao
+  - Ao Zhang
+  - Wenlian Wu
+  - Jinkun Wen
+  - Ming Mu
+  - Simiao Liu
+  - Yuxi Chen
+  - Di Zhang
+  - Haiying Liu
+  - '**Shanjun Deng**'
+  - Xionglei He
+  - Junjiu Huang
+date: 2026-08-21
+doi: 10.1093/procel/pwag057
+citations: 0
+citations_updated: 2026-10-11
+venue: '*Protein & Cell*'
+corresponding:
+  - Junjiu Huang
+co_first:
+  - Tianqi Cao
+  - Ao Zhang
+abstract: |
+  该文以小鼠肝脏为体内模型评估长期 CRISPR/Cas9 基因编辑的安全性，发现除脱靶效应外，
+  长期 SaCas9 编辑还会引发宿主免疫反应，并在 DNA 损伤应答相关基因中产生克隆突变。
+abstract_en: |
+  Using the mouse liver as an in vivo model, this letter evaluates the long-term safety
+  of CRISPR/Cas9 genome editing and shows that, beyond off-target effects, prolonged
+  SaCas9 editing also triggers host immune responses and accumulates clonal mutations in
+  DNA damage response genes.
+tags:
+  - CRISPR/Cas9
+  - gene editing safety
+  - clonal mutations
+  - liver

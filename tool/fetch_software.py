@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""fetch_software.py —— 按 softwarelist.txt 抓取 GitHub 仓库信息与 README。
+"""fetch_software.py —— 按 sources/software.txt 抓取 GitHub 仓库信息与 README。
 
 用途：为「软件」卡片准备素材——把仓库的简介、语言、主题，以及 **README 全文**抓下来，
 便于人工/AI 理解这个包是干什么的，从而写更好的中英双语卡片介绍。
 
 用法：
-    python tool/fetch_software.py [--list content/software/softwarelist.txt]
+    python tool/fetch_software.py [--list sources/software.txt]
                                   [--out content/software] [--write-draft] [--force]
 
 - 默认把每个仓库的 README 保存为 content/software/<slug>.readme.md（供参考，不会被读取渲染）。
@@ -57,7 +57,7 @@ def scalar(s):
 
 def main():
     ap = argparse.ArgumentParser(description='抓取 GitHub 仓库信息与 README')
-    ap.add_argument('--list', default=os.path.join(ROOT, 'content', 'software', 'softwarelist.txt'))
+    ap.add_argument('--list', default=os.path.join(ROOT, 'sources', 'software.txt'))
     ap.add_argument('--out', default=os.path.join(ROOT, 'content', 'software'))
     ap.add_argument('--write-draft', action='store_true')
     ap.add_argument('--force', action='store_true')

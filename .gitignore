@@ -1,4 +1,4 @@
-# 由 update.py 生成的产物（源文件在 content/ templates/ static/）
+# 由 update.py / tool/build.py 生成的产物（源文件在 sources/、templates/、static/；数据在 content/）
 /index.html
 /papers.html
 /news.html
@@ -6,5 +6,15 @@
 /assets/
 /style.css
 /main.js
+/logo_bright.png
+/logo_dark.png
+/logo.png
+/logo.jpg
+/logo.webp
+/logo.svg
 /.nojekyll
 /_site
+
+# Python
+__pycache__/
+*.pyc

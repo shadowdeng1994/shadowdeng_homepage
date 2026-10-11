@@ -1,0 +1,22 @@
+order: 5
+title: SarsMutSignature
+title_en: SarsMutSignature
+description: |
+  分析 SARS-CoV-2 突变特征的数据与 R 脚本：比较公开病毒基因组，推断病毒在疫情前积累的
+  突变谱，发现其与 RaTG13 的突变谱高达 99.9% 一致，提示二者在疫情前共享几乎相同的宿主
+  环境。
+description_en: |
+  Data and R scripts for analysing the SARS-CoV-2 mutation signature: comparing public
+  viral genomes to infer the pre-outbreak mutation spectrum, which is 99.9% identical to
+  that of RaTG13, suggesting they shared almost the same host environment before the
+  outbreak.
+url: https://github.com/shadowdeng1994/SarsMutSignature
+language: R
+tags:
+  - 突变特征
+  - SARS-CoV-2
+  - 病毒演化
+tags_en:
+  - mutation signature
+  - SARS-CoV-2
+  - viral evolution

@@ -1,0 +1,34 @@
+title: Longitudinal lineage tracing reveals early clonal attrition during Drosophila midgut aging
+authors:
+  - Han Gong
+  - Kehui Liu
+  - '**Shanjun Deng**'
+  - Jinwen Wang
+  - Xionglei He
+  - Li Liu
+date: 2026-06-24
+doi: 10.1371/journal.pbio.3003866
+citations: 1
+citations_updated: 2026-10-11
+venue: '*PLOS Biology*'
+corresponding:
+  - Xionglei He
+  - Li Liu
+abstract: |
+  基于改进的 SMALT 系统对成年果蝇中肠进行纵向细胞谱系追踪，发现克隆多样性在羽化后
+  即刻达峰并早于预期开始下降、有效群体大小减小；羽化后 10 天内出现的肠道干细胞谱系
+  在衰老过程中持续占据优势（第 63 天时单一谱系可占采样细胞的 63% 以上），并结合
+  贝叶斯生存模型与图神经网络前瞻性预测了克隆的存续与结构演化。
+abstract_en: |
+  Longitudinal lineage tracing of the adult Drosophila midgut using an enhanced SMALT
+  system shows that clonal diversity peaks immediately after eclosion and then declines
+  earlier than expected, accompanied by a reduced effective population size. Intestinal
+  stem-cell lineages arising in the first 10 days post-eclosion sustain clonal dominance
+  during aging—a single lineage can comprise over 63% of sampled cells by day 63—and
+  Bayesian survival modelling plus a graph neural network prospectively predict clone
+  survival and structural evolution.
+tags:
+  - lineage tracing
+  - ageing
+  - Drosophila midgut
+  - clone dynamics

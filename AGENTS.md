@@ -1,103 +1,83 @@
 # AGENTS.md — shadowdeng_homepage
 
-静态个人主页生成器。源文件在 `content/`、`templates/`、`static/`；根目录下的
-`index.html`、`papers.html`、`news.html`、`news/`、`assets/`、`style.css`、`main.js`、
-`logo.svg`、`.nojekyll` 都是 `python update.py`（或 CI 的 `--out _site`）生成的**产物**，
-不要手改，也不要提交。
+邓善俊（Shanjun Deng）的个人主页生成器。**源文件在 `sources/` 与 `templates/`、`static/`；
+根目录的 `index.html`、`papers.html`、`news.html`、`news/`、`assets/`、`style.css`、`main.js`、
+`logo*.png`、`.nojekyll` 都是生成的产物，不要手改、不要提交。**
 
-## 构建 / 预览
+## 目录结构（手动区 vs 生成区）
 
-- 生成到仓库根目录：`python update.py`
-- 生成到指定目录（CI 用）：`python update.py --out _site`
-- 依赖：`pyyaml`、`markdown`（`pip install -r requirements.txt`）
-- 若无 PDF 库，`tool/pdf2yml.py` 会回退到纯标准库解析。
+**`sources/` —— 只有这里需要你手动维护：**
+- `sources/about/info.yml`（+ 可选 `avatar.jpg`）：个人简介/信息。
+- `sources/papers/*.pdf`：**文章只放 PDF**，其余由脚本生成。
+- `sources/news/*.docx`：**新闻只放 Word**，其余由脚本生成。
+- `sources/software.txt`：**软件只需维护这个清单**（每行一个 GitHub 仓库链接）。
+- `sources/research/*.yml`：研究方向卡片（通常不动）。
+
+**`content/` —— 全部由 `tool/` 脚本生成，勿手改：**
+- `content/papers/<slug>.yml`（由 `tool/pdf2yml.py` 生成；含引用数等）。
+- `content/news/<YYYY-MM-DD>.md` 与 `content/news/<日期>/`（图片，由 `tool/word2news.py` 生成）。
+- `content/software/<slug>.yml` 与 `<slug>.readme.md`（由 `tool/fetch_software.py` 生成）。
+
+`templates/`、`static/`、`tool/`、`update.py` 属于代码/模板。
+
+## 常用命令
+
+- **一键更新站点（推荐）**：`python tool/build.py`
+  依次：把新 PDF 转 yml、把新 Word 转 md、抓取软件仓库、再生成站点（含刷新引用数）。
+  `--no-net` 可跳过联网步骤。
+- 只生成站点：`python update.py`（默认会先刷新论文引用数，`--no-citations` 跳过；`--out DIR` 指定输出）。
+- 依赖：`pip install -r requirements.txt`（pyyaml、markdown）。
 
 ## 中英文双语（重要）
 
-站点支持 **中/英** 切换，**默认英文**，由 `<html>` 上的 `class="lang-en"` / `class="lang-zh"`
-配合 `static/main.js` 与 `static/style.css` 控制。
+站点支持 **中/英** 切换，**默认英文**，由 `<html>` 上的 `class="lang-en"`/`lang-zh`
+配合 `static/main.js`、`static/style.css` 控制。**任何新增/修改的文字都要同时提供中英文。**
 
-**任何新增/修改的文字内容都必须同时提供中英文，否则切换后会漏字或串语言。** 具体：
-
-- 模板（`templates/*.html`）里的界面文案用成对的 span：
-  `<span class="lang-en">English</span><span class="lang-zh">中文</span>`。
-- 生成 HTML 时，用 `update.py` 里的 `lang_block(en_html, zh_html, tag, cls)` 包裹同一段内容的两版。
-- 数据文件的字段约定：
-  - `content/about/info.yml`：`name/name_en`、`title/title_en`、`affiliation/affiliation_en`、
-    `bio/bio_en`、`research_interests/research_interests_en`。
-  - `content/research/*.yml`：`title/title_en`、`description/description_en`、`tags/tags_en`。
-  - `content/papers/*.yml`：`abstract`（中文）+ `abstract_en`（英文）；论文题目/作者/期刊保持原文（英文）。
-  - `content/news/*.md`：新增新闻时需同时提供中英标题与正文（`title`/`title_en` 等），
-    并在 `update.py` 的 `build_news`/`build_news_pages` 中做双语渲染。
-- 欢迎页打字动画的短语列表在 `static/main.js` 的 `phrasesByLang`，两种语言都要维护。
-
-新增英语姓名：**Shanjun Deng**。
+- 界面文案（`templates/*.html`）用成对 span：`<span class="lang-en">En</span><span class="lang-zh">中</span>`。
+- 生成 HTML 时用 `update.py` 的 `lang_block(en_html, zh_html, tag, cls)` 包裹两版。
+- 数据字段约定：about 用 `x`/`x_en`；research 用 `title/title_en`、`description/description_en`、`tags/tags_en`；
+  papers 用 `abstract`(中) + `abstract_en`；news 用 `title_en` + `body_en`；software 用 `description_en`、`tags_en`。
+- 欢迎页打字词表在 `static/main.js` 的 `phrasesByLang`，两种语言都要维护。英文名统一 **Shanjun Deng**。
 
 ## 主题（亮色 / 暗夜，默认亮色）
 
-- 由 `<html>` 上的 `class="theme-light"` / `theme-dark` 控制，切换按钮为导航里的
-  `.theme-switch`（与语言开关 `.lang-switch` 共用样式与 `.ls-knob`）。
-- `static/main.js` 的 `applyTheme`/`setTheme` 负责切换并写入 `localStorage.theme`；
-  `<head>` 内联脚本会先按存储设置，避免闪烁。
+- `<html>` 上 `class="theme-light"`/`theme-dark`；切换按钮为导航的 `.theme-switch`（与语言开关 `.lang-switch` 共用样式）。
 - 暗色样式集中在 `static/style.css` 末尾的「暗夜主题」段（`html.theme-dark ...`）。
-  **新增任何区块/组件时，都要在该段补一条对应的暗色规则**，否则暗夜下会沿用亮色配色。
+  **新增任何区块/组件时，都要在该段补一条对应的暗色规则。**
 
-## Logo（两套）
+## Logo
 
-- `static/logo_bright.png`（亮色主题用）、`static/logo_dark.png`（暗夜主题用）。
-  `update.py` 的 `logo_files()` 会自动选用（找不到则回退 `logo.png`…`logo.svg`），
-  并分别注入 `{{LOGO_LIGHT}}` / `{{LOGO_DARK}}`；模板里两套 logo 用 `.logo-light` /
-  `.logo-dark` 配合主题显隐。favicon 用亮色版。
-- 放入的原始图片请先压缩（建议 ≤256×256 PNG，几十 KB 级别），避免仓库体积过大。
+- `static/logo_bright.png`（亮色）、`static/logo_dark.png`（暗夜）；`update.py` 的 `logo_files()` 自动选用并注入
+  `{{LOGO_LIGHT}}`/`{{LOGO_DARK}}`；模板里用 `.logo-light`/`.logo-dark` 配合主题显隐。favicon 用亮色版。
+- 原始图片请先压缩（建议 ≤256×256 PNG）。
 
+## 文章（Papers）
 
-## 其它约定
-
-- 静态资源引用带内容哈希版本号 `?v={{ASSET_V}}`（见 `asset_version()`），避免缓存。
-- 头像须保存为 `content/about/avatar.jpg`（或在 `info.yml` 里改 `avatar:`）。
-- CSV/摘要等临时文件属中间产物，用完即删。
-
-## 论文引用数（citations）
-
-- 每篇 `content/papers/*.yml` 带 `doi:`；引用数由 `tool/fetch_citations.py` 按 DOI 抓取，
-  写入 `citations:` 与 `citations_updated:` 字段（开放数据源：OpenAlex，失败回退 Crossref）。
-- Web of Science 需付费 API Key、Google Scholar 无 API 且禁止抓取，故不采用；数字通常低于 Google Scholar。
-- 刷新：`python update.py` **默认会先抓取一次**（`--no-citations` 可跳过）；也可单独运行
-  `python tool/fetch_citations.py`。抓取结果会写回 yml，再由 `update.py` 读取显示
-  「Cited by N / 被引 N」。
-- CI 部署（`.github/workflows/deploy.yml`）：构建前先跑 `python tool/fetch_citations.py`
-  （`continue-on-error: true`，失败不影响部署），再 `python update.py --out _site --no-citations`，
-  确保线上显示的是部署当时的最新引用数（不提交回仓库）。
-- 引用数大于 0 才显示徽标。
+- 只把 PDF 放到 `sources/papers/`；`tool/pdf2yml.py`（`tool/build.py` 会调用）生成 `content/papers/<slug>.yml` 草稿。
+- yml 字段：`title`、`authors`（本人加粗 `'**Shanjun Deng**'`）、`date`（YYYY-MM-DD，用于倒序）、`doi`、
+  `venue`、`corresponding`、`co_first`、`abstract`(中)、`abstract_en`、`tags`、`citations`(生成)。
+- 首页只显示**本人为通讯/共通/一作/共一**的论文前 5 篇（`is_lead_paper`）；`papers.html` 显示全部并带序号。
+- 引用数：`tool/fetch_citations.py`（OpenAlex，失败回退 Crossref）写入 `citations`；`update.py` 默认会刷新，
+  CI 部署前也会刷新（不提交回仓库）。Clarivate/Google Scholar 无免费接口，故不用。
 
 ## 新闻（News）
 
-- 用带图片的 Word 稿生成新闻：`python tool/word2news.py content/news/<name>.docx`
-  （std/tool 仅用标准库）。会生成 `content/news/<YYYY-MM-DD>.md` 与图片目录
-  `content/news/<YYYY-MM-DD>/`，图片在正文原位插入；标题取首段整行（含期刊名，如
-  `Advanced Biotechnology | …`）。
-- 常用参数：`--date` 覆盖日期、`--slug` 指定文件名后缀、`--title`/`--title-en` 覆盖标题、
-  `--source` 来源、`--force` 覆盖。
-- 列表条目显示日期并按日期倒序（`load_news` 用 front matter 的 `date:` 或文件名前缀）。
-- 双语：**每条新闻都要提供 `title_en` 与 `body_en`（英文版）**，否则英文模式会显示中文。
-  `word2news.py --title-en` 写入英文标题；正文英文写在 front matter 的 `body_en: |` 块里
-  （保留同样的 `![](图片名)` 图片位置），并把英文名 `**Shanjun Deng**` 加粗。
-- 列出所有新闻用 `numbered=True`（`update.py` 在 `news.html` 上启用序号）。
-- **期刊发表类新闻**：正文末尾常含通讯作者/第一作者信息。用 `--me`（默认「邓善俊」）
-  把正文里出现的本人姓名加粗突出（工具默认开启）。若原稿没有作者信息，需在文末补一句
-  说明（如「…为本文共同第一作者/通讯作者」）并把**邓善俊**加粗。
-- **每次更新新闻都要检查排版 / 语法 / 错别字**：重点确认
-  ① 图片落在对应段落的位置（`word2news.py` 现在按 Word 真实顺序插图片，不再把多张图挤在一起）；
-  ② 段落没有错误的合并/断行；③ 术语与标点统一（如 `SARS-CoV-2`、`溯祖`、`伪时间(pseudotime)`、`小鼠`）；
-  ④ 作者信息与本人姓名标注正确。发现明显错误当次改正。
+- 只把 Word（含图片）放到 `sources/news/`；`tool/word2news.py` 生成 `content/news/<日期>.md` + 图片目录。
+  - 图片按 Word 真实顺序原位插入；图注自动斜体；`--me`（默认邓善俊）加粗本人姓名。
+- **每条新闻都要补 `title_en` 与 `body_en`**（英文版，含相同的 `![](图片名)`），英文名 `**Shanjun Deng**` 加粗。
+- **每次更新新闻都要检查排版 / 语法 / 错别字**：①图片是否落在对应段落；②段落有无错误合并；
+  ③术语与标点统一（`SARS-CoV-2`、`溯祖`、`伪时间(pseudotime)`、`小鼠`）；④作者与本人标注。
+- 列表按日期倒序；详情页可返回；`news.html` 带序号。
 
 ## 软件（Software）
 
-- 数据在 `content/software/*.yml`；同目录的 `softwarelist.txt` 只是待抓取的仓库清单，不会被读取。
-- 字段：`order`、`title`/`title_en`（仓库名）、`description`/`description_en`、`url`（GitHub 链接）、
-  `language`、`tags`/`tags_en`。**中英双语**（描述英文可取自 GitHub，中文翻译补上）。
-- 抓取：`python tool/fetch_software.py` 按 `softwarelist.txt` 抓取每个仓库的简介/语言/主题，
-  并把 **README 全文**保存为 `content/software/<slug>.readme.md`（仅供理解与写介绍参考，不会被渲染）；
-  `--write-draft` 会额外生成 yml 草稿。**写卡片介绍前先读对应 README**，据此总结该包的用途。
-- `update.py` 的 `load_software()`/`build_software()` 渲染为卡片网格（空时占位）；
-  首页与子页导航都有「软件 / Software」入口。
+- 只维护 `sources/software.txt`（每行一个仓库链接，顺序即展示顺序）；`tool/fetch_software.py` 抓取仓库
+  简介/语言/主题与 **README**（存 `content/software/*.readme.md`），据此写卡片 yml。
+- **写卡片介绍前先读对应 README**，总结该包的用途；yml 字段：`order`、`title/title_en`、`description/description_en`、
+  `url`、`language`、`tags/tags_en`。整卡可点击，直接跳转对应 GitHub 仓库。
+
+## 其它约定
+
+- 静态资源引用带内容哈希 `?v={{ASSET_V}}`，避免缓存。
+- 临时/中间文件用完即删。
+- **构建前/后检查**：`python update.py` 应无「未替换的占位符」报错；改样式后确认亮/暗两种模式都正常。
