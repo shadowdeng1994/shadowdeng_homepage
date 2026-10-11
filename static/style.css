@@ -320,7 +320,7 @@ html.theme-dark .section-emblem.logo-dark { display: block; }
   transition: border-color 0.2s;
 }
 .links a:hover { border-bottom-color: #1d6ff2; }
-.bio { margin: 0; color: #29405f; font-size: 0.98rem; }
+.bio { margin: 0; color: #29405f; font-size: 0.98rem; text-align: justify; text-justify: inter-ideograph; }
 .bio p { margin: 0 0 0.8em; }
 .bio p:last-child { margin-bottom: 0; }
 .bio strong { color: #0e2440; }
@@ -385,6 +385,7 @@ html.theme-dark .section-emblem.logo-dark { display: block; }
   font-size: 0.94rem; color: #3a5473;
   line-height: 1.8; margin: 0 0 1.4rem;
   max-width: 92%; position: relative;
+  text-align: justify; text-justify: inter-ideograph;
 }
 .slide-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 0; position: relative; }
 .slide-tags li {
@@ -459,7 +460,7 @@ html.theme-dark .section-emblem.logo-dark { display: block; }
 .paper .meta { color: #3a5473; font-size: 0.88rem; margin: 0 0 0.4rem; }
 .paper .author-note { color: #6b83a3; font-size: 0.78rem; margin: 0 0 0.7rem; }
 .paper .author-mark { color: #1d6ff2; font-weight: 700; }
-.paper .abstract { color: #29405f; font-size: 0.92rem; margin: 0 0 0.8rem; line-height: 1.7; }
+.paper .abstract { color: #29405f; font-size: 0.92rem; margin: 0 0 0.8rem; line-height: 1.7; text-align: justify; text-justify: inter-ideograph; }
 .paper .cite-badge {
   display: inline-block; margin: 0 0 0.7rem;
   font-size: 0.76rem; font-weight: 600; letter-spacing: 0.02em;
@@ -507,7 +508,7 @@ html.theme-dark .paper .cite-badge {
 }
 .news-item .title::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
 .news-item .title:hover { color: #0b57d0; }
-.news-item .summary { color: #3a5473; font-size: 0.9rem; margin: 0; line-height: 1.7; }
+.news-item .summary { color: #3a5473; font-size: 0.9rem; margin: 0; line-height: 1.7; text-align: justify; text-justify: inter-ideograph; }
 .news-empty {
   padding: 1.5rem;
   background: #ffffff;
@@ -555,7 +556,7 @@ html.theme-dark .item-num {
 .sw-title:hover { color: #0b57d0; }
 .software-card .sw-title::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
 .sw-ext { font-size: 0.85em; opacity: 0.7; }
-.sw-desc { color: #29405f; font-size: 0.9rem; line-height: 1.7; margin: 0 0 0.7rem; }
+.sw-desc { color: #29405f; font-size: 0.9rem; line-height: 1.7; margin: 0 0 0.7rem; text-align: justify; text-justify: inter-ideograph; }
 .sw-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 .sw-lang {
   font-size: 0.72rem; font-family: "SF Mono", "Consolas", monospace;
