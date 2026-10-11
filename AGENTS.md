@@ -96,7 +96,8 @@
 - 数据在 `content/software/*.yml`；同目录的 `softwarelist.txt` 只是待抓取的仓库清单，不会被读取。
 - 字段：`order`、`title`/`title_en`（仓库名）、`description`/`description_en`、`url`（GitHub 链接）、
   `language`、`tags`/`tags_en`。**中英双语**（描述英文可取自 GitHub，中文翻译补上）。
-- 抓取仓库信息：`GET https://api.github.com/repos/<owner>/<repo>` 的 `description`/`language`
-  （`topics` 常为空，标签需人工补）。
+- 抓取：`python tool/fetch_software.py` 按 `softwarelist.txt` 抓取每个仓库的简介/语言/主题，
+  并把 **README 全文**保存为 `content/software/<slug>.readme.md`（仅供理解与写介绍参考，不会被渲染）；
+  `--write-draft` 会额外生成 yml 草稿。**写卡片介绍前先读对应 README**，据此总结该包的用途。
 - `update.py` 的 `load_software()`/`build_software()` 渲染为卡片网格（空时占位）；
   首页与子页导航都有「软件 / Software」入口。

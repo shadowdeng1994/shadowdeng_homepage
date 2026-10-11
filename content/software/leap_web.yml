@@ -2,9 +2,13 @@ order: 2
 title: LEAP_web
 title_en: LEAP_web
 description: |
-  30 个斑马鱼细胞系统发育树的在线展示网站。
+  30 个斑马鱼细胞谱系树的交互式网页可视化：节点按细胞类型着色，支持平滑缩放/平移、
+  多种方式选择细胞，并实时显示所选细胞的类型组成。在线使用：
+  https://shadowdeng1994.github.io/LEAP_web/
 description_en: |
-  Website for 30 zebrafish cell phylogenies.
+  Interactive in-browser visualization of 30 zebrafish cell lineage trees: nodes are
+  coloured by cell type, with smooth zoom/pan, flexible cell selection and live
+  cell-type composition charts. Live demo: https://shadowdeng1994.github.io/LEAP_web/
 url: https://github.com/shadowdeng1994/LEAP_web
 language: Web
 tags:

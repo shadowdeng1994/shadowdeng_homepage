@@ -2,10 +2,14 @@ order: 3
 title: TarCA.beta
 title_en: TarCA.beta
 description: |
-  TarCA 的测试版。为获得更高的计算效率，整个软件包以更紧凑的方式重写。
+  TarCA（靶向溯祖分析）测试版：基于细胞系统发育树估计任意组织或细胞群体的祖细胞
+  数目（Np）——计算目标组织单系进化枝上的平均溯祖速率并取倒数，无需预设标记；为提升
+  计算效率而重写的紧凑实现。
 description_en: |
-  The beta version of TarCA. To achieve higher computational efficiency, the entire
-  package is rewritten in a more compact way.
+  Beta version of TarCA (targeting coalescent analysis): estimates the progenitor
+  number (Np) of any defined tissue or cell population from its cell phylogeny via the
+  average coalescent rate at its monophyletic clades, independent of pre-set markers;
+  rewritten for higher computational efficiency.
 url: https://github.com/shadowdeng1994/TarCA.beta
 language: R
 tags:

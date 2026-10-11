@@ -2,17 +2,23 @@ order: 4
 title: NpDynamic
 title_en: NpDynamic
 description: |
-  面向 SLOTH（Single-cell Lineage on Targeted Hypermutation）的 Np 动态重建。
+  利用 SMALT 对黑腹果蝇进行 Np（活跃分裂的祖先细胞数目）动态重建的数据与代码：
+  刻画各器官发育过程中 Np 的纵向动态，进而揭示细胞分裂的对称/不对称平衡与器官生长的
+  sigmoid 规律。
 description_en: |
-  Np dynamic reconstruction for SLOTH (Single-cell Lineage on Targeted
-  Hypermutation).
+  Data and code for the Np dynamic reconstruction in Drosophila melanogaster with
+  SMALT, quantifying the longitudinal dynamics of actively dividing parental cells (Np)
+  during organ development, and informing symmetric vs. asymmetric division balance and
+  a sigmoid organ-growth model.
 url: https://github.com/shadowdeng1994/NpDynamic
 language: R
 tags:
   - 谱系追踪
   - 溯祖分析
   - 祖先细胞群体
+  - 果蝇
 tags_en:
   - lineage tracing
   - coalescent
   - ancestral population
+  - Drosophila

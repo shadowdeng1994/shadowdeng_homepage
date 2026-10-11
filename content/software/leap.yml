@@ -2,18 +2,23 @@ order: 1
 title: LEAP
 title_en: LEAP
 description: |
-  一个全新的基于系统发育的计算框架，利用谱系特异性上调基因（LUGs）从细胞系统发育树
-  推断内部节点的转录状态。
+  基于系统发育的计算框架：利用谱系特异性上调基因（LUGs），从细胞系统发育树推断
+  未观测内部节点的转录状态；结合谱系追踪与单细胞 RNA 测序重建祖先转录组，支持构建
+  谱系分辨的细胞图谱。
 description_en: |
-  A novel phylogeny-based computational framework for inferring the transcriptional
-  states of internal nodes from cell phylogenies via lineage-specific upregulated genes.
+  A phylogeny-based computational framework that infers the transcriptional states of
+  unobserved internal nodes from cell phylogenies via lineage-specific upregulated
+  genes (LUGs), integrating lineage tracing with scRNA-seq to reconstruct ancestral
+  transcriptomes and build lineage-resolved cell atlases.
 url: https://github.com/shadowdeng1994/LEAP
 language: R
 tags:
   - 细胞谱系
   - 系统发育
   - 转录状态
+  - 祖先重建
 tags_en:
   - cell phylogeny
   - lineage tracing
   - transcriptional states
+  - ancestral reconstruction

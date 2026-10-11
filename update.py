@@ -336,11 +336,11 @@ def build_research(items):
 def build_software(items):
     out = []
     for d in items:
-        title = d.get('title') or d.get('name') or ''
-        title_en = d.get('title_en') or title
+        title_en = d.get('title_en') or d.get('title') or d.get('name') or ''
+        title = d.get('title') or title_en
         url = str(d.get('url') or '')
-        desc = d.get('description') or ''
-        desc_en = d.get('description_en') or desc
+        desc_en = d.get('description_en') or d.get('description') or ''
+        desc = d.get('description') or desc_en
         lang = d.get('language') or ''
         tags = d.get('tags') or []
         tags_en = d.get('tags_en') or tags

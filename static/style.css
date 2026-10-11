@@ -553,6 +553,7 @@ html.theme-dark .item-num {
   font-size: 1.02rem; font-weight: 600; margin-bottom: 0.4rem;
 }
 .sw-title:hover { color: #0b57d0; }
+.software-card .sw-title::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
 .sw-ext { font-size: 0.85em; opacity: 0.7; }
 .sw-desc { color: #29405f; font-size: 0.9rem; line-height: 1.7; margin: 0 0 0.7rem; }
 .sw-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
