@@ -7,12 +7,15 @@
 用法：
     python tool/word2news.py <news.docx> [--out content/news] [--date YYYY-MM-DD]
                              [--slug NAME] [--title "标题"] [--title-en "Title"]
-                             [--source "来源"] [--force]
+                             [--source "来源"] [--me "邓善俊"] [--force]
 
 行为：
 - 正文按 Word 段落顺序转成 Markdown；段内图片抽取到 content/news/<slug>/，
   并在原位插入 ![](图片名)；表格文字按段落摊平。
-- 标题默认取首个非空段落；若该段形如 "来源 | 标题"，则取竖线后为标题、前部为来源。
+- 标题默认取首个非空段落整行（含期刊名，如 "Advanced Biotechnology | …"）。
+- 多段之间会合并无意义的空行；孤立的换行不保留。
+- 图注（紧跟图片、且较短的段）自动设为斜体。
+- --me（默认「邓善俊」）：把正文里出现的本人姓名加粗突出（作者/通讯信息处）。
 - 日期默认从文件名（YYYYMMDD / YYYY-MM-DD）推断，否则用今天。
 - 输出文件名以 YYYY-MM-DD 开头，便于 update.py 按日期排序；同名已存在需 --force。
 - 可选 --title-en 写入英文标题（供中英切换）。
@@ -39,6 +42,12 @@ def scalar(s):
     return s
 
 
+def bold_name(text, me):
+    if not me or me not in text:
+        return text
+    return re.sub(re.escape(me), '**' + me + '**', text).replace('****', '**')
+
+
 def read_docx(path):
     z = zipfile.ZipFile(path)
     doc = ET.fromstring(z.read('word/document.xml'))
@@ -53,7 +62,13 @@ def read_docx(path):
 
 
 def para_info(p):
-    text = ''.join(t.text or '' for t in p.iter(W + 't')).strip()
+    parts = []
+    for node in p.iter():
+        if node.tag == W + 't':
+            parts.append(node.text or '')
+        elif node.tag in (W + 'br', W + 'cr'):
+            parts.append('\n')
+    text = ''.join(parts)
     style_el = p.find('.//' + W + 'pStyle')
     style = style_el.get(W + 'val') if style_el is not None else ''
     rids = [b.get(R + 'embed') for b in p.iter(A + 'blip') if b.get(R + 'embed')]
@@ -92,19 +107,15 @@ def guess_date(path, override):
     return datetime.date.today().isoformat()
 
 
-def convert(path, out_dir, date, slug, title, title_en, source, force):
+def convert(path, out_dir, date, slug, title, title_en, source, me, force):
     z, doc, rid2target = read_docx(path)
     infos = [para_info(p) for p in collect_paragraphs(doc)]
 
     if not title:
         for text, style, rids in infos:
-            if text:
-                if '|' in text:
-                    head, tail = text.split('|', 1)
-                    source = source or head.strip()
-                    title = tail.strip()
-                else:
-                    title = text
+            flat = ' '.join(text.split())
+            if flat:
+                title = flat
                 break
     if not title:
         sys.exit('无法从文档中识别标题，请用 --title 指定')
@@ -120,16 +131,13 @@ def convert(path, out_dir, date, slug, title, title_en, source, force):
     blocks = []
     images = []
     used_title = False
+    after_img = False
     for text, style, rids in infos:
-        tail = text.split('|', 1)[1].strip() if '|' in text else text
-        if not used_title and text and tail == title:
+        flat = ' '.join(text.split())
+        if not used_title and flat and flat == title:
             used_title = True
-        else:
-            lvl = heading_level(style)
-            if text and lvl:
-                blocks.append('#' * lvl + ' ' + text)
-            elif text:
-                blocks.append('*' + text + '*' if re.match(r'^图\s*\d', text) else text)
+            text = ''
+        had_img = False
         for rid in rids:
             target = rid2target.get(rid)
             if not target:
@@ -137,6 +145,21 @@ def convert(path, out_dir, date, slug, title, title_en, source, force):
             name = os.path.basename(target)
             images.append(('word/' + target.lstrip('/'), name))
             blocks.append('![](' + name + ')')
+            had_img = True
+        lines = [ln.strip() for ln in text.split('\n') if ln.strip()]
+        if not lines:
+            after_img = after_img or had_img
+            continue
+        lvl = heading_level(style)
+        if lvl:
+            for ln in lines:
+                blocks.append('#' * lvl + ' ' + bold_name(ln, me))
+        else:
+            for j, ln in enumerate(lines):
+                cap = bool(re.match(r'^图\s*\d', ln)) or \
+                    (j == 0 and (had_img or after_img) and len(ln) <= 60)
+                blocks.append(('*' + bold_name(ln, me) + '*') if cap else bold_name(ln, me))
+        after_img = False
 
     if images:
         img_dir = os.path.join(out_dir, stem)
@@ -173,6 +196,7 @@ def main():
     ap.add_argument('--title', default=None)
     ap.add_argument('--title-en', default=None)
     ap.add_argument('--source', default=None)
+    ap.add_argument('--me', default='邓善俊', help='需要加粗突出的本人姓名（默认 邓善俊）')
     ap.add_argument('--force', action='store_true')
     args = ap.parse_args()
 
@@ -180,10 +204,12 @@ def main():
         sys.exit('找不到文件: ' + args.docx)
     date = guess_date(args.docx, args.date)
     md_path, stem, nimg, title = convert(
-        args.docx, args.out, date, args.slug, args.title, args.title_en, args.source, args.force)
+        args.docx, args.out, date, args.slug, args.title, args.title_en,
+        args.source, args.me, args.force)
     print('已生成: %s' % md_path)
     print('  标题: %s' % title)
     print('  日期: %s  图片: %d 张' % (date, nimg))
+    print('  突出: %s' % (args.me or '(无)'))
     print('  图片目录: %s' % os.path.join(args.out, stem))
 
 

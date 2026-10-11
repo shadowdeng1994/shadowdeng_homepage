@@ -74,10 +74,15 @@
 
 - 用带图片的 Word 稿生成新闻：`python tool/word2news.py content/news/<name>.docx`
   （std/tool 仅用标准库）。会生成 `content/news/<YYYY-MM-DD>.md` 与图片目录
-  `content/news/<YYYY-MM-DD>/`，图片在正文原位插入；标题取首段（支持「来源 | 标题」）。
+  `content/news/<YYYY-MM-DD>/`，图片在正文原位插入；标题取首段整行（含期刊名，如
+  `Advanced Biotechnology | …`）。
 - 常用参数：`--date` 覆盖日期、`--slug` 指定文件名后缀、`--title`/`--title-en` 覆盖标题、
   `--source` 来源、`--force` 覆盖。
 - 列表条目显示日期并按日期倒序（`load_news` 用 front matter 的 `date:` 或文件名前缀）。
-- 双语：front matter 可加 `title_en` / `body_en`（`word2news.py --title-en` 会写入 `title_en`）；
-  缺失时该条目在中英模式下显示同一份文本。
+- 双语：**每条新闻都要提供 `title_en` 与 `body_en`（英文版）**，否则英文模式会显示中文。
+  `word2news.py --title-en` 写入英文标题；正文英文写在 front matter 的 `body_en: |` 块里
+  （保留同样的 `![](图片名)` 图片位置），并把英文名 `**Shanjun Deng**` 加粗。
 - 列出所有新闻用 `numbered=True`（`update.py` 在 `news.html` 上启用序号）。
+- **期刊发表类新闻**：正文末尾常含通讯作者/第一作者信息。用 `--me`（默认「邓善俊」）
+  把正文里出现的本人姓名加粗突出（工具默认开启）。若原稿没有作者信息，需在文末补一句
+  说明（如「…为本文共同第一作者/通讯作者」）并把**邓善俊**加粗。
