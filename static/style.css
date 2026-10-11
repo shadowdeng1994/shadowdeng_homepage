@@ -625,6 +625,21 @@ a.contact-value:hover { color: #0b57d0; }
 
 /* ==================== 详情页 / 列表子页 ==================== */
 .post { max-width: 760px; margin: 0 auto; padding: 48px 28px 100px; }
+.post article {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.38) 55%,
+    rgba(255, 255, 255, 0.54) 100%);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  padding: 2.2rem 2.4rem;
+  box-shadow:
+    0 18px 40px rgba(19, 58, 120, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+}
 .post-back {
   display: inline-flex; align-items: center; gap: 0.35rem;
   color: #1d6ff2; text-decoration: none; font-size: 0.92rem;
@@ -636,7 +651,7 @@ a.contact-value:hover { color: #0b57d0; }
   color: #6b83a3; font-size: 0.85rem; margin: 0 0 2rem;
   font-family: "SF Mono", "Consolas", monospace;
 }
-.post-content { color: #29405f; font-size: 1rem; }
+.post-content { color: #29405f; font-size: 1rem; text-align: justify; text-justify: inter-ideograph; }
 .post-content p { margin: 0 0 1.1em; }
 .post-content h1, .post-content h2, .post-content h3 { color: #0e2440; line-height: 1.4; margin: 1.6em 0 0.6em; }
 .post-content a { color: #1d6ff2; }
@@ -823,6 +838,17 @@ html.theme-dark .more-btn { background: rgba(106, 168, 255, 0.08); border-color:
 html.theme-dark .more-btn:hover { background: #4a9eff; border-color: #4a9eff; color: #fff; }
 html.theme-dark footer { color: #7f97b8; }
 html.theme-dark .post-title { color: #e8eef8; }
+html.theme-dark .post article {
+  background: linear-gradient(135deg,
+    rgba(46, 68, 106, 0.5) 0%,
+    rgba(18, 30, 52, 0.34) 55%,
+    rgba(30, 46, 76, 0.46) 100%);
+  border-color: rgba(150, 190, 255, 0.26);
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
 html.theme-dark .post-date { color: #6f88a8; }
 html.theme-dark .post-content { color: #c5d4e8; }
 html.theme-dark .post-content h1, html.theme-dark .post-content h2, html.theme-dark .post-content h3 { color: #e8eef8; }
