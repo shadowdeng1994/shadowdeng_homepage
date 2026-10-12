@@ -107,12 +107,12 @@ html.lang-zh .lang-en { display: none !important; }
 }
 .curtain-content {
   position: relative; z-index: 2; text-align: center;
-  padding: 1.5rem 2.4rem;
+  padding: 0.9rem 1.8rem;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5),
-              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   transition: transform 0.6s cubic-bezier(0.6, 0, 0.4, 1),
@@ -126,10 +126,10 @@ html.lang-zh .lang-en { display: none !important; }
 @keyframes curtainReturn { 0% { opacity: 0; } 100% { opacity: 1; } }
 html.skip-curtain .curtain { display: none !important; }
 .curtain-name {
-  font-size: 3.6rem; font-weight: 600; margin: 0 0 0.9rem;
-  letter-spacing: 0.04em; min-height: 1.35em;
+  font-size: 2.6rem; font-weight: 700; margin: 0;
+  letter-spacing: 0.02em; min-height: 1.15em; line-height: 1.2;
   background: linear-gradient(90deg,
-    #ffffff 0%, #7cb8ff 25%, #c8a8ff 50%, #7cb8ff 75%, #ffffff 100%);
+    #0a2038 0%, #17427f 25%, #52299f 50%, #17427f 75%, #0a2038 100%);
   background-size: 300% auto;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -139,7 +139,7 @@ html.skip-curtain .curtain { display: none !important; }
 .typed-caret {
   display: inline-block; width: 3px; height: 0.92em;
   margin-left: 3px; vertical-align: -0.1em;
-  background: #7cb8ff;
+  background: #17427f;
   animation: caretBlink 1s steps(1) infinite;
 }
 @keyframes caretBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
