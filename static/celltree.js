@@ -39,8 +39,8 @@
   var RC = Math.cos(ROT), RS = Math.sin(ROT);
   var ROT_LEFT = ROT_DEG >= 45 && ROT_DEG < 135;   // 横版时淡出方向改到左边
 
-  /* 画面整体平移：把树整体下移，留出上方空间放欢迎语 */
-  var VIEW_DX = 60, VIEW_DY = 0;
+  /* 画面整体平移：略上移，让树占满画面、上方不留白 */
+  var VIEW_DX = 60, VIEW_DY = -40;
 
   /* 折线生长分量的切分比例：K : 1，使每个细胞落在横线中间 */
   var BRANCH = K / (1 + K);
