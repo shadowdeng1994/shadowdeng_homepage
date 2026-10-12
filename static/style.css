@@ -56,7 +56,7 @@ html.lang-zh .lang-en { display: none !important; }
 }
 .curtain {
   height: 100vh; height: 100dvh;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: flex-start; justify-content: center;
   overflow: hidden;
   touch-action: none;
   background:
@@ -92,15 +92,8 @@ html.lang-zh .lang-en { display: none !important; }
   50%      { opacity: 0.85; }
 }
 .curtain-content {
-  position: relative; z-index: 2; text-align: center;
-  padding: 1.15rem 2rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45),
-              inset 0 1px 0 rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  position: relative; z-index: 2; text-align: center; padding: 20px;
+  margin-top: 18vh;                  /* 文案放在画面上方 */
   transition: transform 0.6s cubic-bezier(0.6, 0, 0.4, 1),
               opacity 0.6s ease;
 }
@@ -112,23 +105,20 @@ html.lang-zh .lang-en { display: none !important; }
 @keyframes curtainReturn { 0% { opacity: 0; } 100% { opacity: 1; } }
 html.skip-curtain .curtain { display: none !important; }
 .curtain-name {
-  font-size: 2.6rem; font-weight: 800; margin: 0;
-  letter-spacing: 0.03em; line-height: 1.45;
-  padding: 0.08em 0;                 /* 给渐变留出覆盖字形的空间，避免裁字 */
+  font-size: 3.6rem; font-weight: 600; margin: 0 0 0.9rem;
+  letter-spacing: 0.04em; min-height: 1.35em;
   background: linear-gradient(90deg,
-    #0a2038 0%, #1b4fa0 25%, #5a2f9e 50%, #1b4fa0 75%, #0a2038 100%);
+    #ffffff 0%, #7cb8ff 25%, #c8a8ff 50%, #7cb8ff 75%, #ffffff 100%);
   background-size: 300% auto;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 6s linear infinite;
-  filter: drop-shadow(0 1px 4px rgba(23, 66, 127, 0.45))
-          drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
 }
 @keyframes shimmer { to { background-position: 300% center; } }
 .typed-caret {
   display: inline-block; width: 3px; height: 0.92em;
   margin-left: 3px; vertical-align: -0.1em;
-  background: #17427f;
+  background: #7cb8ff;
   animation: caretBlink 1s steps(1) infinite;
 }
 @keyframes caretBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
