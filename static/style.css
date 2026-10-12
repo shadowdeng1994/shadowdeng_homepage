@@ -76,20 +76,6 @@ html.lang-zh .lang-en { display: none !important; }
 }
 .stars { position: absolute; inset: 0; pointer-events: none; }
 .curtain .stars { display: none; }   /* 欢迎页改用 canvas 里的星空 */
-.cursor-glow {
-  position: absolute; top: 0; left: 0;
-  width: 120px; height: 120px; margin: -60px 0 0 -60px;
-  border-radius: 50%; pointer-events: none; z-index: 1;
-  background: radial-gradient(circle,
-    rgba(182, 216, 255, 0.6) 0%,
-    rgba(124, 184, 255, 0.28) 30%,
-    rgba(124, 184, 255, 0.08) 56%,
-    transparent 72%);
-  filter: blur(3px);
-  opacity: 0; transition: opacity 0.35s ease;
-  will-change: transform;
-}
-.curtain.cursor-active .cursor-glow { opacity: 1; }
 .star {
   position: absolute; border-radius: 50%; background: #fff;
   animation: float linear infinite, twinkle ease-in-out infinite;
