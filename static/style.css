@@ -105,7 +105,7 @@ html.lang-zh .lang-en { display: none !important; }
 @keyframes curtainReturn { 0% { opacity: 0; } 100% { opacity: 1; } }
 html.skip-curtain .curtain { display: none !important; }
 .curtain-name {
-  font-size: 2.8rem; font-weight: 600; margin: 0 0 0.9rem;
+  font-size: 3.2rem; font-weight: 600; margin: 0 0 0.9rem;
   letter-spacing: 0.03em; min-height: 1.35em;
   background: linear-gradient(90deg,
     #ffffff 0%, #7cb8ff 25%, #c8a8ff 50%, #7cb8ff 75%, #ffffff 100%);
@@ -241,6 +241,14 @@ html.theme-dark .theme-switch .ts-dark { color: #fff; }
 .curtain-lang .ls-zh, .curtain-lang .ls-en { color: rgba(206, 224, 255, 0.9); }
 html.lang-en .curtain-lang .ls-en,
 html.lang-zh .curtain-lang .ls-zh { color: #0a1424; }
+
+/* 欢迎页左上角品牌（始终用深色背景适用的 logo + 浅色文字） */
+.curtain-brand {
+  position: absolute; top: 1.3rem; left: 1.5rem; z-index: 3;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  color: #e8eef8; font-size: 1rem; font-weight: 600; letter-spacing: 0.02em;
+}
+.curtain-brand img { width: 28px; height: 28px; display: block; }
 
 /* 主题 Logo 显隐 */
 .nav-logo.logo-dark, .section-emblem.logo-dark { display: none; }
