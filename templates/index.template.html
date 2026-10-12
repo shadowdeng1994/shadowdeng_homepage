@@ -44,6 +44,7 @@
   </script>
   <script>(function(){try{var l=localStorage.getItem('lang');if(l!=='zh'&&l!=='en')l='en';var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t='light';var d=document.documentElement;d.className='lang-'+l+' theme-'+t;if(location.hash&&location.hash.length>1){d.className+=' skip-curtain';}d.setAttribute('lang',l==='zh'?'zh-CN':'en');var ti=d.getAttribute('data-title-'+l);if(ti){document.title=ti;}}catch(e){}})();</script>
   <script src="main.js?v={{ASSET_V}}" defer></script>
+  <script src="celltree.js?v={{ASSET_V}}" defer></script>
 </head>
 <body>
 
@@ -52,6 +53,7 @@
 
 <!-- 帷幕：点击 / 滚动 / 回车进入主页 -->
 <div class="curtain" id="curtain">
+  <canvas class="curtain-canvas" id="celltree" aria-hidden="true"></canvas>
   <div class="stars" id="stars"></div>
   <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
   <button class="lang-switch curtain-lang" type="button" role="switch" aria-checked="true" aria-label="Switch language"><span class="ls-knob"></span><span class="ls-zh">中</span><span class="ls-en">En</span></button>

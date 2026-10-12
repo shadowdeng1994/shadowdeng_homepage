@@ -543,7 +543,7 @@ def logo_files():
 
 def asset_version():
     h = hashlib.sha1()
-    for name in set(['style.css', 'main.js'] + list(logo_files())):
+    for name in set(['style.css', 'main.js', 'celltree.js'] + list(logo_files())):
         with open(os.path.join(STATIC, name), 'rb') as f:
             h.update(f.read())
     return h.hexdigest()[:10]
@@ -579,7 +579,7 @@ def build_news_pages(posts, out, asset_v, logo_light, logo_dark):
 
 
 def copy_static(out):
-    for name in ('style.css', 'main.js'):
+    for name in ('style.css', 'main.js', 'celltree.js'):
         shutil.copy2(os.path.join(STATIC, name), os.path.join(out, name))
     for name in set(logo_files()):
         shutil.copy2(os.path.join(STATIC, name), os.path.join(out, name))
