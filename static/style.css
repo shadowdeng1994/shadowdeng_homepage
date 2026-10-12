@@ -114,7 +114,13 @@ html.skip-curtain .curtain { display: none !important; }
 .curtain-name {
   font-size: 2.6rem; font-weight: 700; margin: 0;
   letter-spacing: 0.02em; line-height: 1.45;
-  color: #0e2b52;
+  padding: 0.08em 0;                 /* 给渐变留出覆盖字形的空间，避免裁字 */
+  background: linear-gradient(90deg,
+    #0a2038 0%, #1b4fa0 25%, #5a2f9e 50%, #1b4fa0 75%, #0a2038 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
 }
 @keyframes shimmer { to { background-position: 300% center; } }
 .typed-caret {

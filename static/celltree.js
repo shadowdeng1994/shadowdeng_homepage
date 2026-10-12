@@ -465,7 +465,9 @@
       paintBranch(A.x, A.y, B.x, B.y, Math.min(A.a, B.a), IDX[ln[0]].col, IDX[ln[1]].col, w);
     }
 
-    for (var ck = 0; ck < CELLS.length; ck++) {
+    /* 从后往前画：亲代盖在子代之上，新生细胞从母细胞后面“长出来”，
+       而不是压住母细胞 */
+    for (var ck = CELLS.length - 1; ck >= 0; ck--) {
       var cc = CELLS[ck];
       var sc = state[cc.id];
       if (sc.r <= 0.01) continue;
