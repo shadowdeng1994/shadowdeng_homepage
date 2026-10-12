@@ -109,7 +109,9 @@
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     var phrases = phrasesByLang[currentLang()];
     var pi = 0, ci = 0, deleting = false;
-    var TYPE_MS = 90, DELETE_MS = 45, HOLD_MS = 1500, GAP_MS = 380;
+    // 英文短语较长，回删更快一些
+    var isEn = currentLang() === 'en';
+    var TYPE_MS = 90, DELETE_MS = isEn ? 22 : 45, HOLD_MS = 1500, GAP_MS = 380;
     var jitter = function (base, spread) { return base + Math.random() * spread; };
     var step = function () {
       var cur = phrases[pi];
