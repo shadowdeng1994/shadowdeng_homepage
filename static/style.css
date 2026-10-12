@@ -112,8 +112,8 @@ html.lang-zh .lang-en { display: none !important; }
 @keyframes curtainReturn { 0% { opacity: 0; } 100% { opacity: 1; } }
 html.skip-curtain .curtain { display: none !important; }
 .curtain-name {
-  font-size: 2.6rem; font-weight: 700; margin: 0;
-  letter-spacing: 0.02em; line-height: 1.45;
+  font-size: 2.6rem; font-weight: 800; margin: 0;
+  letter-spacing: 0.03em; line-height: 1.45;
   padding: 0.08em 0;                 /* 给渐变留出覆盖字形的空间，避免裁字 */
   background: linear-gradient(90deg,
     #0a2038 0%, #1b4fa0 25%, #5a2f9e 50%, #1b4fa0 75%, #0a2038 100%);
@@ -121,6 +121,8 @@ html.skip-curtain .curtain { display: none !important; }
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 6s linear infinite;
+  filter: drop-shadow(0 1px 4px rgba(23, 66, 127, 0.45))
+          drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
 }
 @keyframes shimmer { to { background-position: 300% center; } }
 .typed-caret {
