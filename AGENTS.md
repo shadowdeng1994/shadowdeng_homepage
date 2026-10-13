@@ -2,7 +2,7 @@
 
 邓善俊（Shanjun Deng）的个人主页生成器。**源文件在 `sources/` 与 `templates/`、`static/`；
 根目录的 `index.html`、`papers.html`、`news.html`、`news/`、`assets/`、`style.css`、`main.js`、
-`logo*.png`、`.nojekyll` 都是生成的产物，不要手改、不要提交。**
+`celltree.js`、`logo*.png`、`.nojekyll` 都是生成的产物，不要手改、不要提交。**
 
 ## 目录结构（手动区 vs 生成区）
 
@@ -26,7 +26,18 @@
   依次：把新 PDF 转 yml、把新 Word 转 md、抓取软件仓库、再生成站点（含刷新引用数）。
   `--no-net` 可跳过联网步骤。
 - 只生成站点：`python update.py`（默认会先刷新论文引用数，`--no-citations` 跳过；`--out DIR` 指定输出）。
-- 依赖：`pip install -r requirements.txt`（pyyaml、markdown）。
+- 依赖：`pip install -r requirements.txt`（pyyaml、markdown）。Python ≥3.8，无需前端框架/构建工具。
+- **生成产物会带上内容哈希**（`?v={{ASSET_V}}`）：`style.css`、`main.js`、`celltree.js`、logo 任一变化都会自动破缓存。
+
+## 欢迎页（帷幕）
+
+- 首页第一屏是 `.curtain`（帷幕）；背景是 `static/celltree.js` 里的「细胞谱系树」动画，画在
+  `<canvas id="celltree" class="curtain-canvas">` 上（自相似分裂 + 镜头推进 + DNA 条形码）。
+  该脚本会自动适配窗口、不可见时暂停省电；**离开视口/切后台不耗性能**。
+- 打字欢迎语：`.curtain-content > .curtain-name`，词表见 `static/main.js` 的 `phrasesByLang`（见「中英文双语」）。
+  桌面端位置由 `.curtain-content { margin-top }` 控制，移动端在 `@media (max-width:640px)` 单独覆盖。
+- 帷幕内还有：左上角品牌 `.curtain-brand`（`{{LOGO_DARK}}` + `HeLab`，深色背景适用）、右上角语言开关 `.curtain-lang`。
+- 想调动画（尺寸/位置/速度/配色/条形码）改 **`static/celltree.js`**；改完须重新构建才会生效。
 
 ## 中英文双语（重要）
 
